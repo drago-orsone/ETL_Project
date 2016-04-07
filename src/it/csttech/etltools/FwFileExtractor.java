@@ -1,15 +1,25 @@
 package it.csttech.etltools;
 
-import java.io.*;
+import java.util.*;
 
-public class FwFileExtractor implements Extractor{
 
-	private File file
+/**
+ * PlaceHolder
+ */
+public class FwFileExtractor implements Extractor {
+
+  	private File file
 
 	FwFileExtractor(File file){
 		this.file = file;
 	}
 
-	
-
+	/*
+	* PlaceHolder 
+	* 
+	*/
+	@Override
+  	public List<Record> Extract(){
+	  
+	}
 }
