@@ -1,4 +1,4 @@
-package it.cst.etltools
+package it.csttech.etltools
 
 /**
  * PlaceHolder
@@ -12,3 +12,4 @@ public interface Extractor {
   public List<Record> Extract();
 
 }
+
