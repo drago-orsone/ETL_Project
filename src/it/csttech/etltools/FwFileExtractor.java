@@ -73,6 +73,7 @@ public class FwFileExtractor extends AbstractFileExtractor implements Extractor 
 	protected Record parseLine(String inputString){
 
 		Record record = new Record();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		try{
 			final int FIXED_WIDTH = 20;
@@ -86,7 +87,7 @@ public class FwFileExtractor extends AbstractFileExtractor implements Extractor 
 				for (int i = 0; i < fieldsNumber; i++)
 					list.add(inputString.substring(i*FIXED_WIDTH, (i+1)*FIXED_WIDTH).trim());
 			
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
 			record.setId(Integer.parseInt(list.get(0)));
 			record.setName(list.get(1));
 			record.setBirthday(formatter.parse(list.get(2)));

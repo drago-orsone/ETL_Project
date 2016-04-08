@@ -28,35 +28,33 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 	 */
 	@Override
 	protected Record parseLine (String line){
-		Scanner s = new Scanner(line).useDelimiter(
-								"\";\"" + "|" + 
-								"\";"	+ "|" + 
-								";\""	+ "|" + 
-								";"		+ "|" + 
-								"\"");
 
-		Record output = new Record();
-		output.setId( s.nextInt() );
-		output.setName( s.next() );
+		Record record = new Record();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
+		try{
+			Scanner s = new Scanner(line).useDelimiter(
+									"\";\"" + "|" + 
+									"\";"	+ "|" + 
+									";\""	+ "|" + 
+									";"		+ "|" + 
+									"\"");
 
-		String dateString = s.next();
-		
-		DateFormat formatter = new SimpleDateFormat("dd/MM/YYYY");
-        try {
- 			log.debug(" Parsing " + dateString + " in " + formatter.parse(dateString) );
-            output.setBirthday( formatter.parse(dateString) );
-        }
-        catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-		
+			record.setId( s.nextInt() );
+			record.setName( s.next() );
+			record.setBirthday( formatter.parse( s.next() ) );
+			record.setHeight( s.nextDouble() );
+			record.setMarried( s.nextBoolean() );	 
 
-		output.setHeight( s.nextDouble() );
-		output.setMarried( s.nextBoolean() );	 
-		s.close(); 
-
-		return output;	
+			if(s.hasNext())
+				log.warn("Line bad format. Ignored extra fields.");
+			s.close(); 
+				
+		}catch(ParseException pe){
+			log.error("Parsing not succeded.");
+		}finally{
+			return record;
+		}
 	}
 	  
 }

@@ -28,13 +28,13 @@ public class UseETL {
  * @param  args argomenti passati
  */
     public static void main(String[] args) {
-		//String csvFileName = "data.csv";
+		String csvFileName = "data.csv";
 		String fwFileName = "data.fw";
 
-		//Extractor ex = new CsvFileExtractor( csvFileName);
-		Extractor ex = new FwFileExtractor(fwFileName);
+		Extractor ex1 = new CsvFileExtractor(csvFileName);
+		Extractor ex2 = new FwFileExtractor(fwFileName);
 		
-		List<Record> records = ex.extract();
+		List<Record> records = ex1.extract();
 
 		for( Record record : records)
 			System.out.println( " " + record.getId() +
@@ -42,6 +42,16 @@ public class UseETL {
 								" " + record.getBirthday() +
 								" " + record.getHeight() +
 								" " + record.isMarried() );
+
+		records = ex2.extract();
+
+		for( Record record : records)
+			System.out.println( " " + record.getId() +
+								" " + record.getName() +
+								" " + record.getBirthday() +
+								" " + record.getHeight() +
+								" " + record.isMarried() );
+
 
     }
 }
