@@ -40,12 +40,21 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 									";"		+ "|" + 
 									"\"");
 
+			record.setId( Integer.parseInt(s.next()) );
+			record.setName( s.next() );
+			record.setBirthday( formatter.parse( s.next() ) );
+			record.setHeight( Double.parseDouble( s.next() ) );
+			record.setMarried( Boolean.parseBoolean( s.next() ) );
+
+/*
+ * 			Qui c'è un problema con il double scanner si aspetta la virgola
+ * 
 			record.setId( s.nextInt() );
 			record.setName( s.next() );
 			record.setBirthday( formatter.parse( s.next() ) );
 			record.setHeight( s.nextDouble() );
 			record.setMarried( s.nextBoolean() );
-
+*/
 			if(s.hasNext())
 				log.warn("Line bad format. Ignored extra fields.");
 			s.close(); 
