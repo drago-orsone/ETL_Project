@@ -34,7 +34,7 @@ public class Record implements java.io.Serializable {
    public double getHeight() {
         return this.height;
     }
-    public void setHeight(double heigth) {
+    public void setHeight(double height) {
         this.height = height;
     }
 

@@ -15,19 +15,11 @@ public class FwFileExtractor extends AbstractFileExtractor implements Extractor 
 
 	private static final Logger log = LogManager.getLogger();
 
-  	//private File file;
-
-	FwFileExtractor(File file){
+	public FwFileExtractor(String file){
 		super(file);
 	}
 
 	/*
-	* PlaceHolder 
-	* 
-	*/
-
-	/*
-	@Override
   	public List<Record> extract(){
 
 		BufferedReader br = null;
@@ -73,12 +65,18 @@ public class FwFileExtractor extends AbstractFileExtractor implements Extractor 
 	  
 	}*/
 
-	private Record parseLine(String line){
 
+	/*
+	 * Transform the readed line to a record
+	 */
+	@Override
+	protected Record parseLine(String inputString){
+
+		Record record = new Record();
 
 		try{
-			Record record = new Record();
-			List<String> list = new ArrayList<String>;		
+			final int FIXED_WIDTH = 20;
+			List<String> list = new ArrayList<String>();		
 			int fieldsNumber;
 
 			if ((inputString.length() - 1) % FIXED_WIDTH == 0) {
@@ -89,15 +87,16 @@ public class FwFileExtractor extends AbstractFileExtractor implements Extractor 
 					list.add(inputString.substring(i*FIXED_WIDTH, (i+1)*FIXED_WIDTH).trim());
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			record.setID(Integer.parseInt(list[0]));
-			record.setName(list[1]);
-			record.setBirthday(formatter.parse(list[2]));
-			record.setHeight(Double.parseDouble(list[3]));
-			record.setMarried(Boolean.parseBoolean(list[4]));
+			record.setId(Integer.parseInt(list.get(0)));
+			record.setName(list.get(1));
+			record.setBirthday(formatter.parse(list.get(2)));
+			record.setHeight(Double.parseDouble(list.get(3)));
+			record.setMarried(Boolean.parseBoolean(list.get(4)));
 
 			}else{
 				log.warn("Line bad format. Skipped and continue!");
 			}
+
 		}catch(ParseException pe){
 			log.error("Parsing not succeded.");
 		}finally{

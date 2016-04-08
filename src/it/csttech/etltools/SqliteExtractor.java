@@ -6,13 +6,11 @@ import java.util.*;
 /**
  * PlaceHolder
  */
-public class SqliteExtractor implements Extractor {
+public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 
   /*
    * PlaceHolder 
    * 
    */
-  public List<Record> Extract(){
-	  
-  }
+
 }

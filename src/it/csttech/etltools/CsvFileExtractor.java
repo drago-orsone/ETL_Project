@@ -4,15 +4,18 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * PlaceHolder
  */
 public class CsvFileExtractor extends AbstractFileExtractor implements Extractor {
 
+	private static final Logger log = LogManager.getLogger();
 	/*
-	 * Transform the readed line to a record
+	 * Constructor
 	 */
-
 	public CsvFileExtractor( String fileName){
 		super(fileName);
 	}
@@ -39,6 +42,7 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 		
 		SimpleDateFormat inDateFormat = new SimpleDateFormat("dd/MM/YYYY");
         try {
+ 			log.error(" Parsing " + dateToken + " in " + inDateFormat.parse(dateToken) );
             output.setBirthday( inDateFormat.parse(dateToken) );
         }
         catch (ParseException ex) {
