@@ -43,7 +43,7 @@ public class UseETL {
 
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
 		Records records = ex1.extract();
-		//showRecords(records.getRecords());
+		showRecords(records.getRecords());
 		Loader load1 = new FwFileLoader(fwOutFile);		
 		load1.load(records);
 
@@ -52,7 +52,7 @@ public class UseETL {
 		//showRecords(records.getRecords());
 		Loader load2 = new CsvFileLoader(csvOutFile);
 		load2.load(records);
-
+		
 
     }
 }

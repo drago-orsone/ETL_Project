@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
  */
 public class CsvFileLoader extends AbstractFileLoader implements Loader {
 
+	private static final char FIELD_SEPARATOR = ';';
+
 	/*
 	 * Constructor
 	 */
@@ -23,9 +25,9 @@ public class CsvFileLoader extends AbstractFileLoader implements Loader {
 		StringBuilder builder = new StringBuilder();
 
 		for(String string : columnNames ){
-			builder.append( string + ";");		
+			builder.append( string + FIELD_SEPARATOR);		
 		}
-			
+		builder.deleteCharAt(builder.length()-1);
 		return builder.toString();   
 	}
 

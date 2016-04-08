@@ -14,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 public class CsvFileExtractor extends AbstractFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger();
+	private static final char FIELD_SEPARATOR = ';';
+
 
 	/*
 	 * Constructor
@@ -24,36 +26,19 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 
 
 	/*
-	 * Cut the imput line
+	 * Cut the input line
+	 * 
+	 * Si prende pure i campi extra.. il metodo parse line li ignorerà!
+	 * 
 	 */
 	@Override
 	protected List<String> parseColumnNames(String inputLine){
-		/*
-			List<String> list = 		
-				new ArrayList<String>(
-					Arrays.asList(
-						inputLine.split(	"\";\""	+ "|" + 
-											"\";"	+ "|" + 
-											";\""	+ "|" + 
-											";"		+ "|" + 
-											"\"")
-					)
-				);
-		*/
 			return Arrays.asList(
-						inputLine.split(	"\";\""	+ "|" + 
-											"\";"	+ "|" + 
-											";\""	+ "|" + 
-											";"		+ "|" + 
+						inputLine.split(	"\"" + FIELD_SEPARATOR + "\"" + "|" + 
+											"\"" + FIELD_SEPARATOR + "|" + 
+											FIELD_SEPARATOR + "\"" + "|" + 
+											FIELD_SEPARATOR + "|" + 
 											"\""));
-		/*
-		 * 		if(s.hasNext())
-				log.warn("Line bad format. Ignored extra fields.");
-			s.close(); 
-			* 
-			* */
-
-
 	}
 
 
