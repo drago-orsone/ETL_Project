@@ -3,6 +3,7 @@ package it.csttech.etltools;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.*; // Use List
 
 /**
  * A cli interface to launch a simple ETL Suite
@@ -27,6 +28,18 @@ public class UseETL {
  * @param  args argomenti passati
  */
     public static void main(String[] args) {
+		String csvFileName = "data.csv";
+
+		Extractor ex = new CsvFileExtractor( csvFileName);
+		
+		List<Record> records = ex.extract();
+
+		for( Record record : records)
+			System.out.println( " " + record.getId() +
+								" " + record.getName() +
+								" " + record.getBirthday() +
+								" " + record.getHeight() +
+								" " + record.isMarried() );
 
     }
 }

@@ -31,10 +31,10 @@ public class Record implements java.io.Serializable {
         this.birthday = birthday;
     }
 
-   public int getHeight() {
+   public double getHeight() {
         return this.height;
     }
-    public void setHeight(int id) {
+    public void setHeight(double heigth) {
         this.height = height;
     }
 
@@ -44,5 +44,6 @@ public class Record implements java.io.Serializable {
     }
     public void setMarried(boolean married) {
         this.married = married;
+    }
 
 }

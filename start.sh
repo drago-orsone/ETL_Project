@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-	MAIN_CLASS_FILE="it.csttech.formattingtools.UseChangeFormat"
+	MAIN_CLASS_FILE="it.csttech.etltools.UseETL"
 	CLASS_PATH=".;lib/*;bin"
 	LOG_CONFIG="config/log4j2.xml"
 
