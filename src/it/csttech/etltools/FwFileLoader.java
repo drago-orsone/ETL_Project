@@ -11,10 +11,7 @@ public class FwFileLoader implements Loader {
    * PlaceHolder 
    * 
    */
-  public void Load(List<Record> inputList){
-	  
-	  
-  }
+
 
 }
 

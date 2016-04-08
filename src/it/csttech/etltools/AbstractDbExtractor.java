@@ -1,5 +1,10 @@
 package it.csttech.etltools;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.*;
+import java.io.*;
 import java.util.*;
 
 
@@ -12,12 +17,15 @@ public abstract class AbstractDbExtractor  {
 	private String tableName;
 	private String dbClassName = "org.sqlite.JDBC";
 
+	private static final Logger log = LogManager.getLogger();
+
   /*
    * PlaceHolder 
    * 
    */
   public List<Record> extract(){
 	List<Record> records = new ArrayList<Record>();
+	Connection conn = null;
 
         try {
 			log.debug("Driver Loading.");
@@ -29,18 +37,12 @@ public abstract class AbstractDbExtractor  {
 			else
 				log.warn("Database not found. Creating " + dbName);
             
-			Connection conn = null;
   			log.debug("Requesting Connection to drive manager : " + dbName);
 			conn = DriverManager.getConnection("jdbc:sqlite:" + dbName);     //throws SQLException     
    
-			log.debug("Checking if " + tableName + " exists in " + outputFile);
+			log.debug("Checking if " + tableName + " exists in " + dbName);
 			if( !checkTable(conn, tableName) ){
-				log.warn( tableName + " not found. creating table.");	
-				log.info( " The first row of " + inputFile + "is used to choose column names");
-			// --------------------------------------------
-					//metodo che eventualmente crea la tabella
-				defaultTableInit( br , conn , tableName);
-			// --------------------------------------------
+				log.warn( tableName + " not found. ABORT!");	
 			}
             
 			log.debug("Executing Query to db");
@@ -51,10 +53,12 @@ public abstract class AbstractDbExtractor  {
             
         } catch (ClassNotFoundException ex) {
 			log.fatal("Error loading connector driver. Class " + " dbClassName " + " not found.");
-        } catch ( SQLException e ) { //Eccezione generata dalla connessione
+		} catch ( SQLException e ) { //Eccezione generata dalla connessione
 			log.fatal(e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-		}finally{
+        } catch (Exception e) {
+			log.fatal(e.getClass().getName() + ": " + e.getMessage() );
+        }finally{
 			if(conn != null) {
 				try{
 					log.debug("Closing dB connection");
