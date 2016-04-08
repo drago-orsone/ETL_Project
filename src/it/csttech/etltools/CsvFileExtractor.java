@@ -44,14 +44,14 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 			record.setName( s.next() );
 			record.setBirthday( formatter.parse( s.next() ) );
 			record.setHeight( s.nextDouble() );
-			record.setMarried( s.nextBoolean() );	 
+			record.setMarried( s.nextBoolean() );
 
 			if(s.hasNext())
 				log.warn("Line bad format. Ignored extra fields.");
 			s.close(); 
 				
-		}catch(ParseException pe){
-			log.error("Parsing not succeded.");
+		//}catch(ParseException pe){
+		//	log.error("Parsing not succeded.");
 		}finally{
 			return record;
 		}

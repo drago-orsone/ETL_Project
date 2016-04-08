@@ -12,7 +12,7 @@ import java.util.*;
  * PlaceHolder
  * 	Dubbio, perchè non deve implementare : " implements Extractor" ?
  */
-public abstract class AbstractFileLoader {
+public abstract class AbstractDbLoader {
 
 	public void load(List<Record> records){
 	}

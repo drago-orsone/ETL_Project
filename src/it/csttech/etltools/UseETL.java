@@ -39,10 +39,10 @@ public class UseETL {
 		String csvInFile= "data.csv";
 		String csvOutFile = "out.csv";
 		String fwInFile = "data.fw";
-		String fwOutFile = "data.fw";		
+		String fwOutFile = "out.fw";		
 
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
-		Extractor ex2 = new FwFileExtractor(fwFileName);
+		Extractor ex2 = new FwFileExtractor(fwInFile);
 		
 		List<Record> records = ex1.extract();
 		//showRecords(records);
@@ -53,7 +53,7 @@ public class UseETL {
 		Loader load1 = new CsvFileLoader(csvOutFile);
 		load1.load(records);
 
-		Loader load2 = new FwFileExtractor(fwOutFile);		
+		Loader load2 = new FwFileLoader(fwOutFile);		
 		load2.load(records);
 
     }
