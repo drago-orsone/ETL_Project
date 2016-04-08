@@ -15,6 +15,7 @@ public class FwFileLoader extends AbstractFileLoader implements Loader {
    	* PlaceHolder 
    	* 
    	*/
+	@Override
   	protected String parseRecord(Record record){
 
 	  	final int FIXED_WIDTH = 20;
@@ -40,6 +41,11 @@ public class FwFileLoader extends AbstractFileLoader implements Loader {
 			builder.append(EMPTY_CHAR);
 
 		temp = Double.toString(record.getHeight());
+		builder.append(temp);
+		for(int i = 0; i < FIXED_WIDTH - temp.length(); i++)
+			builder.append(EMPTY_CHAR);
+
+		temp = Boolean.toString(record.isMarried());
 		builder.append(temp);
 		for(int i = 0; i < FIXED_WIDTH - temp.length(); i++)
 			builder.append(EMPTY_CHAR);
