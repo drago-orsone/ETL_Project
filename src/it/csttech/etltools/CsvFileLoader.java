@@ -11,7 +11,7 @@ public class CsvFileLoader implements Loader {
    * PlaceHolder 
    * 
    */
-  public void Load(List<Record> inputList){
+  public void load(List<Record> inputList){
 	  
 	  
   }

@@ -11,7 +11,7 @@ public class XmlFileLoader implements Loader {
    * PlaceHolder 
    * 
    */
-  public void Load(List<Record> inputList){
+  public void load(List<Record> inputList){
 	  
 	  
   }

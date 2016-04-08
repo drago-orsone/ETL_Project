@@ -30,11 +30,14 @@ public class UseETL {
     public static void main(String[] args) {
 		//String csvFileName = "data.csv";
 		String fwFileName = "data.fw";
+		String output = "output.dat";
 
 		//Extractor ex = new CsvFileExtractor( csvFileName);
 		Extractor ex = new FwFileExtractor(fwFileName);
+		Loader lo = new FwFileLoader(output);
 		
 		List<Record> records = ex.extract();
+		lo.load(records);
 
 		for( Record record : records)
 			System.out.println( " " + record.getId() +

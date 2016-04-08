@@ -35,7 +35,6 @@ public class FwFileExtractor extends AbstractFileExtractor implements Extractor 
 			if ((inputString.length() - 1) % FIXED_WIDTH == 0) {
 
 				fieldsNumber = (inputString.length() - 1) / FIXED_WIDTH;
-
 				for (int i = 0; i < fieldsNumber; i++)
 					list.add(inputString.substring(i*FIXED_WIDTH, (i+1)*FIXED_WIDTH).trim());
 			
