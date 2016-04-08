@@ -17,6 +17,7 @@ public class FwFileLoader extends AbstractFileLoader implements Loader {
    	* PlaceHolder 
    	* 
    	*/
+   	@Override
   	protected String parseColumnNames(List<String> columnNames){
 
 	  	final int FIXED_WIDTH = 20;
@@ -40,6 +41,7 @@ public class FwFileLoader extends AbstractFileLoader implements Loader {
    	* PlaceHolder 
    	* 
    	*/
+   	@Override
   	protected String parseRecord(Record record){
 
 		List<String> recordConverted = new ArrayList<String>();
@@ -52,7 +54,6 @@ public class FwFileLoader extends AbstractFileLoader implements Loader {
 		recordConverted.add(Boolean.toString(record.isMarried()));		
 
 		return parseColumnNames(recordConverted);
-
   
   	}
 
