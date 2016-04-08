@@ -55,6 +55,8 @@ public abstract class AbstractFileExtractor {
 					  "\t Input file " + fileName + " not found.");
 		}catch(IOException e){
 			log.error("Input file reading failed.");
+		}catch(Exception e){
+			log.error(e);
 		}finally{
 			if( in != null) {
 				try{
@@ -63,6 +65,8 @@ public abstract class AbstractFileExtractor {
 					in.close(); //in.close throws IOException
 				}catch(IOException e){
 					log.error("Input file " + fileName + " closing not succeded.");
+				}catch(Exception e){
+					log.error(e);
 				}
 			}
 			return records;
