@@ -1,7 +1,5 @@
 package it.csttech.etltools;
 
-import java.util.*;
-
 /**
  * PlaceHolder
  */
@@ -21,7 +19,7 @@ public class CsvFileLoader extends AbstractFileLoader implements Loader {
 	protected String parseRecord(Record record){
 		StringBuilder builder = new StringBuilder();
 		builder.append(record.getId() + ";");
-		builder.append(record.getName() + ";");
+		builder.append("\"" + record.getName() + "\""+";");
 		builder.append(record.getBirthday() + ";");
 		builder.append(record.getHeight() + ";");
 		builder.append(record.isMarried() + ";");		
