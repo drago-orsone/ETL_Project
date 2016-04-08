@@ -15,6 +15,7 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 
 	private static final Logger log = LogManager.getLogger();
 	private static final char FIELD_SEPARATOR = ';';
+	private static final char STRING_DELIMETER = '"';	
 
 
 	/*
@@ -34,11 +35,11 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 	@Override
 	protected List<String> parseColumnNames(String inputLine){
 			return Arrays.asList(
-						inputLine.split(	"\"" + FIELD_SEPARATOR + "\"" + "|" + 
-											"\"" + FIELD_SEPARATOR + "|" + 
-											FIELD_SEPARATOR + "\"" + "|" + 
+						inputLine.split(	STRING_DELIMETER + FIELD_SEPARATOR + STRING_DELIMETER + "|" + 
+											STRING_DELIMETER + FIELD_SEPARATOR + "|" + 
+											FIELD_SEPARATOR + STRING_DELIMETER + "|" + 
 											FIELD_SEPARATOR + "|" + 
-											"\""));
+											STRING_DELIMETER));
 	}
 
 

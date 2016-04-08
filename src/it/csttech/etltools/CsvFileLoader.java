@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 public class CsvFileLoader extends AbstractFileLoader implements Loader {
 
 	private static final char FIELD_SEPARATOR = ';';
+	private static final char STRING_DELIMETER = '"';
 
 	/*
 	 * Constructor
@@ -41,7 +42,7 @@ public class CsvFileLoader extends AbstractFileLoader implements Loader {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		recordConverted.add(Integer.toString(record.getId()));
-		recordConverted.add(record.getName());
+		recordConverted.add( STRING_DELIMETER + record.getName() + STRING_DELIMETER);
 		recordConverted.add((formatter.format(record.getBirthday())).toString());
 		recordConverted.add(Double.toString(record.getHeight()));
 		recordConverted.add(Boolean.toString(record.isMarried()));		
