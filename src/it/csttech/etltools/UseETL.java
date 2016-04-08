@@ -28,9 +28,11 @@ public class UseETL {
  * @param  args argomenti passati
  */
     public static void main(String[] args) {
-		String csvFileName = "data.csv";
+		//String csvFileName = "data.csv";
+		String fwFileName = "data.fw";
 
-		Extractor ex = new CsvFileExtractor( csvFileName);
+		//Extractor ex = new CsvFileExtractor( csvFileName);
+		Extractor ex = new FwFileExtractor(fwFileName);
 		
 		List<Record> records = ex.extract();
 

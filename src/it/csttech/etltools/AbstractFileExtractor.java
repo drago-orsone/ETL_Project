@@ -19,14 +19,14 @@ public abstract class AbstractFileExtractor {
 	 * Abstract method to be specified in the children classes.
 	 * Transform the readed line to a record
 	 */
-	protected abstract Record parseLine (String inputLine);
+	protected abstract Record parseLine(String inputLine);
 
 
 	/*
 	 * Abstract method to be specified in the children classes.
 	 * Transform the readed line to a record
 	*/   
-	public AbstractFileExtractor( String fileName){
+	public AbstractFileExtractor(String fileName){
 		this.fileName = fileName ;
 	}
 	
@@ -35,26 +35,24 @@ public abstract class AbstractFileExtractor {
    * 
    */
 	public List<Record> extract(){
-		List<Record> records = new ArrayList<Record>();
 
+		List<Record> records = new ArrayList<Record>();
 		BufferedReader br = null;
 		InputStream in = null;
+
 		try {
 			log.debug("Opening File Stream");
 			in = new FileInputStream(fileName); //FileNotFoundException
 			br = new BufferedReader(new InputStreamReader(in));
 
+			String inputLine = null;
+			while ((inputLine = br.readLine()) != null)
+				records.add(parseLine(inputLine));
+
 		}catch(FileNotFoundException e){
 			log.error("File not Found Error");
-			log.info( "\t Possible reasons may be:\n" +
+			log.info("\t Possible reasons may be:\n" +
 					  "\t Input file " + fileName + " not found.");
-		}
-
-		String inputLine = null;			
-		try {
-			while ( (inputLine = br.readLine()) != null){
-				records.add( parseLine( inputLine ) );
-			}
 		}catch(IOException e){
 			log.error("Input file reading failed.");
 		}finally{
@@ -67,8 +65,8 @@ public abstract class AbstractFileExtractor {
 					log.error("Input file " + fileName + " closing not succeded.");
 				}
 			}
+			return records;
 		}
-		return records;
 	}
 	
 }

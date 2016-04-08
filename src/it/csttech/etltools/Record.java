@@ -46,5 +46,4 @@ public class Record implements java.io.Serializable {
         this.married = married;
     }
 
-
 }
