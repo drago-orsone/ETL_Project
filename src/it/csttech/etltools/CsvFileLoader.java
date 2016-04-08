@@ -12,6 +12,7 @@ public class CsvFileLoader extends AbstractFileLoader implements Loader {
 		super(fileName);
 	}
 
+
 	/*
 	 * Transform the readed line to a record
 	 */
@@ -25,5 +26,6 @@ public class CsvFileLoader extends AbstractFileLoader implements Loader {
 		builder.append(record.isMarried() + ";");		
 		return builder.toString();    
 	}
+
 
 }

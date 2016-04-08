@@ -12,5 +12,4 @@ public class XmlFileLoader extends AbstractFileLoader implements Loader {
    * 
    */
 
-
 }

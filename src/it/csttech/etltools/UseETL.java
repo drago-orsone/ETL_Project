@@ -35,10 +35,11 @@ public class UseETL {
  * @param  args argomenti passati
  */
     public static void main(String[] args) {
+
 		String csvInFile= "data.csv";
 		String csvOutFile = "out.csv";
 		String fwInFile = "data.fw";
-		
+		String fwOutFile = "data.fw";		
 
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
 		Extractor ex2 = new FwFileExtractor(fwFileName);
@@ -52,6 +53,8 @@ public class UseETL {
 		Loader load1 = new CsvFileLoader(csvOutFile);
 		load1.load(records);
 
+		Loader load2 = new FwFileExtractor(fwOutFile);		
+		load2.load(records);
 
     }
 }
