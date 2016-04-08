@@ -1,6 +1,7 @@
 package it.csttech.etltools;
 
 import java.util.*;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
@@ -13,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 public class CsvFileExtractor extends AbstractFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger();
+
 	/*
 	 * Constructor
 	 */
@@ -26,8 +28,8 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 	 */
 	@Override
 	protected Record parseLine (String line){
-     Scanner s = new Scanner(line).useDelimiter(
-     							"\";\"" + "|" + 
+		Scanner s = new Scanner(line).useDelimiter(
+								"\";\"" + "|" + 
 								"\";"	+ "|" + 
 								";\""	+ "|" + 
 								";"		+ "|" + 
@@ -38,16 +40,17 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 		output.setName( s.next() );
 
 
-		String dateToken = s.next();
+		String dateString = s.next();
 		
-		SimpleDateFormat inDateFormat = new SimpleDateFormat("dd/MM/YYYY");
+		DateFormat formatter = new SimpleDateFormat("dd/MM/YYYY");
         try {
- 			log.error(" Parsing " + dateToken + " in " + inDateFormat.parse(dateToken) );
-            output.setBirthday( inDateFormat.parse(dateToken) );
+ 			log.debug(" Parsing " + dateString + " in " + formatter.parse(dateString) );
+            output.setBirthday( formatter.parse(dateString) );
         }
         catch (ParseException ex) {
             ex.printStackTrace();
         }
+		
 
 		output.setHeight( s.nextDouble() );
 		output.setMarried( s.nextBoolean() );	 
