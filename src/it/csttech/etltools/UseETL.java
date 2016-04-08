@@ -43,13 +43,13 @@ public class UseETL {
 
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
 		List<Record> records = ex1.extract();
-		showRecords(records);
+		//showRecords(records);
 		Loader load1 = new FwFileLoader(fwOutFile);		
 		load1.load(records);
 
 		Extractor ex2 = new FwFileExtractor(fwInFile);
 		records = ex2.extract();
-		showRecords(records);
+		//showRecords(records);
 		Loader load2 = new CsvFileLoader(csvOutFile);
 		load2.load(records);
 
