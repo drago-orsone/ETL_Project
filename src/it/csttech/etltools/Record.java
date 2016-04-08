@@ -45,5 +45,4 @@ public class Record implements java.io.Serializable {
     public void setMarried(boolean married) {
         this.married = married;
 
-
 }
