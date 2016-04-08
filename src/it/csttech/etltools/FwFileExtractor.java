@@ -11,20 +11,22 @@ import java.text.ParseException;
 /**
  * PlaceHolder
  */
-public class FwFileExtractor implements Extractor {
+public class FwFileExtractor extends AbstractFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger();
 
-  	private File file;
+  	//private File file;
 
 	FwFileExtractor(File file){
-		this.file = file;
+		super(file);
 	}
 
 	/*
 	* PlaceHolder 
 	* 
 	*/
+
+	/*
 	@Override
   	public List<Record> extract(){
 
@@ -69,7 +71,7 @@ public class FwFileExtractor implements Extractor {
 			}
 		}
 	  
-	}
+	}*/
 
 	private Record parseLine(String line){
 
