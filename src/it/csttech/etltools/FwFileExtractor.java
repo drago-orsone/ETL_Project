@@ -20,53 +20,6 @@ public class FwFileExtractor extends AbstractFileExtractor implements Extractor 
 	}
 
 	/*
-  	public List<Record> extract(){
-
-		BufferedReader br = null;
- 		InputStream in = null;
-
-		try {
-			in = new FileInputStream(inputFile); //FileNotFoundException
-			br = new BufferedReader(new InputStreamReader(in));
-
-			String line;
-			List<Record> list = new ArrayList<Record>();
-			while ((line = br.readLine()) != null)
-				list.add(parseLine(line));
-
-  		}catch(FileNotFoundException e){
-			log.error("File not Found Error");
-			log.info( "\t Possible reasons may be:\n"
-					+ "\t Input file " + inputFile + " not found.\n"
-					+ "\t Output file " + outputFile + " exists but is a directory or a regular file.\n"
-					+ "\t Output file " + outputFile + " does not exist but cannot be created.");
-		}catch(IOException){
-			//DO something
-		}finally{
-			if(br != null && in != null) {
-				try{
-					br.close(); //br.close throws IOException
-					in.close(); //in.close throws IOException
-				}catch(IOException e){
-					log.error("Input file " + inputFile + " closing not succeded.");
-				}
-			}
-			if(printWriter != null) {
-				printWriter.close();
-			}
-			if (out != null) {
-				try{
-					out.close();
-				}catch(IOException e){
-    					log.error("Writing on output file " + outputFile + " failed.");
-				}
-			}
-		}
-	  
-	}*/
-
-
-	/*
 	 * Transform the readed line to a record
 	 */
 	@Override
