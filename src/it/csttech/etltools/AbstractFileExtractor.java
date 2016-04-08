@@ -8,8 +8,9 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * PlaceHolder
+ * 	Dubbio, perchè non deve implementare : " implements Extractor" ?
  */
-public abstract class AbstractFileExtractor implements Extractor {
+public abstract class AbstractFileExtractor {
 	
 	private String fileName;
 	private static final Logger log = LogManager.getLogger();
