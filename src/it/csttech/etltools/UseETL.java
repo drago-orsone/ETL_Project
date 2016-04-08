@@ -20,7 +20,14 @@ public class UseETL {
 
 	static final Logger log = LogManager.getLogger();
 
-
+	static void showRecords(List<Record> records){
+		for( Record record : records)
+			System.out.println( " " + record.getId() +
+								" " + record.getName() +
+								" " + record.getBirthday() +
+								" " + record.getHeight() +
+								" " + record.isMarried() );		
+	}
     
 /**
  * Main 
@@ -28,23 +35,26 @@ public class UseETL {
  * @param  args argomenti passati
  */
     public static void main(String[] args) {
-		//String csvFileName = "data.csv";
-		String fwFileName = "data.fw";
-		String output = "output.dat";
 
-		//Extractor ex = new CsvFileExtractor( csvFileName);
-		Extractor ex = new FwFileExtractor(fwFileName);
-		Loader lo = new FwFileLoader(output);
+		String csvInFile= "data.csv";
+		String csvOutFile = "out.csv";
+		String fwInFile = "data.fw";
+		String fwOutFile = "out.fw";		
+
+		Extractor ex1 = new CsvFileExtractor(csvInFile);
+		Extractor ex2 = new FwFileExtractor(fwInFile);
 		
-		List<Record> records = ex.extract();
-		lo.load(records);
+		List<Record> records = ex1.extract();
+		//showRecords(records);
 
-		for( Record record : records)
-			System.out.println( " " + record.getId() +
-								" " + record.getName() +
-								" " + record.getBirthday() +
-								" " + record.getHeight() +
-								" " + record.isMarried() );
+		records = ex2.extract();
+		//showRecords(records);
+
+		Loader load1 = new CsvFileLoader(csvOutFile);
+		load1.load(records);
+
+		Loader load2 = new FwFileLoader(fwOutFile);		
+		load2.load(records);
 
     }
 }

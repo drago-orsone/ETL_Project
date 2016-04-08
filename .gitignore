@@ -20,4 +20,5 @@ hs_err_pid*
 =======
 # Ignore dat file
 **/*.dat
+out*
 

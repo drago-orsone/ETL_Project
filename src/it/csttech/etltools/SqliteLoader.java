@@ -5,15 +5,12 @@ import java.util.*;
 /**
  * PlaceHolder
  */
-public class SqliteLoader implements Loader {
+public class SqliteLoader extends AbstractDbLoader implements Loader {
 
   /*
    * PlaceHolder 
    * 
    */
-  public void load(List<Record> inputList){
-	  
-	  
-  }
+
 
 }

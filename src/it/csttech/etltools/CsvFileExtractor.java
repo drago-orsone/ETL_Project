@@ -1,6 +1,7 @@
 package it.csttech.etltools;
 
 import java.util.*;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
@@ -13,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 public class CsvFileExtractor extends AbstractFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger();
+
 	/*
 	 * Constructor
 	 */
@@ -26,34 +28,33 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 	 */
 	@Override
 	protected Record parseLine (String line){
-     Scanner s = new Scanner(line).useDelimiter(
-     							"\";\"" + "|" + 
-								"\";"	+ "|" + 
-								";\""	+ "|" + 
-								";"		+ "|" + 
-								"\"");
 
-		Record output = new Record();
-		output.setId( s.nextInt() );
-		output.setName( s.next() );
+		Record record = new Record();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
+		try{
+			Scanner s = new Scanner(line).useDelimiter(
+									"\";\"" + "|" + 
+									"\";"	+ "|" + 
+									";\""	+ "|" + 
+									";"		+ "|" + 
+									"\"");
 
-		String dateToken = s.next();
-		
-		SimpleDateFormat inDateFormat = new SimpleDateFormat("dd/MM/YYYY");
-        try {
- 			log.error(" Parsing " + dateToken + " in " + inDateFormat.parse(dateToken) );
-            output.setBirthday( inDateFormat.parse(dateToken) );
-        }
-        catch (ParseException ex) {
-            ex.printStackTrace();
-        }
+			record.setId( s.nextInt() );
+			record.setName( s.next() );
+			record.setBirthday( formatter.parse( s.next() ) );
+			record.setHeight( s.nextDouble() );
+			record.setMarried( s.nextBoolean() );
 
-		output.setHeight( s.nextDouble() );
-		output.setMarried( s.nextBoolean() );	 
-		s.close(); 
-
-		return output;	
+			if(s.hasNext())
+				log.warn("Line bad format. Ignored extra fields.");
+			s.close(); 
+				
+		//}catch(ParseException pe){
+		//	log.error("Parsing not succeded.");
+		}finally{
+			return record;
+		}
 	}
 	  
 }

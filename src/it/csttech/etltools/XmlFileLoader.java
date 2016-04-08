@@ -5,15 +5,19 @@ import java.util.*;
 /**
  * PlaceHolder
  */
-public class XmlFileLoader implements Loader {
+public class XmlFileLoader extends AbstractFileLoader implements Loader {
+
+	public XmlFileLoader(String file){
+		super(file);
+	}
 
   /*
    * PlaceHolder 
    * 
    */
-  public void load(List<Record> inputList){
-	  
-	  
-  }
+  	protected String parseRecord(Record record){
+		String temp = null;	
+		return temp;
+	}
 
 }
