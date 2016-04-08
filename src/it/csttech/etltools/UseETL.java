@@ -42,19 +42,17 @@ public class UseETL {
 		String fwOutFile = "out.fw";		
 
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
-		Extractor ex2 = new FwFileExtractor(fwInFile);
-		
-		List<Record> records = ex1.extract();
-		//showRecords(records);
-
-		records = ex2.extract();
-		//showRecords(records);
-
-		Loader load1 = new CsvFileLoader(csvOutFile);
+		Records records = ex1.extract();
+		showRecords(records.getRecords());
+		Loader load1 = new FwFileLoader(fwOutFile);		
 		load1.load(records);
 
-		Loader load2 = new FwFileLoader(fwOutFile);		
+		Extractor ex2 = new FwFileExtractor(fwInFile);
+		records = ex2.extract();
+		//showRecords(records.getRecords());
+		Loader load2 = new CsvFileLoader(csvOutFile);
 		load2.load(records);
+		
 
     }
 }

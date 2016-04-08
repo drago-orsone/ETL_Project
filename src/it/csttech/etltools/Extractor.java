@@ -11,7 +11,7 @@ public interface Extractor {
    * PlaceHolder 
    * 
    */
-  public List<Record> extract();
+  public Records extract();
 
 }
 

@@ -14,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 public class CsvFileExtractor extends AbstractFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger();
+	private static final char FIELD_SEPARATOR = ';';
+
 
 	/*
 	 * Constructor
@@ -24,37 +26,48 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 
 
 	/*
+	 * Cut the input line
+	 * 
+	 * Si prende pure i campi extra.. il metodo parse line li ignorerà!
+	 * 
+	 */
+	@Override
+	protected List<String> parseColumnNames(String inputLine){
+			return Arrays.asList(
+						inputLine.split(	"\"" + FIELD_SEPARATOR + "\"" + "|" + 
+											"\"" + FIELD_SEPARATOR + "|" + 
+											FIELD_SEPARATOR + "\"" + "|" + 
+											FIELD_SEPARATOR + "|" + 
+											"\""));
+	}
+
+
+
+
+	/*
 	 * Transform the readed line to a record
 	 */
 	@Override
-	protected Record parseLine (String line){
+	protected Record parseLine (String inputString){
 
 		Record record = new Record();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		try{
-			Scanner s = new Scanner(line).useDelimiter(
-									"\";\"" + "|" + 
-									"\";"	+ "|" + 
-									";\""	+ "|" + 
-									";"		+ "|" + 
-									"\"");
+			List<String> list = parseColumnNames(inputString);
 
-			record.setId( s.nextInt() );
-			record.setName( s.next() );
-			record.setBirthday( formatter.parse( s.next() ) );
-			record.setHeight( s.nextDouble() );
-			record.setMarried( s.nextBoolean() );
+			record.setId(Integer.parseInt(list.get(0)));
+			record.setName(list.get(1));
+			record.setBirthday(formatter.parse(list.get(2)));
+			record.setHeight(Double.parseDouble(list.get(3)));
+			record.setMarried(Boolean.parseBoolean(list.get(4)));
 
-			if(s.hasNext())
-				log.warn("Line bad format. Ignored extra fields.");
-			s.close(); 
-				
-		//}catch(ParseException pe){
-		//	log.error("Parsing not succeded.");
+		}catch(ParseException pe){
+			log.error("Parsing not succeded.");
 		}finally{
 			return record;
 		}
+
 	}
 	  
 }

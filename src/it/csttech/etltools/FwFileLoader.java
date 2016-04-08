@@ -1,5 +1,6 @@
 package it.csttech.etltools;
 
+import java.util.*;
 import java.text.SimpleDateFormat;
 
 /**
@@ -17,42 +18,42 @@ public class FwFileLoader extends AbstractFileLoader implements Loader {
    	* 
    	*/
 	@Override
-  	protected String parseRecord(Record record){
+  	protected String parseColumnNames(List<String> columnNames){
 
 	  	final int FIXED_WIDTH = 20;
 		final char EMPTY_CHAR = ' ';
 		final char FINAL_CHAR = '*';
-		String temp;
+
 		StringBuilder builder = new StringBuilder();
 
-		temp = Integer.toString(record.getId());
-		builder.append(temp);
-		for(int i = 0; i < FIXED_WIDTH - temp.length(); i++)
-			builder.append(EMPTY_CHAR);
-
-		temp = record.getName();
-		builder.append(temp);
-		for(int i = 0; i < FIXED_WIDTH - temp.length(); i++)
-			builder.append(EMPTY_CHAR);
-
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		temp = (formatter.format(record.getBirthday())).toString();
-		builder.append(temp);
-		for(int i = 0; i < FIXED_WIDTH - temp.length(); i++)
-			builder.append(EMPTY_CHAR);
-
-		temp = Double.toString(record.getHeight());
-		builder.append(temp);
-		for(int i = 0; i < FIXED_WIDTH - temp.length(); i++)
-			builder.append(EMPTY_CHAR);
-
-		temp = Boolean.toString(record.isMarried());
-		builder.append(temp);
-		for(int i = 0; i < FIXED_WIDTH - temp.length(); i++)
-			builder.append(EMPTY_CHAR);
-
+		for(String string : columnNames ){
+			builder.append(string);
+			for(int i = 0; i < FIXED_WIDTH - string.length(); i++)
+				builder.append(EMPTY_CHAR);
+		}
 		builder.append(FINAL_CHAR);
+
 		return builder.toString();
+
+	}
+
+  	/*
+   	* PlaceHolder 
+   	* 
+   	*/
+	@Override
+  	protected String parseRecord(Record record){
+
+		List<String> recordConverted = new ArrayList<String>();
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+		recordConverted.add(Integer.toString(record.getId()));
+		recordConverted.add(record.getName());
+		recordConverted.add((formatter.format(record.getBirthday())).toString());
+		recordConverted.add(Double.toString(record.getHeight()));
+		recordConverted.add(Boolean.toString(record.isMarried()));		
+
+		return parseColumnNames(recordConverted);
   
   	}
 
