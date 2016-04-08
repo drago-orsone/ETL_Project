@@ -21,6 +21,7 @@ public abstract class AbstractFileLoader {
 	 */
 	protected abstract String parseRecord(Record record);
 
+	protected abstract String parseColumnNames(List<String> columnNames);
 
 	/*
 	 * Constructor
@@ -33,7 +34,7 @@ public abstract class AbstractFileLoader {
    * PlaceHolder 
    * 
    */
-	public void load(List<Record> records){
+	public void load(Records records){
 
 		OutputStream out = null;
 		PrintWriter printWriter = null;
@@ -43,7 +44,9 @@ public abstract class AbstractFileLoader {
 			out = new FileOutputStream(outputFile); //FileNotFoundException & SecurityException
 			printWriter = new PrintWriter(out);
 
-			for(Record record : records)
+			printWriter.println(parseColumnNames(records.getColumnNames()));
+
+			for(Record record : records.getRecords())
 				printWriter.println(parseRecord(record));
 
 		}catch(FileNotFoundException e){

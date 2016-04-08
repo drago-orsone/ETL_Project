@@ -21,6 +21,11 @@ public abstract class AbstractFileExtractor {
 	 */
 	protected abstract Record parseLine(String inputLine);
 
+	/*
+	 * Abstract method to be specified in the children classes.
+	 * Transform the firt line readed to a list of strings 
+	 */
+	protected abstract List<String> parseColumnNames(String inputLine);
 
 	/*
 	 * Abstract method to be specified in the children classes.
@@ -34,9 +39,9 @@ public abstract class AbstractFileExtractor {
    * PlaceHolder 
    * 
    */
-	public List<Record> extract(){
+	public Records extract(){
 
-		List<Record> records = new ArrayList<Record>();
+		Records records = new Records();
 		BufferedReader br = null;
 		InputStream in = null;
 
@@ -45,9 +50,11 @@ public abstract class AbstractFileExtractor {
 			in = new FileInputStream(fileName); //FileNotFoundException
 			br = new BufferedReader(new InputStreamReader(in));
 
+			records.setColumnNames(parseColumnNames(br.readLine()));
+
 			String inputLine = null;
 			while ((inputLine = br.readLine()) != null)
-				records.add(parseLine(inputLine));
+				records.addRecord(parseLine(inputLine));
 
 		}catch(FileNotFoundException e){
 			log.error("File not Found Error");

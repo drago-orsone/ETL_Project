@@ -1,5 +1,6 @@
 package it.csttech.etltools;
 
+import java.util.*;
 import java.text.SimpleDateFormat;
 
 /**
@@ -14,21 +15,37 @@ public class CsvFileLoader extends AbstractFileLoader implements Loader {
 		super(fileName);
 	}
 
+  	/*
+   	* PlaceHolder 
+   	* 
+   	*/
+  	protected String parseColumnNames(List<String> columnNames){
+		StringBuilder builder = new StringBuilder();
+
+		for(String string : columnNames ){
+			builder.append( string + ";");		
+		}
+			
+		return builder.toString();   
+	}
+
 
 	/*
 	 * Transform the readed line to a record
 	 */
 	@Override
 	protected String parseRecord(Record record){
-		StringBuilder builder = new StringBuilder();
+		List<String> recordConverted = new ArrayList<String>();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-		builder.append(record.getId() + ";");
-		builder.append("\"" + record.getName() + "\""+";");
-		builder.append((formatter.format(record.getBirthday())).toString() + ";");
-		builder.append(record.getHeight() + ";");
-		builder.append(record.isMarried() + ";");		
-		return builder.toString();    
+		recordConverted.add(Integer.toString(record.getId()));
+		recordConverted.add(record.getName());
+		recordConverted.add((formatter.format(record.getBirthday())).toString());
+		recordConverted.add(Double.toString(record.getHeight()));
+		recordConverted.add(Boolean.toString(record.isMarried()));		
+
+		return parseColumnNames(recordConverted);
+
 	}
 
 

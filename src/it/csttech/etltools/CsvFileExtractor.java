@@ -22,38 +22,67 @@ public class CsvFileExtractor extends AbstractFileExtractor implements Extractor
 		super(fileName);
 	}
 
+
+	/*
+	 * Cut the imput line
+	 */
+	@Override
+	protected List<String> parseColumnNames(String inputLine){
+		/*
+			List<String> list = 		
+				new ArrayList<String>(
+					Arrays.asList(
+						inputLine.split(	"\";\""	+ "|" + 
+											"\";"	+ "|" + 
+											";\""	+ "|" + 
+											";"		+ "|" + 
+											"\"")
+					)
+				);
+		*/
+			return Arrays.asList(
+						inputLine.split(	"\";\""	+ "|" + 
+											"\";"	+ "|" + 
+											";\""	+ "|" + 
+											";"		+ "|" + 
+											"\""));
+		/*
+		 * 		if(s.hasNext())
+				log.warn("Line bad format. Ignored extra fields.");
+			s.close(); 
+			* 
+			* */
+
+
+	}
+
+
+
+
 	/*
 	 * Transform the readed line to a record
 	 */
 	@Override
-	protected Record parseLine (String line){
+	protected Record parseLine (String inputString){
 
 		Record record = new Record();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		try{
-			Scanner s = new Scanner(line).useDelimiter(
-									"\";\"" + "|" + 
-									"\";"	+ "|" + 
-									";\""	+ "|" + 
-									";"		+ "|" + 
-									"\"");
+			List<String> list = parseColumnNames(inputString);
 
-			record.setId( Integer.parseInt(s.next()) );
-			record.setName( s.next() );
-			record.setBirthday( formatter.parse( s.next() ) );
-			record.setHeight( Double.parseDouble( s.next() ) );
-			record.setMarried( Boolean.parseBoolean( s.next() ) );
+			record.setId(Integer.parseInt(list.get(0)));
+			record.setName(list.get(1));
+			record.setBirthday(formatter.parse(list.get(2)));
+			record.setHeight(Double.parseDouble(list.get(3)));
+			record.setMarried(Boolean.parseBoolean(list.get(4)));
 
-			if(s.hasNext())
-				log.warn("Line bad format. Ignored extra fields.");
-			s.close(); 
-				
 		}catch(ParseException pe){
 			log.error("Parsing not succeded.");
 		}finally{
 			return record;
 		}
+
 	}
 	  
 }
