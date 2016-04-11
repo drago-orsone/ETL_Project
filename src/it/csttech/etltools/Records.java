@@ -27,13 +27,11 @@ public class Records  {
         this.records = records;
     }
 
-	public void addColumnName( String columnName){
-		columnNames.add(columnName);
-	}
+    public void addColumnName(String columnName){
+	columnNames.add(columnName);
+    }
 
-	public void addRecord(Record record){
-		records.add(record);
-	}
-
-
+    public void addRecord(Record record){
+	records.add(record);
+    }
 }

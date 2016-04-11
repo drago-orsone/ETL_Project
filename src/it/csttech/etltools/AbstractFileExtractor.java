@@ -1,6 +1,5 @@
 package it.csttech.etltools;
 
-import java.util.*;
 import java.io.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,24 +15,18 @@ public abstract class AbstractFileExtractor {
 	private static final Logger log = LogManager.getLogger();
 
 	/*
-	 * Abstract method to be specified in the children classes.
-	 * Transform the readed line to a record
-	 */
-	protected abstract Record parseLine(String inputLine);
-
-	/*
-	 * Abstract method to be specified in the children classes.
-	 * Transform the firt line readed to a list of strings 
-	 */
-	protected abstract List<String> parseColumnNames(String inputLine);
-
-	/*
-	 * Abstract method to be specified in the children classes.
-	 * Transform the readed line to a record
+	 * Constructor.
+	 * 
 	*/   
 	public AbstractFileExtractor(String fileName){
 		this.fileName = fileName ;
 	}
+
+	/*
+	* Abstract method to be specified in the children classes.
+	* placeHolder
+	*/  
+	protected abstract Records buildRecords(BufferedReader br) throws IOException;
 	
   /*
    * PlaceHolder 
@@ -50,11 +43,7 @@ public abstract class AbstractFileExtractor {
 			in = new FileInputStream(fileName); //FileNotFoundException
 			br = new BufferedReader(new InputStreamReader(in));
 
-			records.setColumnNames(parseColumnNames(br.readLine()));
-
-			String inputLine = null;
-			while ((inputLine = br.readLine()) != null)
-				records.addRecord(parseLine(inputLine));
+			records = buildRecords(br);
 
 		}catch(FileNotFoundException e){
 			log.error("File not Found Error");

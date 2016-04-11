@@ -1,17 +1,15 @@
 package it.csttech.etltools;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-
 
 
 /**
  * PlaceHolder
  */
-public class FwFileExtractor extends AbstractFileExtractor implements Extractor {
+public class FwFileExtractor extends BaseCsvFwExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger();
 
@@ -41,31 +39,5 @@ public class FwFileExtractor extends AbstractFileExtractor implements Extractor 
 				log.warn("Line bad format. Skipped and continue!");
 			}			
 			return list;
-	}
-
-
-	/*
-	 * Transform the readed line to a record
-	 */
-	@Override
-	protected Record parseLine(String inputString){
-
-		Record record = new Record();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-		try{
-			List<String> list = parseColumnNames(inputString);
-
-			record.setId(Integer.parseInt(list.get(0)));
-			record.setName(list.get(1));
-			record.setBirthday(formatter.parse(list.get(2)));
-			record.setHeight(Double.parseDouble(list.get(3)));
-			record.setMarried(Boolean.parseBoolean(list.get(4)));
-
-		}catch(ParseException pe){
-			log.error("Parsing not succeded.");
-		}finally{
-			return record;
-		}
 	}
 }

@@ -1,13 +1,12 @@
 package it.csttech.etltools;
 
-import java.util.*;
-import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * PlaceHolder
  */
 
-public class FwFileLoader extends AbstractFileLoader implements Loader {
+public class FwFileLoader extends BaseCsvFwLoader implements Loader {
 
 	public FwFileLoader(String file){
 		super(file);
@@ -36,31 +35,5 @@ public class FwFileLoader extends AbstractFileLoader implements Loader {
 		return builder.toString();
 
 	}
-
-  	/*
-   	* PlaceHolder 
-   	* 
-   	*/
-   	@Override
-  	protected String parseRecord(Record record){
-
-		List<String> recordConverted = new ArrayList<String>();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-		recordConverted.add(Integer.toString(record.getId()));
-		recordConverted.add(record.getName());
-		recordConverted.add((formatter.format(record.getBirthday())).toString());
-		recordConverted.add(Double.toString(record.getHeight()));
-		recordConverted.add(Boolean.toString(record.isMarried()));		
-
-		return parseColumnNames(recordConverted);
-  
-  	}
-
-	@Override
-	protected String closingRaw(){
-		return "";
-	}
-
 }
 

@@ -2,6 +2,7 @@ package it.csttech.etltools;
 
 import java.util.*;
 import java.text.SimpleDateFormat;
+import java.io.PrintWriter;
 
 /**
  * PlaceHolder
@@ -13,12 +14,24 @@ public class XmlFileLoader extends AbstractFileLoader implements Loader {
 		super(file);
 	}
 
+
+	@Override
+	protected void printRecords(PrintWriter printWriter, Records records){
+
+		printWriter.println(firstRaws(records.getColumnNames()));
+
+		for(Record record : records.getRecords())
+			printWriter.println(parseRecord(record));
+
+		printWriter.print(closingRaw());
+
+	}
+
   	/*
    	* Return first two lines of xml file
    	* and put tags in a private list of this class
    	*/
-	@Override
-  	protected String parseColumnNames(List<String> columnNames){
+  	private String firstRaws(List<String> columnNames){
 
 		for(String string : columnNames)
 			fields.add(string);
@@ -30,8 +43,7 @@ public class XmlFileLoader extends AbstractFileLoader implements Loader {
    	* PlaceHolder 
    	* 
    	*/
-   	@Override
-  	protected String parseRecord(Record record){
+  	private String parseRecord(Record record){
 
 		List<String> recordConverted = new ArrayList<String>();
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -42,12 +54,11 @@ public class XmlFileLoader extends AbstractFileLoader implements Loader {
 		recordConverted.add(Double.toString(record.getHeight()));
 		recordConverted.add(Boolean.toString(record.isMarried()));		
 
-		return "<RAW>\n" + parse(recordConverted) + "</RAW>";
+		return "<ROW>\n" + parse(recordConverted) + "</ROW>";
   
   	}
 
-	@Override
-	protected String closingRaw(){
+	private String closingRaw(){
 		return "</ROWSET>";
 	}
 

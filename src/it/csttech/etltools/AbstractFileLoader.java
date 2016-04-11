@@ -1,6 +1,5 @@
 package it.csttech.etltools;
 
-import java.util.*;
 import java.io.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,11 +18,7 @@ public abstract class AbstractFileLoader {
 	 * Abstract method to be specified in the children classes.
 	 * Transform a Record into a String line
 	 */
-	protected abstract String parseRecord(Record record);
-
-	protected abstract String parseColumnNames(List<String> columnNames);
-
-	protected abstract String closingRaw();
+	protected abstract void printRecords(PrintWriter printWriter, Records records);
 
 	/*
 	 * Constructor
@@ -32,10 +27,10 @@ public abstract class AbstractFileLoader {
 		this.outputFile = outputFile ;
 	}
 	
-  /*
-   * PlaceHolder 
-   * 
-   */
+  	/*
+   	* PlaceHolder 
+   	* 
+   	*/
 	public void load(Records records){
 
 		OutputStream out = null;
@@ -46,12 +41,7 @@ public abstract class AbstractFileLoader {
 			out = new FileOutputStream(outputFile); //FileNotFoundException & SecurityException
 			printWriter = new PrintWriter(out);
 
-			printWriter.println(parseColumnNames(records.getColumnNames()));
-
-			for(Record record : records.getRecords())
-				printWriter.println(parseRecord(record));
-
-			printWriter.print(closingRaw());
+			printRecords(printWriter, records);
 
 		}catch(FileNotFoundException e){
 			log.error("File not Found Error");
