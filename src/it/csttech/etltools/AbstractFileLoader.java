@@ -23,6 +23,8 @@ public abstract class AbstractFileLoader {
 
 	protected abstract String parseColumnNames(List<String> columnNames);
 
+	protected abstract String closingRaw();
+
 	/*
 	 * Constructor
 	*/   
@@ -48,6 +50,8 @@ public abstract class AbstractFileLoader {
 
 			for(Record record : records.getRecords())
 				printWriter.println(parseRecord(record));
+
+			printWriter.print(closingRaw());
 
 		}catch(FileNotFoundException e){
 			log.error("File not Found Error");

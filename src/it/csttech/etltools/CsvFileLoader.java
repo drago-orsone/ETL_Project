@@ -52,5 +52,10 @@ public class CsvFileLoader extends AbstractFileLoader implements Loader {
 
 	}
 
+	@Override
+	protected String closingRaw(){
+		return "";
+	}
+
 
 }

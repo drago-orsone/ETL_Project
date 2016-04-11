@@ -39,7 +39,8 @@ public class UseETL {
 		String csvInFile= "data.csv";
 		String csvOutFile = "out.csv";
 		String fwInFile = "data.fw";
-		String fwOutFile = "out.fw";		
+		String fwOutFile = "out.fw";
+		String xmlOutFile = "out.xml";		
 
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
 		Records records = ex1.extract();
@@ -52,6 +53,9 @@ public class UseETL {
 		//showRecords(records.getRecords());
 		Loader load2 = new CsvFileLoader(csvOutFile);
 		load2.load(records);
+
+		Loader load3 = new XmlFileLoader(xmlOutFile);		
+		load3.load(records);
 		
 
     }
