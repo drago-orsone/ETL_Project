@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*; // Use List
+import java.io.File;
 
 /**
  * A cli interface to launch a simple ETL Suite
@@ -37,13 +38,27 @@ public class DemoDbETL {
     public static void main(String[] args) {
 
 		String csvInFile= "data.csv";
+		String dbFile="test.db";
+		String dbTable="TEST";
+		//Per test mio ricreo sempre il file db di test!        
+		File f = new File(dbFile);
+		if( f.exists()){
+			System.out.println( "Ricreo il file Database " + dbFile );			
+			f.delete();
+		}
 
+
+		System.out.println("Estrazione dati da " + csvInFile);		
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
 		Records records = ex1.extract();
+		System.out.println("Dati Estratti :");
 		showRecords(records.getRecords());
+		
+		System.out.println("Caricamento dati Estratti in tabella" + dbTable + " in " + dbFile);				
 		Loader load1 = new SqliteLoader("test.db","TEST");		
 		load1.load(records);
 
+		System.out.println("Estrazione dati da tabella" + dbTable + " in " + dbFile);	
 		Extractor ex2 = new SqliteExtractor("test.db","TEST");
 		records = ex2.extract();
 		showRecords(records.getRecords());
