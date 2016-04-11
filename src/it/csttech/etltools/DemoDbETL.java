@@ -21,14 +21,6 @@ public class DemoDbETL {
 
 	static final Logger log = LogManager.getLogger();
 
-	static void showRecords(List<Record> records){
-		for( Record record : records)
-			System.out.println( " " + record.getId() +
-								" " + record.getName() +
-								" " + record.getBirthday() +
-								" " + record.getHeight() +
-								" " + record.isMarried() );		
-	}
     
 /**
  * Main 
@@ -51,17 +43,22 @@ public class DemoDbETL {
 		System.out.println("Estrazione dati da " + csvInFile);		
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
 		Records records = ex1.extract();
-		System.out.println("Dati Estratti :");
-		showRecords(records.getRecords());
+
+		System.out.println("Caricamento dati Estratti in StdOut");				
+		Loader load1 = new SystemOutLoader();
+		load1.load(records);
+
 		
 		System.out.println("Caricamento dati Estratti in tabella" + dbTable + " in " + dbFile);				
-		Loader load1 = new SqliteLoader("test.db","TEST");		
-		load1.load(records);
+		Loader load2 = new SqliteLoader("test.db","TEST");		
+		load2.load(records);
 
 		System.out.println("Estrazione dati da tabella" + dbTable + " in " + dbFile);	
 		Extractor ex2 = new SqliteExtractor("test.db","TEST");
 		records = ex2.extract();
-		showRecords(records.getRecords());
+
+		System.out.println("Caricamento dati Estratti in StdOut");	
+		load1.load(records);
     }
 }
 
