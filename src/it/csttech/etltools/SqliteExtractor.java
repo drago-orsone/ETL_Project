@@ -14,10 +14,15 @@ import java.sql.*;
 public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger();
-  /*
-   * PlaceHolder 
-   * 
-   */
 
+
+	/*
+	 * Constructor
+	 */
+	public SqliteExtractor(String dbName, String tableName){
+		super(dbName,tableName);
+		this.dbClassName = "org.sqlite.JDBC";
+		this.jdbConnectorOptions = "jdbc:sqlite:";
+	}
 
 }
