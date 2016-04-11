@@ -45,7 +45,7 @@ public class DemoDbETL {
 		Records records = ex1.extract();
 
 		System.out.println("Caricamento dati Estratti in StdOut");				
-		Loader load1 = new SystemOutLoader();
+		Loader load1 = new SystemLoader();
 		load1.load(records);
 
 		
@@ -60,11 +60,13 @@ public class DemoDbETL {
 		System.out.println("Caricamento dati Estratti in StdOut");	
 		load1.load(records);
 	
-		/*
+		
 		System.out.println("Estrazione dati da standard input");	
-		Extractor ex3 = new SystemInExtractor();
+		Extractor ex3 = new SystemExtractor();
 		records = ex3.extract();
-		*/
+
+		System.out.println("Caricamento dati Estratti in STDIN");	
+		load1.load(records);		
 		
 		
 		

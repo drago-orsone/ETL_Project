@@ -36,8 +36,7 @@ public abstract class AbstractSystemExtractor {
 				System.out.println("Format not valid.");
 
 			System.out.println("Insert Record value separated by ; (type .q to conclude)");					
-			while((str=br.readLine())!=null && !input.equals(".q")){
-				System.out.println(str);
+			while((str=br.readLine())!=null && !str.equals(".q")){
 				records.addRecord(parseRecord(str));
 			}
 				
@@ -53,7 +52,7 @@ public abstract class AbstractSystemExtractor {
 	 * Abstract method to be specified in the children classes.
 	 * Transform the readed line to a record
 	 */
-	protected abstract Record parseLine(String inputLine);
+	protected abstract Record parseRecord(String inputLine);
 
 	/*
 	 * Abstract method to be specified in the children classes.

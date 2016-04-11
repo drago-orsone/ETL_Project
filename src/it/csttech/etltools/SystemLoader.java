@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * PlaceHolder
  */
-public class SystemOutLoader extends AbstractSystemOutLoader implements Loader {
+public class SystemLoader extends AbstractSystemLoader implements Loader {
 
 
 	/*

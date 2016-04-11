@@ -9,7 +9,7 @@ import java.util.*;
  *
  * 
  */
-public abstract class AbstractSystemOutLoader {
+public abstract class AbstractSystemLoader {
 
 	static final Logger log = LogManager.getLogger();
 
