@@ -96,7 +96,7 @@ public abstract class AbstractDbLoader {
 
 
 	// Ok per ogni database sql
-	protected static void executeStatement(Connection conn, String sqlCode){		
+	protected void executeStatement(Connection conn, String sqlCode){		
 		Statement stmt = null;
 		try {
 		  log.debug(" Query statement = " + sqlCode);	
@@ -113,11 +113,12 @@ public abstract class AbstractDbLoader {
 	/*
 	 *	Seguendo il design del progetto il tipo di ogni campo e fissato da come è fatto il javabeans!
 	 * 	quindi il tipo lo so 
-	 * 
+	 *	La forma della tabella dipende dalla forma del javabeans. 
 	 */
 	protected abstract void createTable(Connection conn, Records records);
 
 	protected abstract void addRows(Connection conn, Records records);
+
 	
 	private boolean checkTable(Connection conn){		
 		boolean check = false;

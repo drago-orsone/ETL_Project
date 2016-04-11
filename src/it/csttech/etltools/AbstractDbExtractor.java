@@ -4,11 +4,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.io.*;
-import java.util.*;
+import java.sql.SQLException;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.File;
+import java.util.List;
+import java.util.ArrayList;
+
+
 /**
  * PlaceHolder
  * 	Dubbio, perchè non deve implementare : " implements Extractor" ?
@@ -16,7 +18,8 @@ import java.util.Date;
 public abstract class AbstractDbExtractor  {
 	private String dbName;
 	
-	protected String tableName;
+	private String tableName;
+
 	protected String dbClassName;
 	protected String jdbConnectorOptions;
 	
@@ -100,68 +103,12 @@ public abstract class AbstractDbExtractor  {
 		}
 		
 	}
-  
+
+
 	/*
-	 * Siccome il risultato di una query deve essere un record.
-	 * 
-	 * */
-  	private ResultSet  executeQuery(Connection conn, String sqlCode){		
-		Statement stmt = null;
-		ResultSet rs = null;
-		try {
-		  log.debug(" Query statement = " + sqlCode);	
-		  stmt = conn.createStatement();
-		  rs = stmt.executeQuery( sqlCode );
-
-		  stmt.close();
-
-		} catch ( SQLException e ) {
-			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
-			System.exit(0);
-		} finally {
-			return rs;
-		}
-	}
-
-  	private List<Record>  parseRecord(Connection conn){		
-		ResultSet rs = executeQuery(conn, "SELECT * FROM " + tableName + ";" );
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		List<Record> recordList = new ArrayList<Record>();
-
-		log.debug("ciclo INJ");
-		try {
-			Record record = new Record();
-			while ( rs.next() ) {
-				log.debug("ciclo OUTJ");
-				int id = rs.getInt(fields.get(0));
-				String  name = rs.getString(fields.get(1));
-				Date birthday = formatter.parse(rs.getString(fields.get(2)));
-				double height = Double.parseDouble(rs.getString(fields.get(3)));
-				boolean flag = Boolean.parseBoolean(rs.getString(fields.get(4)));
-         System.out.println( "ID = " + id );
-         System.out.println( "NAME = " + name );
-         System.out.println( "AGE = " + birthday );
-         System.out.println( "height = " + height );
-         System.out.println( "flag = " + flag );
-				
-				/*
-				record.setId(rs.getInt(fields[0]));
-				record.setName(rs.getString(fields[1]));
-				record.setBirthday(formatter.parse(rs.getString(fields[2])));
-				record.setHeight(Double.parseDouble(rs.getString(fields[3])));
-				record.setMarried(Boolean.parseBoolean(rs.getString(fields[4])));
-				recordList.add(record);		*/
-			}
-			rs.close();
-		} catch ( SQLException e ) {
-			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
-			System.exit(0);
-		} finally {
-			return recordList;
-		}
-	}
-
+	 * Check if the table exists in database
 	
+	*/
 	private boolean checkTable(Connection conn){		
 		boolean check = false;
 		try {
@@ -176,6 +123,9 @@ public abstract class AbstractDbExtractor  {
 		}
 	}
 
+	/*
+	 * Retrive the list of column names
+	*/
 	private List<String> parseColumnNames(Connection conn){		
 		log.debug("Retrieving Column Name List");
 		List<String> NamesArray = new ArrayList<String>();
@@ -198,9 +148,48 @@ public abstract class AbstractDbExtractor  {
 		}
 
 	}	
-	
- 
-  
-  
-  
+
+	/*
+	 * Extract a record from the passed ResultSet
+	 * 
+	 * */
+	protected abstract Record  fillRecord(ResultSet rs);
+	 
+	/*
+	 * Return the list of records corresponing to the passed query
+	 */
+  	private List<Record>  executeQuery(Connection conn, String sqlCode){		
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		List<Record> recordList = new ArrayList<Record>();
+
+		log.debug(" Query statement = " + sqlCode);	
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery( sqlCode );
+
+			Record record = new Record();
+			while ( rs.next() ) {
+				recordList.add(fillRecord(rs));
+			}
+			rs.close();
+			stmt.close();
+		} catch ( SQLException e ) {
+			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
+			System.exit(0);
+		} finally {
+			return recordList;
+		}
+	}
+
+	/*
+	 * Retrive The list of records
+	 */
+	private List<Record> parseRecord(Connection conn){
+		return executeQuery ( conn, "SELECT * FROM " + tableName + ";" );	
+	}
+
+
+
 }

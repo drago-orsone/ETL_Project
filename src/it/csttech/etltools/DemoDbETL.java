@@ -41,8 +41,8 @@ public class DemoDbETL {
 		Extractor ex1 = new CsvFileExtractor(csvInFile);
 		Records records = ex1.extract();
 		showRecords(records.getRecords());
-		//Loader load1 = new SqliteLoader("test.db","TEST");		
-		//load1.load(records);
+		Loader load1 = new SqliteLoader("test.db","TEST");		
+		load1.load(records);
 
 		Extractor ex2 = new SqliteExtractor("test.db","TEST");
 		records = ex2.extract();
