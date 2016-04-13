@@ -11,9 +11,8 @@ import org.apache.commons.cli.*;
  * 	
  * </p>
  *
- * @author 
- * @todo. Boh
- *  
+ * @author drago-orsone, MasterToninus
+ *   
  */
 public class UseETL {
 

@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.*;
 
 /**
- * PlaceHolder
+ * @todo. il metodo parse column name non è a prova di errore. Non considera entry tra virgolette come un solo campo e la presenza di ; in un campo rompe la lettura.
  */
 public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor {
 

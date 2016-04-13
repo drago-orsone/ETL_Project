@@ -42,7 +42,7 @@
 	</target>
 
     <target name="compile" depends="init, ivy-retrieve" description="Compile java sources" >
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
     </target>
     
     <target name="jar" depends="compile" description="Create .jar file of the project">
