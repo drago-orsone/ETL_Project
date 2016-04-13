@@ -1,9 +1,9 @@
-<project name="FormattingTools" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" default="main">
+<project name="FormattingTools" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant" default="help">
 	<description>
 		Command line tools to perform several format transformations.
 	</description>
 
-    <property name="main-class"  value="it.csttech.formattingtools.UseChangeFormat"/>
+    <property name="main-class"  value="it.csttech.formattingtools.UseETL"/>
 
     <property name="src.dir"     value="${basedir}/src"/>
     <property name="build.dir"   value="${basedir}/bin"/>
@@ -13,12 +13,6 @@
     <property name="jar.dir"     value="${build.dir}/publish"/>
     <property name="cfg.dir"	 value="${basedir}/config"/>
     <property name="ivy.dep.file" value="${basedir}/dependencies.xml" />
-	
-	<!-- Bypass a warning -->
-	<presetdef name="javac">
-		<javac includeantruntime="false" />
-	</presetdef>
-
 	<property file="build.properties" />
 
 	<!-- Define the ClassPath -->
@@ -47,11 +41,11 @@
 		<mkdir dir="${doc.dir}"/>
 	</target>
 
-    <target name="compile" depends="init, ivy-retrieve" description="Compile java sources">
+    <target name="compile" depends="init, ivy-retrieve" description="Compile java sources" >
         <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
     </target>
     
-    <target name="jar" depends="compile" description="Create .jar file">
+    <target name="jar" depends="compile" description="Create .jar file of the project">
         <mkdir dir="${jar.dir}"/>
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
             <manifest>
@@ -60,18 +54,14 @@
         </jar>
     </target>
 
-    <target name="run" depends="jar" description="Run .jar file of the project">
-        <java fork="true" classname="${main-class}">
-            <classpath>
-                <path refid="classpath"/>
-                <path location="${jar.dir}/${ant.project.name}.jar"/>
-            </classpath>
-        </java>
-    </target>  
+	<target name="help"> 
+		<java classname="org.apache.tools.ant.Main" description="Print ant guide" > 
+			<arg value="-projecthelp" /> 
+		</java> 
+	</target> 
 
-    <target name="main" depends="compile" description="Clean and Compile"/>
-    
-    <target name="doc" depends="init" description="Generate documentation JavaDoc">
+ 
+    <target name="doc" depends="init" description="Generate documentation JavaDoc" >
         <javadoc sourcepath="${src.dir}" destdir="${doc.dir}">
 			<bottom><![CDATA[<i>Copyright &#169; 2016 Dummy Corp. All Rights Reserved.</i>]]></bottom>
 			<!-- Custom tags -->
@@ -92,7 +82,7 @@
 		<ivy:report todir="ivy-report" />
 	</target>
 
-	<target name="ivy-retrieve">
+	<target name="ivy-retrieve" description="Download dependecies." >
 		<ivy:configure override="true" file="${ivy.install.dir}/ivy-settings.xml" />
 		<ivy:retrieve sync="true" conf="*" type="jar,bundle" pattern="${lib.dir}/[artifact]-[revision].[ext]" />
 	</target>

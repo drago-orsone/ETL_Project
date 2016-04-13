@@ -21,6 +21,7 @@ public class UseETL {
     public static final String FW_FORMAT = "fw";
     public static final String XML_FORMAT = "xml";
     public static final String DB_FORMAT = "db";
+    public static final String SYSTEM_FORMAT = "sys";
 
     public static final String IN_FILE_OPT = "i";
     public static final String OUT_FILE_OPT = "o";
@@ -51,7 +52,7 @@ public class UseETL {
 	Extractor extractor = null;
 
 	String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, CSV_FORMAT);
-	String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, FW_FORMAT);
+	String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, SYSTEM_FORMAT);
 	String inputFile = cmdLine.getOptionValue(IN_FILE_OPT, DEFAULT_IN_FILE);
 	String outputFile = cmdLine.getOptionValue(OUT_FILE_OPT, DEFAULT_OUT_FILE);
 	String table = cmdLine.getOptionValue(TABLE_OPT, DEFAULT_TABLE);
@@ -65,6 +66,8 @@ public class UseETL {
                      break;
             case DB_FORMAT: extractor = new SqliteExtractor(inputFile, table);
                      break;
+            case SYSTEM_FORMAT: extractor = new SystemExtractor();
+                     break;
             default: log.error("Invalid input format " + inputFormat + ".");
                      return;
         }
@@ -77,6 +80,8 @@ public class UseETL {
             case XML_FORMAT: loader = new XmlFileLoader(outputFile);
                      break;
             case DB_FORMAT: loader = new SqliteLoader(outputFile, table);
+                     break;
+            case SYSTEM_FORMAT: loader = new SystemLoader();
                      break;
             default: log.error("Invalid output format " + outputFormat + ".");
                      return;

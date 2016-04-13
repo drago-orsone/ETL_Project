@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 
 public class XmlFileLoader extends AbstractFileLoader implements Loader {
 
+	private List<String> fields = new ArrayList<String>();
+
 	public XmlFileLoader(String file){
 		super(file);
 	}
@@ -75,6 +77,5 @@ public class XmlFileLoader extends AbstractFileLoader implements Loader {
 		return builder.toString();
 	}
 
-	private List<String> fields = new ArrayList();
 
 }
