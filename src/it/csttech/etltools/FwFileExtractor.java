@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 /**
  * PlaceHolder
  */
-public class FwFileExtractor extends BaseCsvFwExtractor implements Extractor {
+public class FwFileExtractor extends LineWiseFileExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Extractor.File.LineWise.Fw");
 
 	/*
 	 * Constructor

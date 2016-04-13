@@ -16,7 +16,7 @@ import java.text.ParseException;
  */
 public class SystemExtractor extends AbstractSystemExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Extractor.System");
 	private static final char FIELD_SEPARATOR = ';';
 	private static final char STRING_DELIMETER = '"';	
 

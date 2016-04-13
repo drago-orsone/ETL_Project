@@ -9,11 +9,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.text.ParseException;
 
-public abstract class BaseCsvFwExtractor extends AbstractFileExtractor {
+public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Extractor.File.LineWise");
 
-	public BaseCsvFwExtractor(String file){
+	public LineWiseFileExtractor(String file){
 		super(file);
 	}
 	

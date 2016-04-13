@@ -15,7 +15,7 @@ import java.text.ParseException;
  */
 public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Extractor.Db.Sqlite");
 
 
 	/*

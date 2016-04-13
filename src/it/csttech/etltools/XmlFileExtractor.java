@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class XmlFileExtractor extends AbstractFileExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Extractor.File.Xml");
 
 	/*
 	 * Constructor

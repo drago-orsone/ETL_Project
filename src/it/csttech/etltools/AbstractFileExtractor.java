@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 public abstract class AbstractFileExtractor {
 	
 	private String fileName;
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Extractor.File");
 
 	/*
 	 * Constructor.

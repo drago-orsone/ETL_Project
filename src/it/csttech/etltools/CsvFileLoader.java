@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
 * PlaceHolder
 */
-public class CsvFileLoader extends BaseCsvFwLoader implements Loader {
+public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 
 	private static final char FIELD_SEPARATOR = ';';
 	private static final char STRING_DELIMETER = '"';

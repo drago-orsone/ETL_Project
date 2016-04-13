@@ -21,7 +21,7 @@ public abstract class AbstractDbLoader {
 	protected String jdbConnectorOptions;
 	protected List<String> fields;
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Loader.Db");
 
 	/*
 	 * Constructor
@@ -99,7 +99,7 @@ public abstract class AbstractDbLoader {
 	protected void executeStatement(Connection conn, String sqlCode){		
 		Statement stmt = null;
 		try {
-		  log.debug(" Query statement = " + sqlCode);	
+		  log.trace("Query statement = " + sqlCode);	
 		  stmt = conn.createStatement();
 		  stmt.executeUpdate(sqlCode);
 		  stmt.close();

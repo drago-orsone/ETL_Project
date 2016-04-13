@@ -11,7 +11,7 @@ import java.util.*;
  */
 public abstract class AbstractSystemLoader {
 
-	static final Logger log = LogManager.getLogger();
+	static final Logger log = LogManager.getLogger("Loader.System");
 
 	public void load(Records records){
 		System.out.println(buildLine(records.getColumnNames()));

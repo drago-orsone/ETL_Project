@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class SqliteLoader extends AbstractDbLoader implements Loader {
 
+	private static final Logger log = LogManager.getLogger("Loader.Db.Sqlite");
 
 	/*
 	 * Constructor
@@ -51,7 +52,10 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 			 * 			City varchar(255)
 			 * 		);
 			 */		
-		//caricalo con execute Statemen		
+		//caricalo con execute Statemen
+			log.debug("Creating Table : " + tableName + " : | " + fields.get(0) + 
+						" | " + fields.get(1) + " | " + fields.get(2) + 
+						" | " + fields.get(3) + " | " + fields.get(4) +" |" );
 			executeStatement(conn, sqlCode.toString());
 	}
 
@@ -69,11 +73,12 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 			sqlCode.append( " ) VALUES ");		
 				
 			for(Record record : records.getRecords()){
-				sqlCode.append("( " + record.getId() + " , ");
+					sqlCode.append("( " + record.getId() + " , ");
 					sqlCode.append("'" + record.getName() + "'" + " , ");
 					sqlCode.append("'" + (formatter.format(record.getBirthday())).toString() + "'" + " , ");
 					sqlCode.append("'" + record.getHeight() + "'" + " , ");
 					sqlCode.append("'" + record.isMarried() + "'" + " ),");					
+					log.debug("Insert Query : "  + "...");		
 			}
 			
 			sqlCode.deleteCharAt(sqlCode.length()-1);

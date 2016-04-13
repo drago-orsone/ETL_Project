@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
  */
 public abstract class AbstractSystemExtractor {
 
-	static final Logger log = LogManager.getLogger();
+	static final Logger log = LogManager.getLogger("Extractor.System");
 
 	public Records extract(){
 		Records records = new Records();

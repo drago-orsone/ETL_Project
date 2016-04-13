@@ -9,3 +9,8 @@ TODO:
 [ ] Fare le documentazioni
 [ ] Creare un main giusto con le opzioni
 [ ] build che spari fuori l'help
+
+
+PROPOSTE:
+[ ] La classe record forse era meglio evitarla. Gli attributi che contengono il nome delle colonne potevano essere salvati come attributi statici della classe record (perchè non propri della singola istanza ma della classe)
+[ ] 

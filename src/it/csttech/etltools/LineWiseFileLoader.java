@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 
-public abstract class BaseCsvFwLoader extends AbstractFileLoader {
+public abstract class LineWiseFileLoader extends AbstractFileLoader {
 
-	public BaseCsvFwLoader(String file){
+	public LineWiseFileLoader(String file){
 		super(file);
 	}
 

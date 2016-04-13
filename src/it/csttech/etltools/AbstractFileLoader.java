@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 public abstract class AbstractFileLoader {
 	
 	private String outputFile;
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Loader.File");
 
 	/*
 	 * Abstract method to be specified in the children classes.

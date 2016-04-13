@@ -6,7 +6,7 @@ import java.util.List;
  * PlaceHolder
  */
 
-public class FwFileLoader extends BaseCsvFwLoader implements Loader {
+public class FwFileLoader extends LineWiseFileLoader implements Loader {
 
 	public FwFileLoader(String file){
 		super(file);

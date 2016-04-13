@@ -25,7 +25,7 @@ public abstract class AbstractDbExtractor  {
 	
 	protected List<String> fields;
 
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger log = LogManager.getLogger("Extractor.Db");
 
 
 	public AbstractDbExtractor(String dbName, String tableName){
