@@ -2,13 +2,13 @@
 <Configuration status="INFO">
 	<Appenders>
 		<Console name="STDOUT" target="SYSTEM_OUT" >
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<PatternLayout pattern="%d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
 		</Console>
 		<File name="ExtractorFile" fileName="log/extractor.log">
-			<PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<PatternLayout pattern="%d{dd/MM/yy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</File>
 		<File name="LoaderFile" fileName="log/loader.log">
-			<PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<PatternLayout pattern="%d{dd/MM/yy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</File>
 	</Appenders>
 	<Loggers>
@@ -19,7 +19,7 @@
 			 <AppenderRef ref="LoaderFile" />
 		</Logger>
 		<Root level="WARN">
-			<AppenderRef ref="STDOUT" />
+			<AppenderRef ref="STDOUT" level="WARN" />
 		</Root>
 	</Loggers>
 </Configuration>

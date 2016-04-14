@@ -75,7 +75,7 @@ public abstract class AbstractDbLoader {
 					return;
 				}
 			}else{
-				log.warn( tableName + " not found. creating table.");	
+				log.warn( tableName + "Table not found. Creating " + tableName);	
 				createTable(conn, records);
 			}
 
@@ -158,23 +158,22 @@ public abstract class AbstractDbLoader {
 	private boolean checkColumnNames(Connection conn){
 		boolean check = false;		
 		try {
-			DatabaseMetaData metadata = conn.getMetaData();
-			ResultSet resultSet = metadata.getColumns(null, null, tableName, null);
+			ResultSet resultSet = conn.getMetaData().getColumns(null, null, tableName, null);
 			int i = 0;
-			if( resultSet.getMetaData().getColumnCount() == fields.size())
-				while (resultSet.next()) {
+				while (resultSet.next() && i<fields.size() ) {
 					if( Objects.equals(resultSet.getString("COLUMN_NAME"),fields.get(i))){
 						check = true;
 						i++;
 					}
 					else{
-						log.error("Non corresponding column name. " + resultSet.getString("COLUMN_NAME") + " =/= " + fields.get(i));
-						check = false;
-						break;
+						log.error("Column names do not match. " + resultSet.getString("COLUMN_NAME") + " =/= " + fields.get(i));
+						return false;
 					}
 				}
-			else
-				log.error("Non corresponding columns number.");
+			if( resultSet.next() || i<fields.size()){
+				check = false;
+				log.error("Column number do not match.");
+			}
 		} catch ( SQLException e ) {
 			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
