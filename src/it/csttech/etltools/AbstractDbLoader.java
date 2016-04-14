@@ -4,16 +4,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.io.*;
-import java.util.*;
-
+import java.io.File;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Load a container of record in a unspecified SQL database.
  * 
  * @author drago-orsone, MasterToninus
  * @since mm-dd-yyyy
- * @see <a href="http://stackoverflow.com/questions/1609637/is-it-possible-to-insert-multiple-rows-at-a-time-in-an-sqlite-database">how to add multiple rows in single query <\a>
  * @todo. Uso troppi attributi.
  * 	dbclassname e jdbConnectorOption potrebbero essere statici perchè sono propri della classe e non dell'istanza. 
  *  potrebbero anche essere final e overloadati dai figli a seconda di sqlite e mysql
@@ -21,6 +20,9 @@ import java.util.*;
  * 
  */
 public abstract class AbstractDbLoader {
+
+	private static final Logger log = LogManager.getLogger("Loader.Db");
+
 	private String dbName;
 	
 	/** Name of the target table in the database. */
@@ -32,7 +34,7 @@ public abstract class AbstractDbLoader {
 	/** UGLY list of column names, for the sake of convenience. */	
 	protected List<String> fields;
 
-	private static final Logger log = LogManager.getLogger("Loader.Db");
+
 
 	/*
 	 * Constructor
@@ -140,7 +142,11 @@ public abstract class AbstractDbLoader {
 	 */
 	protected abstract void addRows(Connection conn, Records records);
 
-	
+	/*
+	 * Check if the table already exist in the connected database. 
+	 * 
+	 * @param conn JDBC connection
+	 */
 	private boolean checkTable(Connection conn){		
 		boolean check = false;
 		try {
@@ -155,6 +161,11 @@ public abstract class AbstractDbLoader {
 		}
 	}
 
+	/*
+	 * Check if columns names match with the fields format.
+	 * 
+	 * @param conn JDBC connection
+	 */
 	private boolean checkColumnNames(Connection conn){
 		boolean check = false;		
 		try {

@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.sql.SQLException;
 
 import java.io.File;
 import java.util.List;
@@ -12,22 +11,30 @@ import java.util.ArrayList;
 
 
 /**
- * PlaceHolder
+ * Extract all the record from a SQL database
  * 	Dubbio, perchè non deve implementare : " implements Extractor" ?
  */
 public abstract class AbstractDbExtractor  {
+	
+	private static final Logger log = LogManager.getLogger("Extractor.Db");
+	
 	private String dbName;
 	
-	private String tableName;
-
+	/** Name of the target table in the database. */
+	protected String tableName;
+	/** Name of the JDBC connector class name. */
 	protected String dbClassName;
+	/** JDBC option correspoding to the database format. */	
 	protected String jdbConnectorOptions;
-	
+	/** UGLY list of column names, for the sake of convenience. */	
 	protected List<String> fields;
 
-	private static final Logger log = LogManager.getLogger("Extractor.Db");
 
-
+	/*
+	 * Constructor
+	 * @param dbName name of the target database
+	 * @param tableName name of the target table in the considered database
+	*/   
 	public AbstractDbExtractor(String dbName, String tableName){
 		this.dbName = dbName ;
 		this.tableName = tableName ;
@@ -35,8 +42,7 @@ public abstract class AbstractDbExtractor  {
 
 
   /*
-   * PlaceHolder 
-   * 
+   * Return a container of all the records contained  in the corresponding database and table.
    */
   public Records extract(){
 
@@ -55,8 +61,7 @@ public abstract class AbstractDbExtractor  {
 				log.error("Database not found. ABORT ");
 				System.exit(0);
             }
-            
-            
+                      
   			log.debug("Requesting Connection to drive manager : " + dbName);
 			conn = DriverManager.getConnection(jdbConnectorOptions + dbName);     //throws SQLException     
    
@@ -65,11 +70,8 @@ public abstract class AbstractDbExtractor  {
 				log.debug("Table found.");
 			}else{
 				log.error( tableName + " not found. EXTRACTION ABORTED.");	
-				System.exit(0);
+				return null;
 			}
-
-
-
 
             //--------------------------------------------------
 			log.debug("Executing Query to db");
@@ -106,9 +108,10 @@ public abstract class AbstractDbExtractor  {
 
 
 	/*
-	 * Check if the table exists in database
-	
-	*/
+	 * Check if the table already exist in the connected database. 
+	 * 
+	 * @param conn JDBC connection
+	 */
 	private boolean checkTable(Connection conn){		
 		boolean check = false;
 		try {

@@ -44,10 +44,11 @@ public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 			record.setHeight(Double.parseDouble(rs.getString(fields.get(3))));
 			record.setMarried(Boolean.parseBoolean(rs.getString(fields.get(4))));
 		} catch ( SQLException e ) {
-			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
-			System.exit(0);
+			log.error("Cannot extract record. Exception: " + e.getClass().getName() + ": " + e.getMessage() );
+			return null;
 		} catch ( ParseException e ) {
-			log.error( e.getClass().getName() + ": " + e.getMessage());
+			log.error("Cannot Recognized data format. Exception: " + e.getClass().getName() + ": " + e.getMessage());
+			return null;
 		} finally {
 			return record;
 		}

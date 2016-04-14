@@ -5,12 +5,16 @@ import org.apache.logging.log4j.Logger;
 
 import java.text.SimpleDateFormat;
 
-import java.sql.*;
-import java.io.*;
-import java.util.*;
+import java.sql.Connection;
+
 
 /**
- * PlaceHolder
+ * Load a container of record in a SQLite database.
+ * 
+ * @author drago-orsone, MasterToninus
+ * @since mm-dd-yyyy
+ * @see <a href="http://stackoverflow.com/questions/1609637/is-it-possible-to-insert-multiple-rows-at-a-time-in-an-sqlite-database">how to add multiple rows in single query <\a>
+ * 
  */
 public class SqliteLoader extends AbstractDbLoader implements Loader {
 
@@ -18,6 +22,7 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 
 	/*
 	 * Constructor
+	 * Load attribute specific to Sqlite 
 	 */
 	public SqliteLoader(String dbName, String tableName){
 		super(dbName,tableName);
@@ -27,36 +32,26 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 
 
 	/*
-	 *	Seguendo il design del progetto il tipo di ogni campo e fissato da come è fatto il javabeans!
-	 * 	quindi il tipo lo so 
+	 *	Execute a Create table statement according to the record format hardcoded in the javabean class "Record".
+	 *  It depends from the structure of the javabean Record and from the sql dialect.
 	 * 
+	 * @see it.csttech.etltools.Record
 	 */
 	@Override	 
 	protected void createTable(Connection conn, Records records){
-		//Leggi Records ed estrai nomi colonne e tipo
-		
-		//assembla un codice sql 
-			StringBuilder sqlCode = new StringBuilder("CREATE TABLE  IF NOT EXISTS " + tableName + "( " );
-			sqlCode.append(fields.get(0) + " INTEGER PRIMARY KEY     NOT NULL, ");
-			sqlCode.append(fields.get(1) + " TEXT NOT NULL, ");
-			sqlCode.append(fields.get(2) + " DATETIME , ");
-			sqlCode.append(fields.get(3) + " REAL , ");
-			sqlCode.append(fields.get(4) + " BOOLEAN ) ");				
-			/*
-			 *      CREATE TABLE Persons
-			 * 		(
-			 * 			PersonID int,
-			 * 			LastName varchar(255),
-			 * 			FirstName varchar(255),
-			 * 			Address varchar(255),
-			 * 			City varchar(255)
-			 * 		);
-			 */		
-		//caricalo con execute Statemen
-			log.debug("Creating Table : " + tableName + " : | " + fields.get(0) + 
-						" | " + fields.get(1) + " | " + fields.get(2) + 
-						" | " + fields.get(3) + " | " + fields.get(4) +" |" );
-			executeStatement(conn, sqlCode.toString());
+		//Assembly the sqlite code 
+		StringBuilder sqlCode = new StringBuilder("CREATE TABLE  IF NOT EXISTS " + tableName + "( " );
+		sqlCode.append(fields.get(0) + " INTEGER PRIMARY KEY     NOT NULL, ");
+		sqlCode.append(fields.get(1) + " TEXT NOT NULL, ");
+		sqlCode.append(fields.get(2) + " DATETIME , ");
+		sqlCode.append(fields.get(3) + " REAL , ");
+		sqlCode.append(fields.get(4) + " BOOLEAN ) ");				
+	
+		log.debug("Creating Table : " + tableName + " : | " + fields.get(0) + 
+					" | " + fields.get(1) + " | " + fields.get(2) + 
+					" | " + fields.get(3) + " | " + fields.get(4) +" |" );
+		//Execute the query
+		executeStatement(conn, sqlCode.toString());
 	}
 
 
@@ -65,44 +60,37 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 	 *	Execute a bulk addRow statement.
 	 *  It depends from the structure of the javabean Record and from the sql dialect.
 	 * 
+	 * @param conn JDBC connection
+	 * @param records container of records to be loaded.
 	 * @todo. l'interfaccia resultset può essere usata per fare il load elegante. (metodi update)
 	 * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/sql/ResultSet.html">JavaDoc<\a>
-	 * 
 	 */
 	@Override
 	protected void addRows(Connection conn, Records records){
-		//Leggi Records ed estrai nomi colonne e tipo
-		//assembla un codice sql 
-			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		//Assembly the sqlite code 
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-			StringBuilder sqlCode = new StringBuilder("INSERT INTO " + tableName + " ( " );
-			for(String Name : fields)
-				sqlCode.append( " " + Name + " ,");
+		StringBuilder sqlCode = new StringBuilder("INSERT INTO " + tableName + " ( " );
+		for(String Name : fields)
+			sqlCode.append( " " + Name + " ,");
 				
-			sqlCode.deleteCharAt(sqlCode.length()-1);
-			sqlCode.append( " ) VALUES ");		
+		sqlCode.deleteCharAt(sqlCode.length()-1);
+		sqlCode.append( " ) VALUES ");		
 				
-			for(Record record : records.getRecords()){
-					sqlCode.append("( " + record.getId() + " , ");
-					sqlCode.append("'" + record.getName() + "'" + " , ");
-					sqlCode.append("'" + (formatter.format(record.getBirthday())).toString() + "'" + " , ");
-					sqlCode.append("'" + record.getHeight() + "'" + " , ");
-					sqlCode.append("'" + record.isMarried() + "'" + " ),");					
-					log.debug("Insert Query : "  + "...");		
-			}
+		for(Record record : records.getRecords()){
+			sqlCode.append("( " + record.getId() + " , ");
+			sqlCode.append("'" + record.getName() + "'" + " , ");
+			sqlCode.append("'" + (formatter.format(record.getBirthday())).toString() + "'" + " , ");
+			sqlCode.append("'" + record.getHeight() + "'" + " , ");
+			sqlCode.append("'" + record.isMarried() + "'" + " ),");					
+			log.debug("Insert Query : "  + "...");		
+		}
 			
-			sqlCode.deleteCharAt(sqlCode.length()-1);
-			sqlCode.append( " ; ");	
+		sqlCode.deleteCharAt(sqlCode.length()-1);
+		sqlCode.append( " ; ");	
 			
-			/*
-			 *      INSERT INTO 'tablename' ('column1', 'column2') VALUES
-			 * 		('data1', 'data2'),
-			 * 		('data1', 'data2'),
-			 * 		('data1', 'data2'),
-			 * 		('data1', 'data2');
-			 */		
-		//caricalo con execute Statemen		
-			executeStatement(conn, sqlCode.toString());		
+		//Execute the query	
+		executeStatement(conn, sqlCode.toString());		
 	}
 	
 
