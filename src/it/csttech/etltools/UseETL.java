@@ -155,7 +155,7 @@ public class UseETL {
 
      		if (cmdLine.hasOption("help")) {
      		    	HelpFormatter formatter = new HelpFormatter();
-     		    	formatter.printHelp("Change Format", options);
+     		    	formatter.printHelp("Change Format (db, csv, fw, xml, sys)", options);
 			cmdLine = null;
      		}
 

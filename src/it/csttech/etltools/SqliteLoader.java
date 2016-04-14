@@ -59,6 +59,16 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 			executeStatement(conn, sqlCode.toString());
 	}
 
+
+
+	/*
+	 *	Execute a bulk addRow statement.
+	 *  It depends from the structure of the javabean Record and from the sql dialect.
+	 * 
+	 * @todo. l'interfaccia resultset può essere usata per fare il load elegante. (metodi update)
+	 * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/sql/ResultSet.html">JavaDoc<\a>
+	 * 
+	 */
 	@Override
 	protected void addRows(Connection conn, Records records){
 		//Leggi Records ed estrai nomi colonne e tipo

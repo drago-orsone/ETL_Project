@@ -129,9 +129,14 @@ public abstract class AbstractDbLoader {
 	 *  It depends from the structure of the javabean Record and from the sql dialect.
 	 */
 	protected abstract void createTable(Connection conn, Records records);
+
 	/*
 	 *	Execute a bulk addRow statement.
 	 *  It depends from the structure of the javabean Record and from the sql dialect.
+	 * 
+	 * @todo. l'interfaccia resultset può essere usata per fare il load elegante. (metodi update)
+	 * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/sql/ResultSet.html">JavaDoc<\a>
+	 * 
 	 */
 	protected abstract void addRows(Connection conn, Records records);
 
