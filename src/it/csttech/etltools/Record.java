@@ -2,6 +2,18 @@ package it.csttech.etltools;
 
 import java.util.Date;
 
+/**
+ * Javabean record.
+ * 
+ * 
+ * @author drago-orsone, MasterToninus
+ * @since mm-dd-yyyy
+ * @see <a href="https://en.wikipedia.org/wiki/JavaBeans"> JavaBeans <\a>
+ *  bisogna indicare anche la "versione"
+ *  metodo to string va overloadato! se no usa quello di object (ogni obj può essere messo tostring)
+ *  metodo equals (object ha il suo che verifica il numero di istanza)
+ *  metodo clone (return record)
+ */
 public class Record implements java.io.Serializable {
 
 	private int id;

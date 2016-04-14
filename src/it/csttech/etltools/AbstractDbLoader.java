@@ -77,7 +77,7 @@ public abstract class AbstractDbLoader {
 					return;
 				}
 			}else{
-				log.warn( tableName + "Table not found. Creating " + tableName);	
+				log.warn( "Table not found. Creating " + tableName);	
 				createTable(conn, records);
 			}
 

@@ -14,7 +14,7 @@ public class FwFileLoader extends LineWiseFileLoader implements Loader {
 
   	/*
    	* PlaceHolder 
-   	* 
+   	*  Meglio usare string.format()
    	*/
 	@Override
   	protected String parseColumnNames(List<String> columnNames){

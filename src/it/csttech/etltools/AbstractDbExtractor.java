@@ -31,7 +31,7 @@ public abstract class AbstractDbExtractor  {
 
 
 	/*
-	 * Constructor
+	 * Class Constructor specyfing database name e table name.
 	 * @param dbName name of the target database
 	 * @param tableName name of the target table in the considered database
 	*/   
@@ -43,6 +43,8 @@ public abstract class AbstractDbExtractor  {
 
   /*
    * Return a container of all the records contained  in the corresponding database and table.
+   * 
+   * @return Container of records.
    */
   public Records extract(){
 
@@ -111,6 +113,7 @@ public abstract class AbstractDbExtractor  {
 	 * Check if the table already exist in the connected database. 
 	 * 
 	 * @param conn JDBC connection
+	 * @return true if the table exists in the database
 	 */
 	private boolean checkTable(Connection conn){		
 		boolean check = false;
@@ -127,7 +130,9 @@ public abstract class AbstractDbExtractor  {
 	}
 
 	/*
-	 * Retrive the list of column names
+	 * Retrive the list of column names.
+	 * @param conn JDBC connection
+	 * @return List of string containing all the column names.
 	*/
 	private List<String> parseColumnNames(Connection conn){		
 		log.debug("Retrieving Column Name List");
@@ -153,13 +158,18 @@ public abstract class AbstractDbExtractor  {
 	}	
 
 	/*
-	 * Extract a record from the passed ResultSet
+	 * Extract the first record from the passed ResultSet
 	 * 
+	 * @param rs Result set of a query.
+	 * @return record
 	 * */
 	protected abstract Record  fillRecord(ResultSet rs);
 	 
 	/*
 	 * Return the list of records corresponing to the passed query
+	 * @param conn JDB connection.
+	 * @param sqlCode string containg an sql query code.
+	 * @return List record extracted from the query.
 	 */
   	private List<Record>  executeQuery(Connection conn, String sqlCode){		
 		Statement stmt = null;
@@ -187,7 +197,10 @@ public abstract class AbstractDbExtractor  {
 	}
 
 	/*
-	 * Retrive The list of records
+	 * Wrapper method executing the Select * query
+	 * @param conn JDB connection.
+	 * 
+	 * @return List record extracted from the query.
 	 */
 	private List<Record> parseRecord(Connection conn){
 		return executeQuery ( conn, "SELECT * FROM " + tableName + ";" );	

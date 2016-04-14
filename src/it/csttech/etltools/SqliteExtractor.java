@@ -19,8 +19,10 @@ public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 
 
 	/*
-	 * Constructor
-	 */
+	 * Class Constructor specyfing database name e table name.
+	 * @param dbName name of the target database
+	 * @param tableName name of the target table in the considered database
+	*/   
 	public SqliteExtractor(String dbName, String tableName){
 		super(dbName,tableName);
 		this.dbClassName = "org.sqlite.JDBC";
@@ -28,8 +30,10 @@ public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 	}
 
 	/*
+	 * Extract the first record from the passed ResultSet
 	 * 
-	 * 
+	 * @param rs Result set of a query.
+	 * @return record
 	 * */
 	@Override
 	protected Record  fillRecord(ResultSet rs) {		

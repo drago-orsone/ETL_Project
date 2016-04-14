@@ -46,6 +46,7 @@ public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 
 		}catch(ParseException pe){
 			log.error("Parsing not succeded.");
+			record = null;
 		}finally{
 			return record;
 		}
