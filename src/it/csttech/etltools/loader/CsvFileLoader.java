@@ -39,7 +39,7 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 
 	@Override
   	protected String buildLine(Record record){
-		return String.format(Locale.ENGLISH, "%d%c%s%c%td/%tm/%tY%c%f%c%s", 
+		return String.format(Locale.US, "%d%c%s%c%td/%tm/%tY%c%f%c%s", 
 					record.getId(),  FIELD_SEPARATOR, 
 					record.getName(),  FIELD_SEPARATOR, 
 					record.getBirthday(), record.getBirthday(), record.getBirthday(),  FIELD_SEPARATOR,

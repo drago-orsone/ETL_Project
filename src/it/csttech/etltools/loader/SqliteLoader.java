@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.text.SimpleDateFormat;
-
+import java.util.Locale;
 import java.sql.Connection;
 
 
@@ -72,7 +72,6 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 	@Override
 	protected void addRows(Connection conn, Records records){
 		//Assembly the sqlite code 
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 		StringBuilder sqlCode = new StringBuilder("INSERT INTO " + tableName + " ( " );
 		for(String Name : fields)
@@ -81,26 +80,20 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 		sqlCode.deleteCharAt(sqlCode.length()-1);
 		sqlCode.append( " ) VALUES ");		
 
-		for(Record record : records.getRecords()){
-		StringBuilder buffer = new StringBuilder(sqlCode.toString());
-			buffer.append("( " + record.getId() + " , ");
-			buffer.append("'" + record.getName() + "'" + " , ");
-			buffer.append("'" + (formatter.format(record.getBirthday())).toString() + "'" + " , ");
-			buffer.append("'" + record.getHeight() + "'" + " , ");
-			buffer.append("'" + record.isMarried() + "'" + " );");					
-			log.debug("Insert Query : ID ="  + record.getId());
-					executeStatement(conn, buffer.toString());		
-
-		}
-
-/*				***TEMP*** OLD VERSION
-		for(Record record : records.getRecords()){
-			sqlCode.append("( " + record.getId() + " , ");
-			sqlCode.append("'" + record.getName() + "'" + " , ");
-			sqlCode.append("'" + (formatter.format(record.getBirthday())).toString() + "'" + " , ");
-			sqlCode.append("'" + record.getHeight() + "'" + " , ");
-			sqlCode.append("'" + record.isMarried() + "'" + " ),");					
-			log.debug("Insert Query : "  + "...");		
+		//Bulk Insert query
+		for(Record record : records.getRecords()){ //for each non è null safe
+			if(record != null){
+				String buffer = String.format(Locale.US,"( '%1$d' , '%2$s' , '%3$td/%3$tm/%3$tY' , %4$f , '%5$s' ),", 
+												record.getId(),
+												record.getName(),
+												record.getBirthday(),
+												record.getHeight(),
+												record.isMarried());
+				
+				sqlCode.append(buffer);
+				log.debug("Insert Query : "  + buffer);	
+			}
+			else log.warn("Null Record !");  	
 		}
 			
 		sqlCode.deleteCharAt(sqlCode.length()-1);
@@ -108,7 +101,7 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 			
 		//Execute the query	
 		executeStatement(conn, sqlCode.toString());		
-*/
+
 	}
 	
 

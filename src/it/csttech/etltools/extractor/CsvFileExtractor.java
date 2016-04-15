@@ -17,7 +17,8 @@ public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor
 	private static final Logger log = LogManager.getLogger(CsvFileExtractor.class.getName());
 
 	private static final char FIELD_SEPARATOR = ';';
-	private static final char STRING_DELIMETER = '"';	
+//	private static final char STRING_DELIMETER = '"';	//Mistero, con questo char si nota che tutti i 127 vengono riconosciuti come dei token dalla funzione split
+	private static final String STRING_DELIMETER = "\"";	
 
 
 	/*
@@ -36,11 +37,14 @@ public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor
 	 */
 	@Override
 	protected List<String> parseColumnNames(String inputLine){
-			return Arrays.asList(
-						inputLine.split(	STRING_DELIMETER + FIELD_SEPARATOR + STRING_DELIMETER + "|" + 
+			log.trace("*Parsing* " + inputLine);
+			List<String> entryList = Arrays.asList(
+										inputLine.split(	STRING_DELIMETER + FIELD_SEPARATOR + STRING_DELIMETER + "|" + 
 											STRING_DELIMETER + FIELD_SEPARATOR + "|" + 
 											FIELD_SEPARATOR + STRING_DELIMETER + "|" + 
 											FIELD_SEPARATOR + "|" + 
 											STRING_DELIMETER));
+			log.trace("*  in   * " + entryList);
+			return entryList ;
 	}
 }
