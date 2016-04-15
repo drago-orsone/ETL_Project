@@ -3,11 +3,6 @@ package it.csttech.etltools.loader;
 import it.csttech.etltools.Loader;
 import it.csttech.etltools.Record;
 
-
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Arrays;
 
@@ -16,8 +11,6 @@ import java.util.Arrays;
  */
 public class SystemLoader extends AbstractSystemLoader implements Loader {
 
-	static SimpleDateFormat sdformat = new SimpleDateFormat("dd/MM/yyyy");
-
 	/*
 	 *	Seguendo il design del progetto il tipo di ogni campo e fissato da come è fatto il javabeans!
 	 * 	quindi il tipo lo so 
@@ -25,7 +18,7 @@ public class SystemLoader extends AbstractSystemLoader implements Loader {
 	 */
 	@Override	 
 	protected String buildLine(Record record){
-		return String.format( "| %5d | %-25s | %td/%tm/%ty | %6.2f | %7s |", 
+		return String.format( "| %5d | %-25s | %td/%tm/%tY | %6.2f | %7s |", 
 					record.getId(), 
 					record.getName(), 
 					record.getBirthday(), record.getBirthday(), record.getBirthday(),
@@ -35,10 +28,10 @@ public class SystemLoader extends AbstractSystemLoader implements Loader {
 	
 	@Override
 	protected String buildTitle(List<String> columnNames){
-		final char[] array = new char[59];
+		final char[] array = new char[69];
 		Arrays.fill(array, '-');
 		array[0]='+';
-		array[58]='+';
+		array[68]='+';
 		String sep = new String(array);
 
 		return String.format("%s%n| %5s | %-25s | %10s | %6s | %7s |%n%s",
