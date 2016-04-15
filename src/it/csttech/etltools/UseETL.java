@@ -47,110 +47,87 @@ public class UseETL {
     */
     public static void main(String[] args) {
 
-	CommandLine cmdLine = manageOption(args);
-	if (cmdLine == null) {
-		return;
-	}
+		CommandLine cmdLine = manageOption(args);
+		if (cmdLine == null)
+			return;
 
-	Loader loader = null;
-	Extractor extractor = null;
+		String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, CSV_FORMAT);
+		String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, SYSTEM_FORMAT);
+		String inputFile = cmdLine.getOptionValue(IN_FILE_OPT, DEFAULT_IN_FILE);
+		String outputFile = cmdLine.getOptionValue(OUT_FILE_OPT, DEFAULT_OUT_FILE);
+		String table = cmdLine.getOptionValue(TABLE_OPT, DEFAULT_TABLE);
 
-	String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, CSV_FORMAT);
-	String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, SYSTEM_FORMAT);
-	String inputFile = cmdLine.getOptionValue(IN_FILE_OPT, DEFAULT_IN_FILE);
-	String outputFile = cmdLine.getOptionValue(OUT_FILE_OPT, DEFAULT_OUT_FILE);
-	String table = cmdLine.getOptionValue(TABLE_OPT, DEFAULT_TABLE);
+		ExtractorFactory extractorFactory = new ExtractorFactory(inputFile, table);
+		Extractor extractor = extractorFactory.getExtractor(inputFormat);
+		if( extractor == null )
+			log.error("Invalid input format " + inputFormat + ".");
+		
+		LoaderFactory loaderFactory = new LoaderFactory(inputFile, table);
+		Loader loader = loaderFactory.getLoader(outputFormat);
+		if( loader == null )
+			log.error("Invalid output format " + outputFormat + ".");
 
-	switch (inputFormat) {
-            case CSV_FORMAT: extractor = new CsvFileExtractor(inputFile);
-                     break;
-            case FW_FORMAT: extractor = new FwFileExtractor(inputFile);
-                     break;
-            case XML_FORMAT: extractor = new XmlFileExtractor(inputFile);
-                     break;
-            case DB_FORMAT: extractor = new SqliteExtractor(inputFile, table);
-                     break;
-            case SYSTEM_FORMAT: extractor = new SystemExtractor();
-                     break;
-            default: log.error("Invalid input format " + inputFormat + ".");
-                     return;
-        }
-	
-	switch (outputFormat) {
-            case CSV_FORMAT: loader = new CsvFileLoader(outputFile);
-                     break;
-            case FW_FORMAT: loader = new FwFileLoader(outputFile);
-                     break;
-            case XML_FORMAT: loader = new XmlFileLoader(outputFile);
-                     break;
-            case DB_FORMAT: loader = new SqliteLoader(outputFile, table);
-                     break;
-            case SYSTEM_FORMAT: loader = new SystemLoader();
-                     break;
-            default: log.error("Invalid output format " + outputFormat + ".");
-                     return;
-        }
-
-	if(loader != null && extractor != null)
-		loader.load(extractor.extract());
+		if(loader != null && extractor != null)
+			loader.load(extractor.extract());
+		
     }
 
     public static CommandLine manageOption(String[] args) {
 
-	Option helpOption = Option.builder(HELP_OPT)
-                          .longOpt("help")
-			  .hasArg(false)
-                          .required(false)
-                          .desc("print guide")
-                          .build();
+		Option helpOption = Option.builder(HELP_OPT)
+								.longOpt("help")
+								.hasArg(false)
+								.required(false)
+								.desc("print guide")
+								.build();
 
-     	Option inFileOption = Option.builder(IN_FILE_OPT)
-			  .argName("input file")
-                          .longOpt("inputFile")
-                          .required(false)
-			  .numberOfArgs(1)
-                          .desc("input file")
-                          .build();
+		Option inFileOption = Option.builder(IN_FILE_OPT)
+								.argName("input file")
+								.longOpt("inputFile")
+								.required(false)
+								.numberOfArgs(1)
+								.desc("input file")
+								.build();
 
      	Option outFileOption = Option.builder(OUT_FILE_OPT)
-			 .argName("output file")
-                         .longOpt("outputFile")
-                         .numberOfArgs(1)
-                         .required(false)
-                         .desc("output file")
-                         .build();
+								.argName("output file")
+								.longOpt("outputFile")
+								.numberOfArgs(1)
+								.required(false)
+								.desc("output file")
+								.build();
 
      	Option inFormatOption = Option.builder(IN_FORMAT_OPT)
-			  .argName("input format")
-                          .longOpt("inputFormat")
-                          .required(false)
-			  .numberOfArgs(1)
-                          .desc("input file format")
-                          .build();
+								.argName("input format")
+								.longOpt("inputFormat")
+								.required(false)
+								.numberOfArgs(1)
+								.desc("input file format")
+								.build();
 
     	Option outFormatOption = Option.builder(OUT_FORMAT_OPT)
-			 .argName("output format")
-                         .longOpt("outputFormat")
-                         .numberOfArgs(1)
-                         .required(false)
-                         .desc("output file format")
-                         .build();
+								.argName("output format")
+								.longOpt("outputFormat")
+								.numberOfArgs(1)
+								.required(false)
+								.desc("output file format")
+								.build();
 
     	Option tableOption = Option.builder(TABLE_OPT)
-			 .argName("database table")
-                         .longOpt("table")
-                         .numberOfArgs(1)
-                         .required(false)
-                         .desc("database table")
-                         .build();
+								.argName("database table")
+								.longOpt("table")
+								.numberOfArgs(1)
+								.required(false)
+								.desc("database table")
+								.build();
 
      	Options options = new Options();
     	options.addOption(helpOption);
-   	options.addOption(inFileOption);
+		options.addOption(inFileOption);
      	options.addOption(outFileOption);
      	options.addOption(inFormatOption);
      	options.addOption(outFormatOption);
-	options.addOption(tableOption);
+		options.addOption(tableOption);
 
      	CommandLine cmdLine = null;
 
@@ -167,9 +144,9 @@ public class UseETL {
      	}catch( ParseException pe ){
 		log.error("Invalid option(s).");
 		cmdLine = null;
-	}finally{
-     		return cmdLine;
-     	}
+		}finally{
+				return cmdLine;
+		}
 
     }
 }

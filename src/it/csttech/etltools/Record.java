@@ -5,16 +5,21 @@ import java.util.Date;
 /**
  * Javabean record.
  * 
+ * <p>
+ *  Finezze da ricordare:
+ * 		implementare il serializable
+ * 		numero versione della serializable
+ * 		ricordare che come ogni classe il javabean estende object. bisogna dunque overridare toString, equals e clone (altrimenti usano quello del parent).
+ * <\p>
  * 
  * @author drago-orsone, MasterToninus
  * @since mm-dd-yyyy
- * @see <a href="https://en.wikipedia.org/wiki/JavaBeans"> JavaBeans <\a>
- *  bisogna indicare anche la "versione"
- *  metodo to string va overloadato! se no usa quello di object (ogni obj può essere messo tostring)
- *  metodo equals (object ha il suo che verifica il numero di istanza)
- *  metodo clone (return record)
+ * @see <a href="https://en.wikipedia.org/wiki/JavaBeans"> JavaBeans <\a> 
+ * @see <a href="http://javarevisited.blogspot.it/2014/05/why-use-serialversionuid-inside-serializable-class-in-java.html" >Serial Version (???) <\a> 
  */
 public class Record implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private int id;
 	private String name;

@@ -25,10 +25,10 @@ public class SystemLoader extends AbstractSystemLoader implements Loader {
 	 */
 	@Override	 
 	protected String buildLine(Record record){
-		return String.format( "| %5d | %-15s | %10s | %6.2f | %7s |", 
+		return String.format( "| %5d | %-25s | %td/%tm/%ty | %6.2f | %7s |", 
 					record.getId(), 
 					record.getName(), 
-					sdformat.format(record.getBirthday()), 
+					record.getBirthday(), record.getBirthday(), record.getBirthday(),
 					record.getHeight(), 
 					record.isMarried());
 	}
@@ -37,9 +37,11 @@ public class SystemLoader extends AbstractSystemLoader implements Loader {
 	protected String buildTitle(List<String> columnNames){
 		final char[] array = new char[59];
 		Arrays.fill(array, '-');
+		array[0]='+';
+		array[58]='+';
 		String sep = new String(array);
 
-		return String.format("%s\n| %5s | %-15s | %10s | %6s | %7s |\n%s",
+		return String.format("%s%n| %5s | %-25s | %10s | %6s | %7s |%n%s",
 					sep,
 					columnNames.get(0), 
 					columnNames.get(1), 
