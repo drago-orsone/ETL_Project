@@ -13,6 +13,8 @@ public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 
 	private static final Logger log = LogManager.getLogger("Extractor.File.LineWise");
 
+	int i = 2;
+
 	public LineWiseFileExtractor(String file){
 		super(file);
 	}
@@ -24,8 +26,10 @@ public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 		records.setColumnNames(parseColumnNames(br.readLine()));
 
 		String inputLine = null;
-		while ((inputLine = br.readLine()) != null)
+		while ((inputLine = br.readLine()) != null) {
 			records.addRecord(parseLine(inputLine));
+			i++;
+		}
 
 		return records;
 	}
@@ -45,7 +49,7 @@ public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 			record.setMarried(Boolean.parseBoolean(list.get(4)));
 
 		}catch(ParseException pe){
-			log.error("Parsing not succeded.");
+			log.error("Parsing not succeded at line " + i + ".");
 		}finally{
 			return record;
 		}
