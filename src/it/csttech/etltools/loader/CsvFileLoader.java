@@ -12,7 +12,7 @@ import java.util.List;
 * PlaceHolder
 */
 public class CsvFileLoader extends LineWiseFileLoader implements Loader {
-
+//TODO Change char in String, use %3 to avoid three Birthday
 	private static final char FIELD_SEPARATOR = ';';
 	private static final char STRING_DELIMETER = '"';
 
@@ -39,7 +39,7 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 
 	@Override
   	protected String buildLine(Record record){
-		return String.format(Locale.ENGLISH, "%d%c%s%c%td/%tm/%tY%c%f%c%s", 
+		return String.format(Locale.ENGLISH, "%d%c%s%c%td/%tm/%tY%c%.02f%c%s", 
 					record.getId(),  FIELD_SEPARATOR, 
 					record.getName(),  FIELD_SEPARATOR, 
 					record.getBirthday(), record.getBirthday(), record.getBirthday(),  FIELD_SEPARATOR,
