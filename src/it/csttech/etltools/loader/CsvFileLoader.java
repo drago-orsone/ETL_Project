@@ -4,8 +4,9 @@ import it.csttech.etltools.Loader;
 import it.csttech.etltools.Record;
 import it.csttech.etltools.Records;
 
+import java.util.Locale;
+
 import java.util.List;
-import java.util.ArrayList;
 
 /**
 * PlaceHolder
@@ -28,11 +29,21 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
    	*/
 	@Override
   	protected String buildTitle(List<String> columnNames){
-		return "";   
+		return String.format("%s%c%s%c%s%c%s%c%s",
+					columnNames.get(0),  FIELD_SEPARATOR,
+					columnNames.get(1),  FIELD_SEPARATOR, 
+					columnNames.get(2),  FIELD_SEPARATOR,  
+					columnNames.get(3),  FIELD_SEPARATOR, 
+					columnNames.get(4));
 	}
 
 	@Override
   	protected String buildLine(Record record){
-		return "";   
+		return String.format(Locale.ENGLISH, "%d%c%s%c%td/%tm/%tY%c%f%c%s", 
+					record.getId(),  FIELD_SEPARATOR, 
+					record.getName(),  FIELD_SEPARATOR, 
+					record.getBirthday(), record.getBirthday(), record.getBirthday(),  FIELD_SEPARATOR,
+					record.getHeight(),  FIELD_SEPARATOR, 
+					record.isMarried());  
 	}
 }
