@@ -12,10 +12,10 @@
 		</File>
 	</Appenders>
 	<Loggers>
-		<Logger name="Extractor" level="DEBUG"  additivity="true" >
+		<Logger name="it.csttech.etltools.extractor" level="DEBUG"  additivity="true" >
 			 <AppenderRef ref="ExtractorFile" />
 		</Logger>
-		<Logger name="Loader" level="DEBUG"  additivity="true" >
+		<Logger name="it.csttech.etltools.loader" level="DEBUG"  additivity="true" >
 			 <AppenderRef ref="LoaderFile" />
 		</Logger>
 		<Root level="WARN">

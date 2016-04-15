@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.loader;
+
+import it.csttech.etltools.Loader;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import java.util.*;
 import java.text.SimpleDateFormat;

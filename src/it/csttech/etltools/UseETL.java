@@ -1,8 +1,13 @@
 package it.csttech.etltools;
 
+import it.csttech.etltools.extractor.*;
+import it.csttech.etltools.loader.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.cli.*;
+
+
 
 /**
  * A cli interface to launch a simple ETL Suite

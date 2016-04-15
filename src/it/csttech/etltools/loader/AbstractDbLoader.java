@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.loader;
+
+import it.csttech.etltools.Loader;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,7 +25,7 @@ import java.util.Objects;
  */
 public abstract class AbstractDbLoader {
 
-	private static final Logger log = LogManager.getLogger("Loader.Db");
+	private static final Logger log = LogManager.getLogger(AbstractDbLoader.class.getName());
 
 	private String dbName;
 	

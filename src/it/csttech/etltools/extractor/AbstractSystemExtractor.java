@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
+
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +19,7 @@ import java.io.InputStreamReader;
  */
 public abstract class AbstractSystemExtractor {
 
-	static final Logger log = LogManager.getLogger("Extractor.System");
+	static final Logger log = LogManager.getLogger(AbstractSystemExtractor.class.getName());
 
 	public Records extract(){
 		Records records = new Records();

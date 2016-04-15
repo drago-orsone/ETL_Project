@@ -1,5 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
 
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,7 +18,7 @@ import java.text.ParseException;
  */
 public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger("Extractor.Db.Sqlite");
+	private static final Logger log = LogManager.getLogger(SqliteExtractor.class.getName());
 
 
 	/*

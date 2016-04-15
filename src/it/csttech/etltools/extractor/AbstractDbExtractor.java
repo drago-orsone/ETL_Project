@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
+
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +20,7 @@ import java.util.ArrayList;
  */
 public abstract class AbstractDbExtractor  {
 	
-	private static final Logger log = LogManager.getLogger("Extractor.Db");
+	private static final Logger log = LogManager.getLogger(AbstractDbExtractor.class.getName());
 	
 	private String dbName;
 	

@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.loader;
+
+import it.csttech.etltools.Loader;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +22,7 @@ import java.sql.Connection;
  */
 public class SqliteLoader extends AbstractDbLoader implements Loader {
 
-	private static final Logger log = LogManager.getLogger("Loader.Db.Sqlite");
+	private static final Logger log = LogManager.getLogger(SqliteLoader.class.getName());
 
 	/*
 	 * Constructor

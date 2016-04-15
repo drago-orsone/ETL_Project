@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
+
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import java.io.*;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 public abstract class AbstractFileExtractor {
 	
 	private String fileName;
-	private static final Logger log = LogManager.getLogger("Extractor.File");
+	private static final Logger log = LogManager.getLogger(AbstractFileExtractor.class.getName());
 
 	/*
 	 * Constructor.
