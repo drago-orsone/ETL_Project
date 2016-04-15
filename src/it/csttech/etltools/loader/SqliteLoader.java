@@ -80,7 +80,20 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 				
 		sqlCode.deleteCharAt(sqlCode.length()-1);
 		sqlCode.append( " ) VALUES ");		
-				
+
+		for(Record record : records.getRecords()){
+		StringBuilder buffer = new StringBuilder(sqlCode.toString());
+			buffer.append("( " + record.getId() + " , ");
+			buffer.append("'" + record.getName() + "'" + " , ");
+			buffer.append("'" + (formatter.format(record.getBirthday())).toString() + "'" + " , ");
+			buffer.append("'" + record.getHeight() + "'" + " , ");
+			buffer.append("'" + record.isMarried() + "'" + " );");					
+			log.debug("Insert Query : ID ="  + record.getId());
+					executeStatement(conn, buffer.toString());		
+
+		}
+
+/*				***TEMP*** OLD VERSION
 		for(Record record : records.getRecords()){
 			sqlCode.append("( " + record.getId() + " , ");
 			sqlCode.append("'" + record.getName() + "'" + " , ");
@@ -95,6 +108,7 @@ public class SqliteLoader extends AbstractDbLoader implements Loader {
 			
 		//Execute the query	
 		executeStatement(conn, sqlCode.toString());		
+*/
 	}
 	
 
