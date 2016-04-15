@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
+
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import java.util.*;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +19,7 @@ import java.io.IOException;
  */
 public class XmlFileExtractor extends AbstractFileExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger("Extractor.File.Xml");
+	private static final Logger log = LogManager.getLogger(XmlFileExtractor.class.getName());
 
 	/*
 	 * Constructor

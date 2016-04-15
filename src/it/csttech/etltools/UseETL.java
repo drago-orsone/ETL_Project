@@ -1,8 +1,13 @@
 package it.csttech.etltools;
 
+import it.csttech.etltools.extractor.*;
+import it.csttech.etltools.loader.*;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.cli.*;
+
+
 
 /**
  * A cli interface to launch a simple ETL Suite
@@ -11,9 +16,8 @@ import org.apache.commons.cli.*;
  * 	
  * </p>
  *
- * @author 
- * @todo. Boh
- *  
+ * @author drago-orsone, MasterToninus
+ *   
  */
 public class UseETL {
 
@@ -156,7 +160,7 @@ public class UseETL {
 
      		if (cmdLine.hasOption("help")) {
      		    	HelpFormatter formatter = new HelpFormatter();
-     		    	formatter.printHelp("Change Format", options);
+     		    	formatter.printHelp("Change Format (db, csv, fw, xml, sys)", options);
 			cmdLine = null;
      		}
 

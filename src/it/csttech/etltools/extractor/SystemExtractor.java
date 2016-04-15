@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
+
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +20,7 @@ import java.text.ParseException;
  */
 public class SystemExtractor extends AbstractSystemExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger("Extractor.System");
+	private static final Logger log = LogManager.getLogger(SystemExtractor.class.getName());
 	private static final char FIELD_SEPARATOR = ';';
 	private static final char STRING_DELIMETER = '"';	
 

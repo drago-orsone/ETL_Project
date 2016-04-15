@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.loader;
+
+import it.csttech.etltools.Loader;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import java.util.List;
 
@@ -14,7 +18,7 @@ public class FwFileLoader extends LineWiseFileLoader implements Loader {
 
   	/*
    	* PlaceHolder 
-   	* 
+   	*  Meglio usare string.format()
    	*/
 	@Override
   	protected String parseColumnNames(List<String> columnNames){

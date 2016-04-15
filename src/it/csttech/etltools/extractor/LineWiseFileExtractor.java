@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
+
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import java.util.List;
 //import java.util.ArrayList;
@@ -11,7 +15,7 @@ import java.text.ParseException;
 
 public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 
-	private static final Logger log = LogManager.getLogger("Extractor.File.LineWise");
+	private static final Logger log = LogManager.getLogger(LineWiseFileExtractor.class.getName());
 
 	int i = 2;
 

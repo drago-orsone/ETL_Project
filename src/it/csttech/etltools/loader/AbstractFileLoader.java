@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.loader;
+
+import it.csttech.etltools.Loader;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import java.io.*;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 public abstract class AbstractFileLoader {
 	
 	private String outputFile;
-	private static final Logger log = LogManager.getLogger("Loader.File");
+	private static final Logger log = LogManager.getLogger(AbstractFileLoader.class.getName());
 
 	/*
 	 * Abstract method to be specified in the children classes.

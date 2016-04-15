@@ -29,7 +29,6 @@
 	<target name="clean" description="Tidy up the workspace">
 		<delete failonerror="false" dir="${build.dir}" />
 		<delete failonerror="false" dir="ivy-report" />
-		<delete failonerror="false" dir="${doc.dir}"/>
 		<delete>
 			<fileset defaultexcludes="no" dir="${src.dir}" includes="**/*~"/>
 		</delete>
@@ -61,7 +60,8 @@
 	</target> 
 
  
-    <target name="doc" depends="init" description="Generate documentation JavaDoc" >
+    <target name="doc" description="Generate documentation JavaDoc" >
+ 		<delete failonerror="false" dir="${doc.dir}"/>
         <javadoc sourcepath="${src.dir}" destdir="${doc.dir}">
 			<bottom><![CDATA[<i>Copyright &#169; 2016 Dummy Corp. All Rights Reserved.</i>]]></bottom>
 			<!-- Custom tags -->

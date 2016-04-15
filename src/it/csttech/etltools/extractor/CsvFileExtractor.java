@@ -1,4 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
+
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -6,11 +10,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.*;
 
 /**
- * PlaceHolder
+ * @todo. il metodo parse column name non è a prova di errore. Non considera entry tra virgolette come un solo campo e la presenza di ; in un campo rompe la lettura.
  */
 public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger("Extractor.File.LineWise.Csv");
+	private static final Logger log = LogManager.getLogger(CsvFileExtractor.class.getName());
 
 	private static final char FIELD_SEPARATOR = ';';
 	private static final char STRING_DELIMETER = '"';	

@@ -1,5 +1,8 @@
-package it.csttech.etltools;
+package it.csttech.etltools.extractor;
 
+import it.csttech.etltools.Extractor;
+import it.csttech.etltools.Record;
+import it.csttech.etltools.Records;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,12 +18,14 @@ import java.text.ParseException;
  */
 public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 
-	private static final Logger log = LogManager.getLogger("Extractor.Db.Sqlite");
+	private static final Logger log = LogManager.getLogger(SqliteExtractor.class.getName());
 
 
 	/*
-	 * Constructor
-	 */
+	 * Class Constructor specyfing database name e table name.
+	 * @param dbName name of the target database
+	 * @param tableName name of the target table in the considered database
+	*/   
 	public SqliteExtractor(String dbName, String tableName){
 		super(dbName,tableName);
 		this.dbClassName = "org.sqlite.JDBC";
@@ -28,8 +33,10 @@ public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 	}
 
 	/*
+	 * Extract the first record from the passed ResultSet
 	 * 
-	 * 
+	 * @param rs Result set of a query.
+	 * @return record
 	 * */
 	@Override
 	protected Record  fillRecord(ResultSet rs) {		
@@ -44,10 +51,11 @@ public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 			record.setHeight(Double.parseDouble(rs.getString(fields.get(3))));
 			record.setMarried(Boolean.parseBoolean(rs.getString(fields.get(4))));
 		} catch ( SQLException e ) {
-			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
-			System.exit(0);
+			log.error("Cannot extract record. Exception: " + e.getClass().getName() + ": " + e.getMessage() );
+			return null;
 		} catch ( ParseException e ) {
-			log.error( e.getClass().getName() + ": " + e.getMessage());
+			log.error("Cannot Recognized data format. Exception: " + e.getClass().getName() + ": " + e.getMessage());
+			return null;
 		} finally {
 			return record;
 		}
