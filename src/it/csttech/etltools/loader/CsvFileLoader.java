@@ -13,8 +13,7 @@ import java.util.List;
 */
 public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 
-	private static final char FIELD_SEPARATOR = ';';
-	private static final char STRING_DELIMETER = '"';
+	private static final String FIELD_SEPARATOR = ";";
 
 	/*
 	* Constructor
@@ -39,11 +38,12 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 
 	@Override
   	protected String buildLine(Record record){
-		return String.format(Locale.US, "%d%c%s%c%td/%tm/%tY%c%f%c%s", 
-					record.getId(),  FIELD_SEPARATOR, 
-					record.getName(),  FIELD_SEPARATOR, 
-					record.getBirthday(), record.getBirthday(), record.getBirthday(),  FIELD_SEPARATOR,
-					record.getHeight(),  FIELD_SEPARATOR, 
+		return String.format(Locale.US, "%2$d%1$s%3$s%1$s%4$td/%4$tm/%4$tY%1$s%5$.02f%1$s%6$s", 
+					FIELD_SEPARATOR,
+					record.getId(),   
+					record.getName(), 
+					record.getBirthday(),
+					record.getHeight(), 
 					record.isMarried());  
 	}
 }

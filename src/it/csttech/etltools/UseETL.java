@@ -59,29 +59,31 @@ public class UseETL {
 
 		ExtractorFactory extractorFactory = new ExtractorFactory(inputFile, table);
 		Extractor extractor = extractorFactory.getExtractor(inputFormat);
-		if( extractor == null )
+		if( extractor == null ) {
 			log.error("Invalid input format " + inputFormat + ".");
-		
+			return;
+		}
+
 		LoaderFactory loaderFactory = new LoaderFactory(outputFile, table);
 		Loader loader = loaderFactory.getLoader(outputFormat);
-		if( loader == null )
+		if( loader == null ) {
 			log.error("Invalid output format " + outputFormat + ".");
+			return;
+		}
 
-		if(loader != null && extractor != null)
-			loader.load(extractor.extract());
-		
+		loader.load(extractor.extract());
     }
 
     public static CommandLine manageOption(String[] args) {
 
-		Option helpOption = Option.builder(HELP_OPT)
+	Option helpOption = Option.builder(HELP_OPT)
 			.longOpt("help")
 			.hasArg(false)
 			.required(false)
 			.desc("print guide")
 			.build();
 
-		Option inFileOption = Option.builder(IN_FILE_OPT)
+	Option inFileOption = Option.builder(IN_FILE_OPT)
 			.argName("input file")
 			.longOpt("inputFile")
 			.required(false)
@@ -144,9 +146,9 @@ public class UseETL {
      	}catch( ParseException pe ){
 		log.error("Invalid option(s).");
 		cmdLine = null;
-		}finally{
-				return cmdLine;
-		}
+	}finally{
+		return cmdLine;
+	}
 
     }
 }
