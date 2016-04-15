@@ -62,7 +62,7 @@ public class UseETL {
 		if( extractor == null )
 			log.error("Invalid input format " + inputFormat + ".");
 		
-		LoaderFactory loaderFactory = new LoaderFactory(inputFile, table);
+		LoaderFactory loaderFactory = new LoaderFactory(outputFile, table);
 		Loader loader = loaderFactory.getLoader(outputFormat);
 		if( loader == null )
 			log.error("Invalid output format " + outputFormat + ".");
@@ -75,59 +75,59 @@ public class UseETL {
     public static CommandLine manageOption(String[] args) {
 
 		Option helpOption = Option.builder(HELP_OPT)
-								.longOpt("help")
-								.hasArg(false)
-								.required(false)
-								.desc("print guide")
-								.build();
+			.longOpt("help")
+			.hasArg(false)
+			.required(false)
+			.desc("print guide")
+			.build();
 
 		Option inFileOption = Option.builder(IN_FILE_OPT)
-								.argName("input file")
-								.longOpt("inputFile")
-								.required(false)
-								.numberOfArgs(1)
-								.desc("input file")
-								.build();
+			.argName("input file")
+			.longOpt("inputFile")
+			.required(false)
+			.numberOfArgs(1)
+			.desc("input file")
+			.build();
 
      	Option outFileOption = Option.builder(OUT_FILE_OPT)
-								.argName("output file")
-								.longOpt("outputFile")
-								.numberOfArgs(1)
-								.required(false)
-								.desc("output file")
-								.build();
+			.argName("output file")
+			.longOpt("outputFile")
+			.numberOfArgs(1)
+			.required(false)
+			.desc("output file")
+			.build();
 
      	Option inFormatOption = Option.builder(IN_FORMAT_OPT)
-								.argName("input format")
-								.longOpt("inputFormat")
-								.required(false)
-								.numberOfArgs(1)
-								.desc("input file format")
-								.build();
+			.argName("input format")
+			.longOpt("inputFormat")
+			.required(false)
+			.numberOfArgs(1)
+			.desc("input file format")
+			.build();
 
     	Option outFormatOption = Option.builder(OUT_FORMAT_OPT)
-								.argName("output format")
-								.longOpt("outputFormat")
-								.numberOfArgs(1)
-								.required(false)
-								.desc("output file format")
-								.build();
+			.argName("output format")
+			.longOpt("outputFormat")
+			.numberOfArgs(1)
+			.required(false)
+			.desc("output file format")
+			.build();
 
     	Option tableOption = Option.builder(TABLE_OPT)
-								.argName("database table")
-								.longOpt("table")
-								.numberOfArgs(1)
-								.required(false)
-								.desc("database table")
-								.build();
+			.argName("database table")
+			.longOpt("table")
+			.numberOfArgs(1)
+			.required(false)
+			.desc("database table")
+			.build();
 
      	Options options = new Options();
     	options.addOption(helpOption);
-		options.addOption(inFileOption);
+	options.addOption(inFileOption);
      	options.addOption(outFileOption);
      	options.addOption(inFormatOption);
      	options.addOption(outFormatOption);
-		options.addOption(tableOption);
+	options.addOption(tableOption);
 
      	CommandLine cmdLine = null;
 
