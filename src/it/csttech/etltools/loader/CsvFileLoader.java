@@ -27,13 +27,12 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
    	* 
    	*/
 	@Override
-  	protected String parseColumnNames(List<String> columnNames){
-		StringBuilder builder = new StringBuilder();
+  	protected String buildTitle(List<String> columnNames){
+		return "";   
+	}
 
-		for(String string : columnNames){
-			builder.append( string + FIELD_SEPARATOR);		
-		}
-		builder.deleteCharAt(builder.length()-1);
-		return builder.toString();   
+	@Override
+  	protected String buildLine(Record record){
+		return "";   
 	}
 }

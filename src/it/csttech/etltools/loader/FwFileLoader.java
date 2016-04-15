@@ -20,7 +20,7 @@ public class FwFileLoader extends LineWiseFileLoader implements Loader {
    	* PlaceHolder 
    	*  Meglio usare string.format()
    	*/
-	@Override
+	/*@Override
   	protected String parseColumnNames(List<String> columnNames){
 
 	  	final int FIXED_WIDTH = 20;
@@ -38,6 +38,20 @@ public class FwFileLoader extends LineWiseFileLoader implements Loader {
 
 		return builder.toString();
 
+		return String.format("%-20s%-20s%-20s%-20s%-20s%s", 
+				columnNames.get(0), columnNames.get(1), columnNames.get(2), columnNames.get(3), columnNames.get(4), FINAL_CHAR);
+
+	}*/
+
+	@Override
+  	protected String buildTitle(List<String> columnNames){
+		return "";   
 	}
+
+	@Override
+  	protected String buildLine(Record record){
+		return "";   
+	}
+
 }
 

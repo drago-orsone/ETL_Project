@@ -18,27 +18,15 @@ public abstract class LineWiseFileLoader extends AbstractFileLoader {
 	@Override
 	protected void printRecords(PrintWriter printWriter, Records records){
 
-		printWriter.println(parseColumnNames(records.getColumnNames()));
+		printWriter.println(buildTitle(records.getColumnNames()));
 
 		for(Record record : records.getRecords())
-			printWriter.println(parseRecord(record));
+			printWriter.println(buildLine(record));
 
 	}
 
-	private String parseRecord(Record record){
+	protected abstract String buildLine(Record record);
 
-		List<String> recordConverted = new ArrayList<String>();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-		recordConverted.add(Integer.toString(record.getId()));
-		recordConverted.add(record.getName());
-		recordConverted.add((formatter.format(record.getBirthday())).toString());
-		recordConverted.add(Double.toString(record.getHeight()));
-		recordConverted.add(Boolean.toString(record.isMarried()));		
-
-		return parseColumnNames(recordConverted);
-  	}
-
-	protected abstract String parseColumnNames(List<String> columnNames);
+	protected abstract String buildTitle(List<String> columnNames);
 
 }

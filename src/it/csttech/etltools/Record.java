@@ -1,6 +1,7 @@
 package it.csttech.etltools;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Javabean record.
@@ -58,4 +59,48 @@ public class Record implements java.io.Serializable {
         this.married = married;
     }
 
+    @Override
+    public String toString(){
+
+	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
+	return 	"[" + Integer.toString(this.id) + ", " 
+		+ this.name + ", " 
+		+ formatter.format(this.birthday) + ", " 
+		+ Double.toString(this.height) + ", " 
+		+ Boolean.toString(this.married) + "]";
+    }
+
+    @Override
+    public boolean equals(Object o){
+
+	if (o == this)
+		return true;
+	if (!(o instanceof Record))
+		return false;
+
+	Record rec = (Record) o;
+
+	if(
+	    this.id == rec.getId() &&
+	    this.name == rec.getName() &&
+	    this.birthday == rec.getBirthday() &&
+	    this.height == rec.getHeight() &&
+	    this.married == rec.isMarried())
+		return true;
+	else
+		return false;
+    }
+
+    @Override
+    public Record clone(){
+	Record record = new Record();
+	record.setId(this.id);
+	record.setName(this.name);
+	record.setBirthday(this.birthday);
+	record.setHeight(this.height);
+	record.setMarried(this.married);
+
+	return record;
+    }
 }
