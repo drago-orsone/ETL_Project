@@ -18,39 +18,27 @@ public class FwFileLoader extends LineWiseFileLoader implements Loader {
 
   	/*
    	* PlaceHolder 
-   	*  Meglio usare string.format()
+   	*  
    	*/
-	/*@Override
-  	protected String parseColumnNames(List<String> columnNames){
 
-	  	final int FIXED_WIDTH = 20;
-		final char EMPTY_CHAR = ' ';
-		final char FINAL_CHAR = '*';
-
-		StringBuilder builder = new StringBuilder();
-
-		for(String string : columnNames ){
-			builder.append(string);
-			for(int i = 0; i < FIXED_WIDTH - string.length(); i++)
-				builder.append(EMPTY_CHAR);
-		}
-		builder.append(FINAL_CHAR);
-
-		return builder.toString();
-
-		return String.format("%-20s%-20s%-20s%-20s%-20s%s", 
-				columnNames.get(0), columnNames.get(1), columnNames.get(2), columnNames.get(3), columnNames.get(4), FINAL_CHAR);
-
-	}*/
+	static final int FIXED_WIDTH = 20;
+	static final String FINAL_CHAR = "*";
 
 	@Override
   	protected String buildTitle(List<String> columnNames){
-		return "";   
+		
+		return String.format(
+			"%-" + FIXED_WIDTH + "s%-" + FIXED_WIDTH + "s%-" + FIXED_WIDTH + "s%-" + FIXED_WIDTH + "s%-" + FIXED_WIDTH + "s%s",
+			//"%.*s%.*s%.*s%.*s%.*s%s", FIXED_WIDTH, FIXED_WIDTH, FIXED_WIDTH, FIXED_WIDTH, FIXED_WIDTH,
+			columnNames.get(0), columnNames.get(1), columnNames.get(2), columnNames.get(3), columnNames.get(4), FINAL_CHAR);   
 	}
 
 	@Override
   	protected String buildLine(Record record){
-		return "";   
+		int dateWidth = FIXED_WIDTH - 6;
+		return String.format(
+			"%1$-" + FIXED_WIDTH + "d%2$-" + FIXED_WIDTH + "s%3$td/%3$tm/%3$-" + dateWidth + "tY%4$-" + FIXED_WIDTH + ".02f%5$-" + FIXED_WIDTH + "s%6$s", 
+			record.getId(), record.getName(), record.getBirthday(), record.getHeight(), record.isMarried(), FINAL_CHAR);   
 	}
 
 }
