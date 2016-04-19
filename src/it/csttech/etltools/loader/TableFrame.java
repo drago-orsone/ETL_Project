@@ -61,17 +61,17 @@ public class TableFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fillTable() {
-	List<Record> listRec = records.getRecords();
-	Object[] obj = new Object[5];
-	for (Record record : listRec) {
-		obj[0] = record.getId();
-		obj[1] = record.getName();
-		obj[2] = record.getBirthday();
-		obj[3] = record.getHeight();
-		obj[4] = record.isMarried();
-		dtm.addRow(obj);
-	}
+  private void fillTable() {
+	   List<Record> listRec = records.getRecords();
+	    Object[] obj = new Object[5];
+    	for (Record record : listRec) {
+    		obj[0] = record.getId();
+    		obj[1] = record.getName();
+    		obj[2] = String.format("%1$td/%1$tm/%1$tY",record.getBirthday());
+    		obj[3] = record.getHeight();
+    		obj[4] = record.isMarried();
+    		dtm.addRow(obj);
+    	}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
