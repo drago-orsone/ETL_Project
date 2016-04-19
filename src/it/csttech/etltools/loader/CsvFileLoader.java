@@ -28,7 +28,7 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
    	*/
 	@Override
   	protected String buildTitle(List<String> columnNames){
-		return String.format("%s%c%s%c%s%c%s%c%s",
+		return String.format("%s%s%s%s%s%s%s%s%s",
 					columnNames.get(0),  FIELD_SEPARATOR,
 					columnNames.get(1),  FIELD_SEPARATOR, 
 					columnNames.get(2),  FIELD_SEPARATOR,  
