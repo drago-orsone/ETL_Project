@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 
 /**
  *
- * 
+ *
  */
 public abstract class AbstractSystemExtractor {
 
@@ -24,29 +24,29 @@ public abstract class AbstractSystemExtractor {
 	public Records extract(){
 		Records records = new Records();
 
-		System.out.println("\nDigit ColumnNames separated by ;");
+		System.out.println("\nDigit 5 Column Names separated by whitespaces");
 
 
 		String str;
 
 
 		try{
-			BufferedReader br = 
+			BufferedReader br =
 						  new BufferedReader(new InputStreamReader(System.in));
-			
+
 			if((str=br.readLine())!=null )
 				records.setColumnNames(parseColumnNames(str));
 			else
 				System.out.println("Format not valid.");
 
-			System.out.println("Insert Record value separated by ; (type .q to conclude)");					
+			System.out.println("Insert Record value separated by whitespaces. e.g.:\n 1 \"nonna papera\" 12/12/1212 1.12 false\n (type .q to conclude)");
 			while((str=br.readLine())!=null && !str.equals(".q")){
 				records.addRecord(parseRecord(str));
 			}
-				
+
 		}catch(IOException io){
 			io.printStackTrace();
-		}	
+		}
 
 		return records;
 
@@ -60,7 +60,7 @@ public abstract class AbstractSystemExtractor {
 
 	/*
 	 * Abstract method to be specified in the children classes.
-	 * Transform the firt line readed to a list of strings 
+	 * Transform the firt line readed to a list of strings
 	 */
 	protected abstract List<String> parseColumnNames(String inputLine);
 

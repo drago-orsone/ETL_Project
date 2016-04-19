@@ -11,7 +11,7 @@ import java.util.*;
 
 /**
  *
- * 
+ *
  */
 public abstract class AbstractSystemLoader {
 
@@ -20,10 +20,12 @@ public abstract class AbstractSystemLoader {
 	public void load(Records records){
 		System.out.println(buildTitle(records.getColumnNames()));
 		for( Record record : records.getRecords())
-			System.out.println( buildLine(record) );	
+			System.out.println( buildLine(record) );
+		System.out.println(separatorLine());
 	}
 
 	protected abstract String buildLine(Record record);
 	protected abstract String buildTitle(List<String> columnNames);
-
+	protected abstract String separatorLine();
+	
 }
