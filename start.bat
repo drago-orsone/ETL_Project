@@ -1,5 +1,17 @@
 @echo off
 
-set PROJECT_VAR=C:\Users\Alberto.Dragoni\Documents\workspace\ChangeFormatProjectCLI
+	set MAIN_CLASS_FILE="it.csttech.etltools.UseETL"
+	set CLASS_PATH=".;lib\*;bin"
+	set LOG_CONFIG="config\log4j2.xml"
 
-java -cp %PROJECT_VAR%\bin;%PROJECT_VAR%\lib\* it.csttech.UseChangeFormat %1 %2 %3 %4 %5 %6 %7 %8
+
+	echo "---------------------------------"
+	echo "*** Launching %MAIN_CLASS_FILE% %1 %2 %3 %4 %5 %6 %7 %8 %9 ***"
+	echo "---------------------------------"
+	echo " "
+
+
+	java -Dlog4j.configurationFile=%LOG_CONFIG% -cp %CLASS_PATH% %MAIN_CLASS_FILE% %1 %2 %3 %4 %5 %6 %7 %8 %9
+	
+	echo " "
+	echo "---------------------------------"

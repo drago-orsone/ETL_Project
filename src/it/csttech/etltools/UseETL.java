@@ -72,6 +72,10 @@ public class UseETL {
     }
 
     loader.load(extractor.extract());
+
+    Loader lgui = new GuiLoader();
+    lgui.load(extractor.extract());
+
   }
 
   public static CommandLine manageOption(String[] args) {
