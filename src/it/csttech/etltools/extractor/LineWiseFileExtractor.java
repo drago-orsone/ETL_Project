@@ -16,16 +16,17 @@ import java.text.ParseException;
 public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 
 	private static final Logger log = LogManager.getLogger(LineWiseFileExtractor.class.getName());
+	private static final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
 	int i = 2;
 
 	public LineWiseFileExtractor(String file){
 		super(file);
 	}
-	
+
 	@Override
 	protected Records buildRecords(BufferedReader br) throws IOException {
-		
+
 		Records records = new Records();
 		records.setColumnNames(parseColumnNames(br.readLine()));
 
@@ -41,7 +42,7 @@ public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 	private Record parseLine (String inputString){
 
 		Record record = new Record();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+
 
 		try{
 			List<String> list = parseColumnNames(inputString);

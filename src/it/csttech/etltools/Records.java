@@ -44,11 +44,17 @@ public class Records  {
 	public void setRecords(List<Record> records) {
 		this.records = records;
 	}
-
+	/**
+	 * [addColumnName description]
+	 * @param columnName [description]
+	 */
 	public void addColumnName(String columnName){
 		columnNames.add(columnName);
 	}
-
+	/**
+	 * [addRecord description]
+	 * @param record [description]
+	 */
 	public void addRecord(Record record){
 		records.add(record);
 	}

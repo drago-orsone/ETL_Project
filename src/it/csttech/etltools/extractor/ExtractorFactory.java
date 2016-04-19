@@ -15,11 +15,14 @@ public class ExtractorFactory {
 
 	public ExtractorFactory(String fileName, String tableName){
 		this.fileName = fileName;
-		this.tableName = tableName;	
+		this.tableName = tableName;
 	}
-	
-	
-   //use getExtractor method to get object of type shape 
+
+	/**
+	 * [getExtractor description]
+	 * @param  extractorType [description]
+	 * @return               [description]
+	 */
 	public Extractor getExtractor(String extractorType){
 		switch (extractorType.toLowerCase()) {
 			case "csv": return new CsvFileExtractor(fileName);
@@ -28,6 +31,6 @@ public class ExtractorFactory {
             case "db": 	return new SqliteExtractor(fileName, tableName);
             case "sys": return new SystemExtractor();
             default:    return null;
-        }           
+        }
    }
 }

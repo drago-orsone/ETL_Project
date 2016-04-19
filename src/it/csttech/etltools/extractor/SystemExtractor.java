@@ -31,7 +31,7 @@ public class SystemExtractor extends AbstractSystemExtractor implements Extracto
 	private static final String regex = "[^\"\\s]+|\"(\\\\.|[^\\\\\"])*\"";
 	private static final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-	/*
+	/**
 	 * Cut the input line
 	 *
 	 * Si prende pure i campi extra.. il metodo parse line li ignorerà!
@@ -54,8 +54,9 @@ public class SystemExtractor extends AbstractSystemExtractor implements Extracto
 
 
 
-	/*
-	 * Transform the readed line to a record
+	/**
+	 *	Transform the readed line to a record
+	 *
 	 */
 	@Override
 	protected Record parseRecord(String inputLine){
@@ -63,6 +64,7 @@ public class SystemExtractor extends AbstractSystemExtractor implements Extracto
 		Record record = new Record();
 		//use Scanner to parse the content of each line
     Scanner scanner = new Scanner(inputLine);
+		if(!scanner.hasNext()) return null;
 
 		try{
 			record.setId(scanner.nextInt());
@@ -73,11 +75,11 @@ public class SystemExtractor extends AbstractSystemExtractor implements Extracto
 		}catch(ParseException pe){
 			log.error("Date Parsing not succeded.");
 		}catch(InputMismatchException ex){
-			log.error("Float parsing not succeded.");
-		}catch(Exception ex){
-			ex.printStackTrace();
-			record = null;
+			log.error("Int /double /booleanr parsing not succeded.");
+		}catch(NoSuchElementException  ex){
+			log.error("Invalid number of fields.");
 		}finally{
+			scanner.close();
 			return record;
 		}
 

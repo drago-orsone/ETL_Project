@@ -41,7 +41,9 @@ public abstract class AbstractSystemExtractor {
 
 			System.out.println("Insert Record value separated by whitespaces. e.g.:\n 1 \"nonna papera\" 12/12/1212 1.12 false\n (type .q to conclude)");
 			while((str=br.readLine())!=null && !str.equals(".q")){
-				records.addRecord(parseRecord(str));
+				Record dummy = parseRecord(str);
+				if(dummy != null)
+					records.addRecord(parseRecord(str));
 			}
 
 		}catch(IOException io){
