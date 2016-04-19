@@ -27,6 +27,7 @@ public class LoaderFactory {
 				case "xml": return new XmlFileLoader(fileName);
 				case "db": 	return new SqliteLoader(fileName, tableName);
 				case "sys": return new SystemLoader();
+				case "gui": return new GuiLoader();
 				default:    return null;
 			}
 		}

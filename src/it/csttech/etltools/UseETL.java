@@ -26,6 +26,7 @@ public class UseETL {
   public static final String XML_FORMAT = "xml";
   public static final String DB_FORMAT = "db";
   public static final String SYSTEM_FORMAT = "sys";
+  public static final String GUI_FORMAT = "gui";
 
   public static final String IN_FILE_OPT = "i";
   public static final String OUT_FILE_OPT = "o";
@@ -52,7 +53,7 @@ public class UseETL {
     return;
 
     String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, CSV_FORMAT);
-    String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, SYSTEM_FORMAT);
+    String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, GUI_FORMAT);
     String inputFile = cmdLine.getOptionValue(IN_FILE_OPT, DEFAULT_IN_FILE);
     String outputFile = cmdLine.getOptionValue(OUT_FILE_OPT, DEFAULT_OUT_FILE);
     String table = cmdLine.getOptionValue(TABLE_OPT, DEFAULT_TABLE);
@@ -73,8 +74,6 @@ public class UseETL {
 
     loader.load(extractor.extract());
 
-    Loader lgui = new GuiLoader();
-    lgui.load(extractor.extract());
 
   }
 
