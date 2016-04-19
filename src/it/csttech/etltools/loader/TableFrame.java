@@ -35,8 +35,8 @@ public class TableFrame extends javax.swing.JFrame {
 	Object[] obj = new Object[5];
 	for(int i = 0; i < 5; i++)
 		obj[i] = records.getColumnNames().get(i);
+	
 	dtm = new javax.swing.table.DefaultTableModel(obj, 0);
-
         recordTable.setModel(dtm);
 
         jScrollPane1.setViewportView(recordTable);
@@ -61,9 +61,9 @@ public class TableFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-  private void fillTable() {
-	   List<Record> listRec = records.getRecords();
-	    Object[] obj = new Object[5];
+    private void fillTable() {
+	List<Record> listRec = records.getRecords();
+	Object[] obj = new Object[5];
     	for (Record record : listRec) {
     		obj[0] = record.getId();
     		obj[1] = record.getName();
