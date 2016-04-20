@@ -52,6 +52,8 @@ public class UseETL {
     if (cmdLine == null)
     return;
 
+//leggere properties. qui avermo un oggetto properties.
+
     String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, CSV_FORMAT);
     String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, GUI_FORMAT);
     String inputFile = cmdLine.getOptionValue(IN_FILE_OPT, DEFAULT_IN_FILE);

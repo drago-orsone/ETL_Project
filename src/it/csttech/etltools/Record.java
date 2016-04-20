@@ -1,7 +1,6 @@
 package it.csttech.etltools;
 
 import java.util.Date;
-import java.text.SimpleDateFormat;
 
 /**
  * Javabean record.
@@ -66,14 +65,9 @@ public class Record implements java.io.Serializable {
 
     @Override
     public String toString(){
+	
+	return String.format("[%1$d, %2$s, %3$td/%3$tm/%3$tY, %4$.3f, %5$s]" ,this.id, this.name, this.birthday, this.height, this.married);
 
-	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-
-	return 	"[" + Integer.toString(this.id) + ", " 
-		+ this.name + ", " 
-		+ formatter.format(this.birthday) + ", " 
-		+ Double.toString(this.height) + ", " 
-		+ Boolean.toString(this.married) + "]";
     }
 
     @Override
@@ -84,7 +78,7 @@ public class Record implements java.io.Serializable {
 	if (!(o instanceof Record))
 		return false;
 
-	Record rec = (Record) o;
+	Record rec = (Record) o; //cast
 
 	if(
 	    this.id == rec.getId() &&
@@ -97,8 +91,8 @@ public class Record implements java.io.Serializable {
 		return false;
     }
 
-    @Override
-    public Record clone(){
+    @Override //parametro di ritorno non controllato dal compilatore -> posso overridare
+    public Record clone(){ //return object
 	Record record = new Record();
 	record.setId(this.id);
 	record.setName(this.name);
@@ -106,6 +100,6 @@ public class Record implements java.io.Serializable {
 	record.setHeight(this.height);
 	record.setMarried(this.married);
 
-	return record;
+	return record; //cast to object
     }
 }

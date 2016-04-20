@@ -16,10 +16,8 @@ public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor
 
 	private static final Logger log = LogManager.getLogger(CsvFileExtractor.class.getName());
 
-	private static final char FIELD_SEPARATOR = ';';
-	//	private static final char STRING_DELIMETER = '"';	//Mistero, con questo char si nota che tutti i 127 vengono riconosciuti come dei token dalla funzione split
+	private static final String FIELD_SEPARATOR = ";";
 	private static final String STRING_DELIMETER = "\"";
-
 
 	/*
 	* Constructor

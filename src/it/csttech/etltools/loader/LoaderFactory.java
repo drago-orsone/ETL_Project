@@ -23,12 +23,12 @@ public class LoaderFactory {
 		public Loader getLoader(String loaderType){
 			switch (loaderType.toLowerCase()) {
 				case "csv": return new CsvFileLoader(fileName);
-				case "fw":	return new FwFileLoader(fileName);
+				case "fw": return new FwFileLoader(fileName);
 				case "xml": return new XmlFileLoader(fileName);
-				case "db": 	return new SqliteLoader(fileName, tableName);
+				case "db": return new SqliteLoader(fileName, tableName);
 				case "sys": return new SystemLoader();
 				case "gui": return new GuiLoader();
-				default:    return null;
+				default: return null;
 			}
 		}
 	}

@@ -26,11 +26,11 @@ public class ExtractorFactory {
 	public Extractor getExtractor(String extractorType){
 		switch (extractorType.toLowerCase()) {
 			case "csv": return new CsvFileExtractor(fileName);
-            case "fw":	return new FwFileExtractor(fileName);
-            case "xml": return new XmlFileExtractor(fileName);
-            case "db": 	return new SqliteExtractor(fileName, tableName);
-            case "sys": return new SystemExtractor();
-            default:    return null;
+            		case "fw": return new FwFileExtractor(fileName);
+            		case "xml": return new XmlFileExtractor(fileName);
+            		case "db": return new SqliteExtractor(fileName, tableName);
+            		case "sys": return new SystemExtractor();
+            		default: return null;
         }
    }
 }
