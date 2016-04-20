@@ -16,11 +16,18 @@ public class LoaderFactory {
 
 		//use getLoader method to get object of type shape
 		public Loader getLoader(String loaderType){
+			
+			String outputFile = properties.getProperty("outputFile") + "." +  loaderType.toLowerCase();
+			String fieldSeparator = properties.getProperty("FIELD_SEPARATOR");
+			int fixedWidth = Integer.parseInt(properties.getProperty("FIXED_WIDTH"));
+			String endChar = properties.getProperty("END_CHAR");
+			String table = properties.getProperty("outputTable");
+
 			switch (loaderType.toLowerCase()) {
-				case "csv": return new CsvFileLoader(properties.getProperty("outputFile") + "." +  loaderType.toLowerCase());
-				case "fw": return new FwFileLoader(properties.getProperty("outputFile") + "." + loaderType.toLowerCase());
-				case "xml": return new XmlFileLoader(properties.getProperty("outputFile") + "." + loaderType.toLowerCase());
-				case "db": return new SqliteLoader(properties.getProperty("outputFile") + "." + loaderType.toLowerCase(), properties.getProperty("outputTable"));
+				case "csv": return new CsvFileLoader(outputFile, fieldSeparator);
+				case "fw": return new FwFileLoader(outputFile, fixedWidth, endChar);
+				case "xml": return new XmlFileLoader(outputFile);
+				case "db": return new SqliteLoader(outputFile, table);
 				case "sys": return new SystemLoader();
 				case "gui": return new GuiLoader();
 				default: return null;

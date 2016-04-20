@@ -21,10 +21,16 @@ public class ExtractorFactory {
 		*/
 		public Extractor getExtractor(String extractorType){
 			switch (extractorType.toLowerCase()) {
-				case "csv": return new CsvFileExtractor(properties.getProperty("inputFile") + "." + extractorType.toLowerCase());
-				case "fw": return new FwFileExtractor(properties.getProperty("inputFile") + "." + extractorType.toLowerCase(), Integer.parseInt(properties.getProperty("FIXED_WIDTH")));
-				case "xml": return new XmlFileExtractor(properties.getProperty("inputFile") + "." + extractorType.toLowerCase());
-				case "db": return new SqliteExtractor(properties.getProperty("inputFile") + "." + extractorType.toLowerCase(), properties.getProperty("inputTable"));
+				case "csv": return new CsvFileExtractor(
+					properties.getProperty("inputFile") + "." + extractorType.toLowerCase(),
+					properties.getProperty("FIELD_SEPARATOR"),
+					properties.getProperty("STRING_DELIMETER"));
+				case "fw": return new FwFileExtractor(
+					properties.getProperty("inputFile") + "." + extractorType.toLowerCase(), Integer.parseInt(properties.getProperty("FIXED_WIDTH")));
+				case "xml": return new XmlFileExtractor(
+					properties.getProperty("inputFile") + "." + extractorType.toLowerCase());
+				case "db": return new SqliteExtractor(
+					properties.getProperty("inputFile") + "." + extractorType.toLowerCase(), properties.getProperty("inputTable"));
 				case "sys": return new SystemExtractor();
 				default: return null;
 			}

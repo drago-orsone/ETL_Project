@@ -3,11 +3,9 @@ package it.csttech.etltools.extractor;
 import it.csttech.etltools.Extractor;
 import it.csttech.etltools.Record;
 import it.csttech.etltools.Records;
-
+import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.*;
 
 /**
 * @todo. il metodo parse column name non è a prova di errore. Non considera entry tra virgolette come un solo campo e la presenza di ; in un campo rompe la lettura.
@@ -15,15 +13,20 @@ import java.util.*;
 public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger(CsvFileExtractor.class.getName());
+	private String fieldSeparator;
+	private String stringDelimiter;
 
-	private static final String FIELD_SEPARATOR = ";";
-	private static final String STRING_DELIMETER = "\"";
-
-	/*
-	* Constructor
-	*/
-	public CsvFileExtractor( String fileName){
+	/**
+	 * [CsvFileExtractor description]
+	 * @param   [fileName]
+	 * @param   [fieldSeparator]
+	 * @param   [stringDelimiter]
+	 * @return  [description]
+	 */
+	public CsvFileExtractor( String fileName, String fieldSeparator, String stringDelimiter){
 		super(fileName);
+	this.fieldSeparator = fieldSeparator;
+	this.stringDelimiter = stringDelimiter;
 	}
 
 
@@ -37,11 +40,11 @@ public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor
 	protected List<String> parseColumnNames(String inputLine){
 		log.trace("*Parsing* " + inputLine);
 		List<String> entryList = Arrays.asList(
-			inputLine.split(	STRING_DELIMETER + FIELD_SEPARATOR + STRING_DELIMETER + "|" +
-				STRING_DELIMETER + FIELD_SEPARATOR + "|" +
-				FIELD_SEPARATOR + STRING_DELIMETER + "|" +
-				FIELD_SEPARATOR + "|" +
-				STRING_DELIMETER));
+			inputLine.split(	stringDelimiter + fieldSeparator + stringDelimiter + "|" +
+				stringDelimiter + fieldSeparator + "|" +
+				fieldSeparator + stringDelimiter + "|" +
+				fieldSeparator + "|" +
+				stringDelimiter));
 		log.trace("*  in   * " + entryList);
 		return entryList ;
 	}

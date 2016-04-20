@@ -16,14 +16,14 @@ import org.apache.logging.log4j.Logger;
 public class FwFileExtractor extends LineWiseFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger(FwFileExtractor.class.getName());
-	private int FIXED_WIDTH;
+	private int fixedWidth;
 
 	/*
 	 * Constructor
 	 */
-	public FwFileExtractor(String file, int FIXED_WIDTH){
+	public FwFileExtractor(String file, int fixedWidth){
 		super(file);
-		this.FIXED_WIDTH = FIXED_WIDTH;
+		this.fixedWidth = fixedWidth;
 	}
 
 
@@ -35,11 +35,11 @@ public class FwFileExtractor extends LineWiseFileExtractor implements Extractor 
 			List<String> list = new ArrayList<String>();
 			int fieldsNumber;
 
-			if ((inputString.length() - 1) % FIXED_WIDTH == 0) {
+			if ((inputString.length() - 1) % fixedWidth == 0) {
 
-				fieldsNumber = (inputString.length() - 1) / FIXED_WIDTH;
+				fieldsNumber = (inputString.length() - 1) / fixedWidth;
 				for (int i = 0; i < fieldsNumber; i++)
-					list.add(inputString.substring(i*FIXED_WIDTH, (i+1)*FIXED_WIDTH).trim());
+					list.add(inputString.substring(i*fixedWidth, (i+1)*fixedWidth).trim());
 			}else{
 				log.warn("Line bad format. Skipped and continue!");
 			}

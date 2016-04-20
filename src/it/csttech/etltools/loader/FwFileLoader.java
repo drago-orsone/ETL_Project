@@ -12,8 +12,10 @@ import java.util.List;
 
 public class FwFileLoader extends LineWiseFileLoader implements Loader {
 
-	public FwFileLoader(String file){
+	public FwFileLoader(String file, int fixedWidth, String finalChar){
 		super(file);
+		this.fixedWidth = fixedWidth;
+		this.finalChar = finalChar;
 	}
 
   	/*
@@ -21,23 +23,23 @@ public class FwFileLoader extends LineWiseFileLoader implements Loader {
    	*  
    	*/
 
-	private static final int FIXED_WIDTH = 20;
-	private static final String FINAL_CHAR = "*";
+	private int fixedWidth;
+	private String finalChar;
 
 	@Override
   	protected String buildTitle(List<String> columnNames){
 		
 		return String.format(
-			"%-" + FIXED_WIDTH + "s%-" + FIXED_WIDTH + "s%-" + FIXED_WIDTH + "s%-" + FIXED_WIDTH + "s%-" + FIXED_WIDTH + "s%s",
-			columnNames.get(0), columnNames.get(1), columnNames.get(2), columnNames.get(3), columnNames.get(4), FINAL_CHAR);   
+			"%-" + fixedWidth + "s%-" + fixedWidth + "s%-" + fixedWidth + "s%-" + fixedWidth + "s%-" + fixedWidth + "s%s",
+			columnNames.get(0), columnNames.get(1), columnNames.get(2), columnNames.get(3), columnNames.get(4), finalChar);   
 	}
 
 	@Override
   	protected String buildLine(Record record){
-		int dateWidth = FIXED_WIDTH - 6;
+		int dateWidth = fixedWidth - 6;
 		return String.format( Locale.US,
-			"%1$-" + FIXED_WIDTH + "d%2$-" + FIXED_WIDTH + "s%3$td/%3$tm/%3$-" + dateWidth + "tY%4$-" + FIXED_WIDTH + ".02f%5$-" + FIXED_WIDTH + "s%6$s", 
-			record.getId(), record.getName(), record.getBirthday(), record.getHeight(), record.isMarried(), FINAL_CHAR);   
+			"%1$-" + fixedWidth + "d%2$-" + fixedWidth + "s%3$td/%3$tm/%3$-" + dateWidth + "tY%4$-" + fixedWidth + ".02f%5$-" + fixedWidth + "s%6$s", 
+			record.getId(), record.getName(), record.getBirthday(), record.getHeight(), record.isMarried(), finalChar);   
 	}
 
 }
