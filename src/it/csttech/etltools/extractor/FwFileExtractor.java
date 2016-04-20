@@ -16,12 +16,14 @@ import org.apache.logging.log4j.Logger;
 public class FwFileExtractor extends LineWiseFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger(FwFileExtractor.class.getName());
+	private int FIXED_WIDTH;
 
 	/*
 	 * Constructor
 	 */
-	public FwFileExtractor(String file){
+	public FwFileExtractor(String file, int FIXED_WIDTH){
 		super(file);
+		this.FIXED_WIDTH = FIXED_WIDTH;
 	}
 
 
@@ -30,8 +32,7 @@ public class FwFileExtractor extends LineWiseFileExtractor implements Extractor 
 	 */
 	@Override
 	protected List<String> parseColumnNames(String inputString){
-			final int FIXED_WIDTH = 20;
-			List<String> list = new ArrayList<String>();		
+			List<String> list = new ArrayList<String>();
 			int fieldsNumber;
 
 			if ((inputString.length() - 1) % FIXED_WIDTH == 0) {
@@ -41,7 +42,7 @@ public class FwFileExtractor extends LineWiseFileExtractor implements Extractor 
 					list.add(inputString.substring(i*FIXED_WIDTH, (i+1)*FIXED_WIDTH).trim());
 			}else{
 				log.warn("Line bad format. Skipped and continue!");
-			}			
+			}
 			return list;
 	}
 }

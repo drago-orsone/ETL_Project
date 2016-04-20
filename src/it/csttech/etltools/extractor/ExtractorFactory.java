@@ -1,36 +1,32 @@
 package it.csttech.etltools.extractor;
 
 import it.csttech.etltools.Extractor;
+import java.util.Properties;
 
 public class ExtractorFactory {
 
-	private String fileName;
-	private String tableName;
+	private Properties properties;
 
 	public ExtractorFactory(){}
 
-	public ExtractorFactory(String fileName){
-		this.fileName = fileName;
-	}
+		public ExtractorFactory(Properties properties){
+			this.properties = properties;
+		}
 
-	public ExtractorFactory(String fileName, String tableName){
-		this.fileName = fileName;
-		this.tableName = tableName;
-	}
 
-	/**
-	 * [getExtractor description]
-	 * @param  extractorType [description]
-	 * @return               [description]
-	 */
-	public Extractor getExtractor(String extractorType){
-		switch (extractorType.toLowerCase()) {
-			case "csv": return new CsvFileExtractor(fileName);
-            		case "fw": return new FwFileExtractor(fileName);
-            		case "xml": return new XmlFileExtractor(fileName);
-            		case "db": return new SqliteExtractor(fileName, tableName);
-            		case "sys": return new SystemExtractor();
-            		default: return null;
-        }
-   }
-}
+		/**
+		* [getExtractor description]
+		* @param  extractorType [description]
+		* @return               [description]
+		*/
+		public Extractor getExtractor(String extractorType){
+			switch (extractorType.toLowerCase()) {
+				case "csv": return new CsvFileExtractor(properties.getProperty("inputFile") + "." + extractorType.toLowerCase());
+				case "fw": return new FwFileExtractor(properties.getProperty("inputFile") + "." + extractorType.toLowerCase(), Integer.parseInt(properties.getProperty("FIXED_WIDTH")));
+				case "xml": return new XmlFileExtractor(properties.getProperty("inputFile") + "." + extractorType.toLowerCase());
+				case "db": return new SqliteExtractor(properties.getProperty("inputFile") + "." + extractorType.toLowerCase(), properties.getProperty("inputTable"));
+				case "sys": return new SystemExtractor();
+				default: return null;
+			}
+		}
+	}

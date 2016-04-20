@@ -16,10 +16,13 @@ hs_err_pid*
 
 # Ignore Log
 **/*.log
-**/log4j2.xml
+
 =======
 # Ignore dat file
 **/*.dat
 out*
 *.db
 
+#Ignore user conf
+config/etltools.properties
+config/log4j2.xml

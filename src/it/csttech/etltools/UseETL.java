@@ -7,6 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.commons.cli.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 
 /**
@@ -21,23 +25,13 @@ import org.apache.commons.cli.*;
 */
 public class UseETL {
 
-  public static final String CSV_FORMAT = "csv";
-  public static final String FW_FORMAT = "fw";
-  public static final String XML_FORMAT = "xml";
-  public static final String DB_FORMAT = "db";
-  public static final String SYSTEM_FORMAT = "sys";
-  public static final String GUI_FORMAT = "gui";
+  public static final String DEFAULT_PROPERTIES = "config/etltools_default.properties";
 
-  public static final String IN_FILE_OPT = "i";
-  public static final String OUT_FILE_OPT = "o";
   public static final String IN_FORMAT_OPT = "if";
   public static final String OUT_FORMAT_OPT = "of";
   public static final String HELP_OPT = "h";
-  public static final String TABLE_OPT = "t";
+  public static final String PROPERTIES_OPT = "p";
 
-  public static final String DEFAULT_IN_FILE = "data.csv";
-  public static final String DEFAULT_OUT_FILE = "output.dat";
-  public static final String DEFAULT_TABLE = "TEST";
 
   static final Logger log = LogManager.getLogger();
 
@@ -52,22 +46,20 @@ public class UseETL {
     if (cmdLine == null)
     return;
 
-//leggere properties. qui avermo un oggetto properties.
+    String propFile = cmdLine.getOptionValue(PROPERTIES_OPT, DEFAULT_PROPERTIES);
+    Properties prop = readProperties(propFile);
 
-    String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, CSV_FORMAT);
-    String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, GUI_FORMAT);
-    String inputFile = cmdLine.getOptionValue(IN_FILE_OPT, DEFAULT_IN_FILE);
-    String outputFile = cmdLine.getOptionValue(OUT_FILE_OPT, DEFAULT_OUT_FILE);
-    String table = cmdLine.getOptionValue(TABLE_OPT, DEFAULT_TABLE);
+    String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, prop.getProperty("default.inFormat"));
+    String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, prop.getProperty("default.outFormat"));
 
-    ExtractorFactory extractorFactory = new ExtractorFactory(inputFile, table);
+    ExtractorFactory extractorFactory = new ExtractorFactory(prop);
     Extractor extractor = extractorFactory.getExtractor(inputFormat);
     if( extractor == null ) {
       log.error("Invalid input format " + inputFormat + ".");
       return;
     }
 
-    LoaderFactory loaderFactory = new LoaderFactory(outputFile, table);
+    LoaderFactory loaderFactory = new LoaderFactory(prop);
     Loader loader = loaderFactory.getLoader(outputFormat);
     if( loader == null ) {
       log.error("Invalid output format " + outputFormat + ".");
@@ -88,22 +80,6 @@ public class UseETL {
     .desc("print guide")
     .build();
 
-    Option inFileOption = Option.builder(IN_FILE_OPT)
-    .argName("input file")
-    .longOpt("inputFile")
-    .required(false)
-    .numberOfArgs(1)
-    .desc("input file")
-    .build();
-
-    Option outFileOption = Option.builder(OUT_FILE_OPT)
-    .argName("output file")
-    .longOpt("outputFile")
-    .numberOfArgs(1)
-    .required(false)
-    .desc("output file")
-    .build();
-
     Option inFormatOption = Option.builder(IN_FORMAT_OPT)
     .argName("input format")
     .longOpt("inputFormat")
@@ -120,21 +96,19 @@ public class UseETL {
     .desc("output file format")
     .build();
 
-    Option tableOption = Option.builder(TABLE_OPT)
-    .argName("database table")
-    .longOpt("table")
+    Option propertiesOption = Option.builder(PROPERTIES_OPT)
+    .argName("properties file")
+    .longOpt("properties")
     .numberOfArgs(1)
     .required(false)
-    .desc("database table")
+    .desc("path to properties file")
     .build();
 
     Options options = new Options();
     options.addOption(helpOption);
-    options.addOption(inFileOption);
-    options.addOption(outFileOption);
     options.addOption(inFormatOption);
     options.addOption(outFormatOption);
-    options.addOption(tableOption);
+    options.addOption(propertiesOption);
 
     CommandLine cmdLine = null;
 
@@ -144,7 +118,7 @@ public class UseETL {
 
       if (cmdLine.hasOption("help")) {
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("Change Format (db, csv, fw, xml, sys)", options);
+        formatter.printHelp("Change Format (db, csv, fw, xml, sys, gui)", options);
         cmdLine = null;
       }
 
@@ -156,4 +130,32 @@ public class UseETL {
     }
 
   }
+
+  public static Properties readProperties( String propFile ){
+    Properties prop = new Properties();
+    InputStream input = null;
+
+    try {
+      input = new FileInputStream(propFile);
+
+      // load a properties file
+      prop.load(input);
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+      return prop;
+    }
+  }
+
+  public UseETL(){
+
+  }
+
 }
