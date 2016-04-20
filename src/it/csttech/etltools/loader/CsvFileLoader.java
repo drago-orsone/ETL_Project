@@ -13,13 +13,14 @@ import java.util.List;
  */
 public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 
-	private static final String FIELD_SEPARATOR = ";";
+	private String fieldSeparator;
 
 	/*
 	* Constructor
 	*/
-	public CsvFileLoader( String fileName){
+	public CsvFileLoader(String fileName, String fieldSeparator){
 		super(fileName);
+		this.fieldSeparator = fieldSeparator;
 	}
 
 	/**
@@ -30,7 +31,7 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 	protected String buildTitle(List<String> columnNames){
 
 		return String.format("%2$s%1$s%3$s%1$s%4$s%1$s%5$s%1$s%6$s",
-		FIELD_SEPARATOR,
+		fieldSeparator,
 		columnNames.get(0),
 		columnNames.get(1),
 		columnNames.get(2),
@@ -41,7 +42,7 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 	@Override
 	protected String buildLine(Record record){
 		return String.format(Locale.US, "%2$d%1$s%3$s%1$s%4$td/%4$tm/%4$tY%1$s%5$.02f%1$s%6$s",
-		FIELD_SEPARATOR,
+		fieldSeparator,
 		record.getId(),
 		record.getName(),
 		record.getBirthday(),
