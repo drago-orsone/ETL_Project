@@ -2,6 +2,7 @@ package it.csttech.etltools.extractor;
 
 import it.csttech.etltools.Extractor;
 import java.util.Properties;
+import it.csttech.etltools.ETLException;
 
 public class ExtractorFactory {
 
@@ -19,7 +20,7 @@ public class ExtractorFactory {
 		* @param  extractorType [description]
 		* @return               [description]
 		*/
-		public Extractor getExtractor(String extractorType){
+		public Extractor getExtractor(String extractorType) throws ETLException {
 
 			String inputFile = properties.getProperty("inputFile") + "." +  extractorType.toLowerCase();
 			String fieldSeparator = properties.getProperty("FIELD_SEPARATOR");
@@ -34,7 +35,7 @@ public class ExtractorFactory {
 				case "xml": return new XmlFileExtractor(inputFile);
 				case "db": return new SqliteExtractor(inputFile, inputTable);
 				case "sys": return new SystemExtractor();
-				default: return null;
+				default: throw new ETLException("Invalid input format " + extractorType + ".");
 			}
 		}
 	}
