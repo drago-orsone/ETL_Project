@@ -40,11 +40,10 @@ public class UseETL {
   *
   * @param  args argomenti passati
   */
-  public static void main(String[] args) {
+  public static void main(String[] args) { //Usare Costruttore?
+   try {
 
     CommandLine cmdLine = manageOption(args);
-    if (cmdLine == null)
-    return;
 
     String propFile = cmdLine.getOptionValue(PROPERTIES_OPT, DEFAULT_PROPERTIES);
     Properties prop = readProperties(propFile);
@@ -54,24 +53,22 @@ public class UseETL {
 
     ExtractorFactory extractorFactory = new ExtractorFactory(prop);
     Extractor extractor = extractorFactory.getExtractor(inputFormat);
-    if( extractor == null ) {
-      log.error("Invalid input format " + inputFormat + ".");
-      return;
-    }
 
     LoaderFactory loaderFactory = new LoaderFactory(prop);
     Loader loader = loaderFactory.getLoader(outputFormat);
-    if( loader == null ) {
-      log.error("Invalid output format " + outputFormat + ".");
-      return;
-    }
 
     loader.load(extractor.extract());
 
-
+   } catch(ETLException etlex) {
+	log.error(etlex.getMessage());
+	log.debug(etlex);
+   } catch(ParseException pe) {
+	log.error(pe.getMessage());
+	log.debug(pe);
+   }
   }
 
-  public static CommandLine manageOption(String[] args) {
+  public static CommandLine manageOption(String[] args) throws ParseException {
 
     Option helpOption = Option.builder(HELP_OPT)
     .longOpt("help")
@@ -112,22 +109,18 @@ public class UseETL {
 
     CommandLine cmdLine = null;
 
-    try{
+    //try{
       CommandLineParser parser = new DefaultParser();
       cmdLine = parser.parse(options, args); //throws ParseException. IF statement is skipped if ParseExc is catched.
 
       if (cmdLine.hasOption("help")) {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("Change Format (db, csv, fw, xml, sys, gui)", options);
-        cmdLine = null;
+	HelpFormatter formatter = new HelpFormatter();
+	formatter.printHelp("Change Format (db, csv, fw, xml, sys, gui)", options);
+	//throw new SomekindofException();
+	System.exit(0); //SExit o eccezione?
       }
 
-    }catch( ParseException pe ){
-      log.error("Invalid option(s).");
-      cmdLine = null;
-    }finally{
       return cmdLine;
-    }
 
   }
 
@@ -141,13 +134,15 @@ public class UseETL {
       // load a properties file
       prop.load(input);
     } catch (IOException ex) {
-      ex.printStackTrace();
+      log.error(ex.getMessage());
+      log.debug(ex);
     } finally {
       if (input != null) {
         try {
           input.close();
         } catch (IOException e) {
-          e.printStackTrace();
+          log.error(e.getMessage());
+	  log.debug(e);
         }
       }
       return prop;

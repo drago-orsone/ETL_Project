@@ -2,6 +2,7 @@ package it.csttech.etltools.loader;
 
 import it.csttech.etltools.Loader;
 import java.util.Properties;
+import it.csttech.etltools.ETLException;
 
 public class LoaderFactory {
 
@@ -15,7 +16,7 @@ public class LoaderFactory {
 
 
 		//use getLoader method to get object of type shape
-		public Loader getLoader(String loaderType){
+		public Loader getLoader(String loaderType) throws ETLException {
 			
 			String outputFile = properties.getProperty("outputFile") + "." +  loaderType.toLowerCase();
 			String fieldSeparator = properties.getProperty("FIELD_SEPARATOR");
@@ -30,7 +31,8 @@ public class LoaderFactory {
 				case "db": return new SqliteLoader(outputFile, table);
 				case "sys": return new SystemLoader();
 				case "gui": return new GuiLoader();
-				default: return null;
+				//default: return null;
+				default: throw new ETLException("Invalid output format " + loaderType + ".");
 			}
 		}
 	}
