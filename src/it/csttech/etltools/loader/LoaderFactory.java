@@ -16,7 +16,7 @@ public class LoaderFactory {
 
 		//use getLoader method to get object of type shape
 		public Loader getLoader(String loaderType){
-			
+
 			String outputFile = properties.getProperty("outputFile") + "." +  loaderType.toLowerCase();
 			String fieldSeparator = properties.getProperty("FIELD_SEPARATOR");
 			int fixedWidth = Integer.parseInt(properties.getProperty("FIXED_WIDTH"));
