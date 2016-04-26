@@ -22,7 +22,7 @@ public class LoaderFactory {
 
 		String loaderClassName = properties.getProperty(loaderType + ".loader.class".toLowerCase());
 		try{
-			Constructor ctor;
+			Constructor<?> ctor;
 			if(loaderClassName != null)
 				ctor = Class.forName(loaderClassName).getDeclaredConstructor(Properties.class);
 			else
@@ -31,7 +31,7 @@ public class LoaderFactory {
 		} catch (ReflectiveOperationException ex) { //chiedere a matteo se catch e rilancio di eccezione è lecito.
 			throw new ETLException("Possible reason:\n" +
 						"Loader class " + loaderClassName + " does not exist.\n" +
-						"The called constructor of " + loaderClassName + " does not exist.\n" + 
+						"The called constructor of " + loaderClassName + " does not exist.\n" +
 						"Instantiation of class " + loaderClassName + " not succeded.");
 		}
 	}

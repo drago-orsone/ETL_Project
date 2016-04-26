@@ -89,9 +89,8 @@ public class SystemExtractor extends AbstractSystemExtractor implements Extracto
 			record = null; // ignore wrong format string
 		}finally{
 			scanner.close();
-			return record;
 		}
-
+		return record;
 	}
 
 

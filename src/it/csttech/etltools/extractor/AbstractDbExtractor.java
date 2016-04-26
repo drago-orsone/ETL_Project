@@ -155,10 +155,8 @@ public abstract class AbstractDbExtractor  {
 			for( String line : NamesArray )
 				debugString.append( line + " ");
 			log.debug(debugString.toString());
-
-			return NamesArray;
 		}
-
+		return NamesArray;
 	}
 
 	/*
@@ -195,9 +193,8 @@ public abstract class AbstractDbExtractor  {
 		} catch ( SQLException e ) {
 			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-		} finally {
-			return recordList;
 		}
+		return recordList;
 	}
 
 	/*

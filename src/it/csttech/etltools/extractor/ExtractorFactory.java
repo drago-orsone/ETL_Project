@@ -31,7 +31,7 @@ public class ExtractorFactory {
 		if(extractorClassName == null )
 			throw new ETLException("Invalid input format " + extractorType + ".");
 		try{
-			Constructor ctor = Class.forName(extractorClassName).getDeclaredConstructor(Properties.class);
+			Constructor<?> ctor = Class.forName(extractorClassName).getDeclaredConstructor(Properties.class);
 			return (Extractor)ctor.newInstance(properties);
 		} catch (ReflectiveOperationException ex) {
 			throw new ETLException("Cannot find : " + ex.getMessage() + "class" );

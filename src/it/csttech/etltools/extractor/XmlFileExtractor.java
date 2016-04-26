@@ -88,9 +88,8 @@ public class XmlFileExtractor extends AbstractFileExtractor implements Extractor
 			}
 		}catch(ParseException pe){
 			log.error(pe);
-		}finally{
-			return record;
 		}
+		return record;
 	}
 
 	private void initFields(Records records, BufferedReader br) throws IOException {

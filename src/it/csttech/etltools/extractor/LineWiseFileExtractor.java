@@ -55,10 +55,8 @@ public abstract class LineWiseFileExtractor extends AbstractFileExtractor {
 
 		}catch(ParseException pe){
 			log.error("Parsing not succeded at line " + i + ".");
-		}finally{
-			return record;
 		}
-
+		return record;
 	}
 
 	protected abstract List<String> parseColumnNames(String inputString);

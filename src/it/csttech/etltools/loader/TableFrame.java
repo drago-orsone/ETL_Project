@@ -8,6 +8,7 @@ import it.csttech.etltools.Record;
  * @author alberto.dragoni
  */
 public class TableFrame extends javax.swing.JFrame {
+	private static final long serialVersionUID = 1L;
 
     /**
      * Creates new form TableFrame
@@ -20,7 +21,7 @@ public class TableFrame extends javax.swing.JFrame {
 
     /**
      * This method is called from within the constructor to initialize the form.
-     * 
+     *
      */
     @SuppressWarnings("unchecked")
     private void initComponents() {
@@ -33,7 +34,7 @@ public class TableFrame extends javax.swing.JFrame {
 	Object[] obj = new Object[5];
 	for(int i = 0; i < 5; i++)
 		obj[i] = records.getColumnNames().get(i);
-	
+
 	dtm = new javax.swing.table.DefaultTableModel(obj, 0);
         recordTable.setModel(dtm);
 

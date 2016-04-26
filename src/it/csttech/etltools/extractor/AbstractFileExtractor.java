@@ -69,8 +69,8 @@ public abstract class AbstractFileExtractor {
 					log.error(e);
 				}
 			}
-			return records;
 		}
+		return records;
 	}
 
 }

@@ -14,28 +14,28 @@ import java.util.Objects;
 
 /**
  * Load a container of record in a unspecified SQL database.
- * 
+ *
  * @author drago-orsone, MasterToninus
  * @since mm-dd-yyyy
  * @todo. Uso troppi attributi.
- * 	dbclassname e jdbConnectorOption potrebbero essere statici perchè sono propri della classe e non dell'istanza. 
+ * 	dbclassname e jdbConnectorOption potrebbero essere statici perchè sono propri della classe e non dell'istanza.
  *  potrebbero anche essere final e overloadati dai figli a seconda di sqlite e mysql
  * @todo. anche Fields di support non è bello che sia lì. il nome dei fields potrebbe essere salvato come attributo statico di Record!
- * 
+ *
  */
 public abstract class AbstractDbLoader {
 
 	private static final Logger log = LogManager.getLogger(AbstractDbLoader.class.getName());
 
 	private String dbName;
-	
+
 	/** Name of the target table in the database. */
 	protected String tableName;
 	/** Name of the JDBC connector class name. */
 	protected String dbClassName;
-	/** JDBC option correspoding to the database format. */	
+	/** JDBC option correspoding to the database format. */
 	protected String jdbConnectorOptions;
-	/** UGLY list of column names, for the sake of convenience. */	
+	/** UGLY list of column names, for the sake of convenience. */
 	protected List<String> fields;
 
 
@@ -44,7 +44,7 @@ public abstract class AbstractDbLoader {
 	 * Constructor
 	 * @param dbName name of the target database
 	 * @param tableName name of the target table in the considered database
-	*/   
+	*/
 	public AbstractDbLoader(String dbName, String tableName){
 		this.dbName = dbName ;
 		this.tableName = tableName ;
@@ -63,16 +63,16 @@ public abstract class AbstractDbLoader {
         try {
 			log.debug("Driver Loading.");
             Class.forName(dbClassName).newInstance();
-            
+
 			File f = new File(dbName);
 			if( f.exists())
 				log.debug("Database found");
 			else
 				log.warn("Database not found. Creating " + dbName);
-            
+
   			log.debug("Requesting Connection to drive manager : " + dbName);
-			conn = DriverManager.getConnection(jdbConnectorOptions + dbName);     //throws SQLException     
-   
+			conn = DriverManager.getConnection(jdbConnectorOptions + dbName);     //throws SQLException
+
 			log.debug("Checking if " + tableName + " exists in " + dbName);
 			if(checkTable(conn) ){
 				log.debug("Table found. Checking if " + tableName + " is correctly formatted.");
@@ -81,7 +81,7 @@ public abstract class AbstractDbLoader {
 					return;
 				}
 			}else{
-				log.warn( "Table not found. Creating " + tableName);	
+				log.warn( "Table not found. Creating " + tableName);
 				createTable(conn, records);
 			}
 
@@ -89,7 +89,7 @@ public abstract class AbstractDbLoader {
 			log.debug("Executing Query to db");
 			addRows(conn, records);
 			//--------------------------------------------------
-			     
+
         } catch (ClassNotFoundException ex) {
 			log.fatal("Error loading connector driver. Class " +  dbClassName  + " not found.");
 		} catch ( SQLException e ) { //Eccezione generata dalla connessione
@@ -116,10 +116,10 @@ public abstract class AbstractDbLoader {
 	 * @param conn JDBC connection
 	 * @string sqlCode
 	 */
-	protected void executeStatement(Connection conn, String sqlCode){		
+	protected void executeStatement(Connection conn, String sqlCode){
 		Statement stmt = null;
 		try {
-		  log.trace("Query statement = " + sqlCode);	
+		  log.trace("Query statement = " + sqlCode);
 		  stmt = conn.createStatement();
 		  stmt.executeUpdate(sqlCode);
 		  stmt.close();
@@ -139,19 +139,19 @@ public abstract class AbstractDbLoader {
 	/*
 	 *	Execute a bulk addRow statement.
 	 *  It depends from the structure of the javabean Record and from the sql dialect.
-	 * 
+	 *
 	 * @todo. l'interfaccia resultset può essere usata per fare il load elegante. (metodi update)
 	 * @see <a href="https://docs.oracle.com/javase/6/docs/api/java/sql/ResultSet.html">JavaDoc<\a>
-	 * 
+	 *
 	 */
 	protected abstract void addRows(Connection conn, Records records);
 
 	/*
-	 * Check if the table already exist in the connected database. 
-	 * 
+	 * Check if the table already exist in the connected database.
+	 *
 	 * @param conn JDBC connection
 	 */
-	private boolean checkTable(Connection conn){		
+	private boolean checkTable(Connection conn){
 		boolean check = false;
 		try {
 			DatabaseMetaData metadata = conn.getMetaData();
@@ -160,18 +160,17 @@ public abstract class AbstractDbLoader {
 		} catch ( SQLException e ) {
 			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-		} finally {
-			return check;
 		}
+		return check;
 	}
 
 	/*
 	 * Check if columns names match with the fields format.
-	 * 
+	 *
 	 * @param conn JDBC connection
 	 */
 	private boolean checkColumnNames(Connection conn){
-		boolean check = false;		
+		boolean check = false;
 		try {
 			ResultSet resultSet = conn.getMetaData().getColumns(null, null, tableName, null);
 			int i = 0;
@@ -192,9 +191,8 @@ public abstract class AbstractDbLoader {
 		} catch ( SQLException e ) {
 			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-		} finally {
-			return check;
-		}		
+		}
+		return check;		
 	}
 
 

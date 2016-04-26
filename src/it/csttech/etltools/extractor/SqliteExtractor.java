@@ -63,9 +63,8 @@ public class SqliteExtractor extends AbstractDbExtractor implements Extractor {
 		} catch ( ParseException e ) {
 			log.error("Cannot Recognized data format. Exception: " + e.getClass().getName() + ": " + e.getMessage());
 			return null;
-		} finally {
-			return record;
 		}
+		return record;
 	}
 
 
