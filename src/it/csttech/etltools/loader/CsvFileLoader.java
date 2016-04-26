@@ -5,7 +5,7 @@ import it.csttech.etltools.Record;
 import it.csttech.etltools.Records;
 
 import java.util.Locale;
-
+import java.util.Properties;
 import java.util.List;
 
 /**
@@ -21,6 +21,11 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 	public CsvFileLoader(String fileName, String fieldSeparator){
 		super(fileName);
 		this.fieldSeparator = fieldSeparator;
+	}
+
+	public CsvFileLoader(Properties prop){
+		super(prop.getProperty("outputFile") + ".csv");
+		this.fieldSeparator = prop.getProperty("FIELD_SEPARATOR");
 	}
 
 	/**

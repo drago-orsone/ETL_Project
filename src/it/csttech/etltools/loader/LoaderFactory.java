@@ -28,12 +28,12 @@ public class LoaderFactory {
 			String table = properties.getProperty("outputTable");
 
 			switch (loaderType.toLowerCase()) {
-				case "csv": return new CsvFileLoader(outputFile, fieldSeparator);
-				case "fw": return new FwFileLoader(outputFile, fixedWidth, endChar);
-				case "xml": return new XmlFileLoader(outputFile);
-				case "db": return new SqliteLoader(outputFile, table);
-				case "sys": return new SystemLoader();
-				case "gui": return new GuiLoader();
+				case "csv": return new CsvFileLoader(properties);
+				case "fw": return new FwFileLoader(properties);
+				case "xml": return new XmlFileLoader(properties);
+				case "db": return new SqliteLoader(properties);
+				case "sys": return new SystemLoader(properties);
+				case "gui": return new GuiLoader(properties);
 				//default: return null;
 				default: throw new ETLException("Invalid output format " + loaderType + ".");
 			}

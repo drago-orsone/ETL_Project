@@ -4,7 +4,7 @@ import it.csttech.etltools.Loader;
 import it.csttech.etltools.Record;
 
 import java.util.Locale;
-
+import java.util.Properties;
 import java.util.List;
 import java.util.Arrays;
 
@@ -12,6 +12,10 @@ import java.util.Arrays;
  * PlaceHolder
  */
 public class SystemLoader extends AbstractSystemLoader implements Loader {
+
+	SystemLoader(Properties prop) {
+		//DO NOTHING	
+	}
 
 	/*
 	 *	Seguendo il design del progetto il tipo di ogni campo e fissato da come è fatto il javabeans!
