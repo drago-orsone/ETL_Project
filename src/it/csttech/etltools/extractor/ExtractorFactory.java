@@ -16,7 +16,6 @@ public class ExtractorFactory {
 		this.properties = properties;
 	}
 
-
 	/**
 	* [getExtractor description]
 	* @param  extractorType [description]

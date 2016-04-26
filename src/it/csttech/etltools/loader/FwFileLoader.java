@@ -5,6 +5,7 @@ import it.csttech.etltools.Record;
 import it.csttech.etltools.Records;
 import java.util.Locale;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * PlaceHolder
@@ -16,6 +17,12 @@ public class FwFileLoader extends LineWiseFileLoader implements Loader {
 		super(file);
 		this.fixedWidth = fixedWidth;
 		this.finalChar = finalChar;
+	}
+
+	public FwFileLoader(Properties prop){
+		super(prop.getProperty("outputFile") + ".fw");
+		this.fixedWidth = Integer.parseInt(prop.getProperty("FIXED_WIDTH"));
+		this.finalChar = prop.getProperty("END_CHAR");
 	}
 
   	/*

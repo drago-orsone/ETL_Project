@@ -7,6 +7,7 @@ import it.csttech.etltools.Records;
 import java.util.*;
 import java.text.SimpleDateFormat;
 import java.io.PrintWriter;
+import java.util.Properties;
 
 /**
  * PlaceHolder
@@ -18,6 +19,10 @@ public class XmlFileLoader extends AbstractFileLoader implements Loader {
 
 	public XmlFileLoader(String file){
 		super(file);
+	}
+
+	public XmlFileLoader(Properties prop) {
+		super(prop.getProperty("outputFile") + ".xml");
 	}
 
 

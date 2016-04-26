@@ -2,6 +2,7 @@ package it.csttech.etltools.loader;
 
 import it.csttech.etltools.Loader;
 import it.csttech.etltools.Records;
+import java.util.Properties;
 /**
  *
  * @author alberto.dragoni
@@ -11,8 +12,8 @@ public class GuiLoader implements Loader {
     /**
      * Creates new form GuiLoader
      */
-    public GuiLoader() {
-
+    public GuiLoader(Properties prop) {
+		//DO NOTHING
     }
 
 
