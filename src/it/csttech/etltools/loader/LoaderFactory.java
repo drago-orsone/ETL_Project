@@ -28,5 +28,8 @@ public class LoaderFactory {
 			case "gui": return new GuiLoader(properties);
 			default: throw new ETLException("Invalid output format " + loaderType + ".");
 		}
+
+		
+
 	}
 }
