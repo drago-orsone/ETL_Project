@@ -41,31 +41,33 @@ public class UseETL {
   * @param  args argomenti passati
   */
   public static void main(String[] args) { //Usare Costruttore?
-   try {
+    try {
 
-    CommandLine cmdLine = manageOption(args);
+      CommandLine cmdLine = manageOption(args);
 
-    String propFile = cmdLine.getOptionValue(PROPERTIES_OPT, DEFAULT_PROPERTIES);
-    Properties prop = readProperties(propFile);
+      String propFile = cmdLine.getOptionValue(PROPERTIES_OPT, DEFAULT_PROPERTIES);
+      Properties prop = readProperties(propFile);
 
-    String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, prop.getProperty("default.inFormat"));
-    String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, prop.getProperty("default.outFormat"));
+      String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, prop.getProperty("default.inFormat"));
+      String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, prop.getProperty("default.outFormat"));
 
-    ExtractorFactory extractorFactory = new ExtractorFactory(prop);
-    Extractor extractor = extractorFactory.getExtractor(inputFormat);
+      //cosruttore con passato il properties (a questo punto il costruttore lancia eccezioni?)
 
-    LoaderFactory loaderFactory = new LoaderFactory(prop);
-    Loader loader = loaderFactory.getLoader(outputFormat);
+      ExtractorFactory extractorFactory = new ExtractorFactory(prop);
+      Extractor extractor = extractorFactory.getExtractor(inputFormat);
 
-    loader.load(extractor.extract());
+      LoaderFactory loaderFactory = new LoaderFactory(prop);
+      Loader loader = loaderFactory.getLoader(outputFormat);
 
-   } catch(ETLException etlex) {
-	log.error(etlex.getMessage());
-	log.debug(etlex);
-   } catch(ParseException pe) {
-	log.error(pe.getMessage());
-	log.debug(pe);
-   }
+      loader.load(extractor.extract());
+
+    } catch(ETLException etlex) {
+      log.error(etlex.getMessage());
+      log.debug(etlex);
+    } catch(ParseException pe) {
+      log.error(pe.getMessage());
+      log.debug(pe);
+    }
   }
 
   public static CommandLine manageOption(String[] args) throws ParseException {
@@ -109,18 +111,17 @@ public class UseETL {
 
     CommandLine cmdLine = null;
 
-    //try{
-      CommandLineParser parser = new DefaultParser();
-      cmdLine = parser.parse(options, args); //throws ParseException. IF statement is skipped if ParseExc is catched.
+    CommandLineParser parser = new DefaultParser();
+    cmdLine = parser.parse(options, args); //throws ParseException. IF statement is skipped if ParseExc is catched.
 
-      if (cmdLine.hasOption("help")) {
-	HelpFormatter formatter = new HelpFormatter();
-	formatter.printHelp("Change Format (db, csv, fw, xml, sys, gui)", options);
-	//throw new SomekindofException();
-	System.exit(0); //SExit o eccezione?
-      }
+    if (cmdLine.hasOption("help")) {
+      HelpFormatter formatter = new HelpFormatter();
+      formatter.printHelp("Change Format (db, csv, fw, xml, sys, gui)", options);
+      //throw new SomekindofException();
+      System.exit(0); //SExit o eccezione?
+    }
 
-      return cmdLine;
+    return cmdLine;
 
   }
 
@@ -142,7 +143,7 @@ public class UseETL {
           input.close();
         } catch (IOException e) {
           log.error(e.getMessage());
-	  log.debug(e);
+          log.debug(e);
         }
       }
       return prop;

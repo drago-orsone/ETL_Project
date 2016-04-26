@@ -14,14 +14,14 @@ import org.apache.logging.log4j.Logger;
  * 	Dubbio, perchè non deve implementare : " implements Extractor" ?
  */
 public abstract class AbstractFileExtractor {
-	
+
 	private String fileName;
 	private static final Logger log = LogManager.getLogger(AbstractFileExtractor.class.getName());
 
 	/*
 	 * Constructor.
-	 * 
-	*/   
+	 *
+	*/
 	public AbstractFileExtractor(String fileName){
 		this.fileName = fileName ;
 	}
@@ -29,12 +29,12 @@ public abstract class AbstractFileExtractor {
 	/*
 	* Abstract method to be specified in the children classes.
 	* placeHolder
-	*/  
+	*/
 	protected abstract Records buildRecords(BufferedReader br) throws IOException;
-	
+
   /*
-   * PlaceHolder 
-   * 
+   * PlaceHolder
+   *
    */
 	public Records extract(){
 
@@ -72,5 +72,5 @@ public abstract class AbstractFileExtractor {
 			return records;
 		}
 	}
-	
+
 }

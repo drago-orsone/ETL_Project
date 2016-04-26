@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Properties;
 
 /**
  * PlaceHolder
@@ -17,6 +18,7 @@ public class FwFileExtractor extends LineWiseFileExtractor implements Extractor 
 
 	private static final Logger log = LogManager.getLogger(FwFileExtractor.class.getName());
 	private int fixedWidth;
+	private String endChar;
 
 	/*
 	 * Constructor
@@ -24,6 +26,12 @@ public class FwFileExtractor extends LineWiseFileExtractor implements Extractor 
 	public FwFileExtractor(String file, int fixedWidth){
 		super(file);
 		this.fixedWidth = fixedWidth;
+	}
+
+	public FwFileExtractor( Properties properties){
+		super( properties.getProperty("inputFile") + ".fw" ) ;
+		this.fixedWidth = Integer.parseInt(properties.getProperty("FIXED_WIDTH"));
+		this.endChar = properties.getProperty("END_CHAR");
 	}
 
 
