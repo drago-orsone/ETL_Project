@@ -51,15 +51,10 @@ public class UseETL {
       String inputFormat = cmdLine.getOptionValue(IN_FORMAT_OPT, prop.getProperty("default.inFormat"));
       String outputFormat = cmdLine.getOptionValue(OUT_FORMAT_OPT, prop.getProperty("default.outFormat"));
 
-      //cosruttore con passato il properties (a questo punto il costruttore lancia eccezioni?)
+      //costruttore con le properties (a questo punto il costruttore lancia eccezioni?)
+      new UseETL(inputFormat,outputFormat,prop);
 
-      ExtractorFactory extractorFactory = new ExtractorFactory(prop);
-      Extractor extractor = extractorFactory.getExtractor(inputFormat);
 
-      LoaderFactory loaderFactory = new LoaderFactory(prop);
-      Loader loader = loaderFactory.getLoader(outputFormat);
-
-      loader.load(extractor.extract());
 
     } catch(ETLException etlex) {
       log.error(etlex.getMessage());
@@ -146,12 +141,18 @@ public class UseETL {
           log.debug(e);
         }
       }
-      return prop;
     }
+    return prop;
   }
 
-  public UseETL(){
+  public UseETL(String inputFormat, String outputFormat, Properties prop) throws ETLException{
+    ExtractorFactory extractorFactory = new ExtractorFactory(prop);
+    Extractor extractor = extractorFactory.getExtractor(inputFormat);
 
+    LoaderFactory loaderFactory = new LoaderFactory(prop);
+    Loader loader = loaderFactory.getLoader(outputFormat);
+
+    loader.load(extractor.extract());
   }
 
 }

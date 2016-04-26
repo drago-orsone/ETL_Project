@@ -41,9 +41,11 @@
 	</target>
 
     <target name="compile" depends="init, ivy-retrieve" description="Compile java sources" >
-        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath">
+					<compilerarg value="-Xlint:all"/>
+				</javac>
     </target>
-    
+
     <target name="jar" depends="compile" description="Create .jar file of the project">
         <mkdir dir="${jar.dir}"/>
         <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
@@ -53,13 +55,13 @@
         </jar>
     </target>
 
-	<target name="help"> 
-		<java classname="org.apache.tools.ant.Main" description="Print ant guide" > 
-			<arg value="-projecthelp" /> 
-		</java> 
-	</target> 
+	<target name="help">
+		<java classname="org.apache.tools.ant.Main" description="Print ant guide" >
+			<arg value="-projecthelp" />
+		</java>
+	</target>
 
- 
+
     <target name="doc" description="Generate documentation JavaDoc" >
  		<delete failonerror="false" dir="${doc.dir}"/>
         <javadoc sourcepath="${src.dir}" destdir="${doc.dir}">
@@ -71,9 +73,9 @@
 					<include name="*.jar"/>
 				</fileset>
 			</classpath>
-	    </javadoc>  
-    </target>    
-    
+	    </javadoc>
+    </target>
+
 	<!-- IVY TARGETS -->
 	<target name="ivy-report">
 		<ivy:configure override="true" file="${ivy.install.dir}/ivy-settings.xml" />
@@ -107,12 +109,12 @@
 		<ivy:cleancache />
 	</target>
 
-   
+
    <!--CONFIGURAZIONE DI IVY PER LE DIPENDENZE -->
-   
-   
-   
-   
-   
+
+
+
+
+
 
 </project>

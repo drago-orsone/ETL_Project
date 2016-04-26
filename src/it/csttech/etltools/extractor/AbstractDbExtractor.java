@@ -109,9 +109,8 @@ public abstract class AbstractDbExtractor  {
 					System.exit(0);
 				}
 			}
-			return records;
 		}
-
+		return records;
 	}
 
 
@@ -130,9 +129,8 @@ public abstract class AbstractDbExtractor  {
 		} catch ( SQLException e ) {
 			log.fatal( e.getClass().getName() + ": " + e.getMessage() );
 			System.exit(0);
-		} finally {
-			return check;
 		}
+		return check;
 	}
 
 	/*
