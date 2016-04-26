@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 
 import java.util.Locale;
 
+import java.util.Properties;
+
 
 /**
  *
@@ -31,12 +33,16 @@ public class SystemExtractor extends AbstractSystemExtractor implements Extracto
 	private static final String regex = "[^\"\\s]+|\"(\\\\.|[^\\\\\"])*\"";
 	private static final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
+	public SystemExtractor(Properties properties){
+
+	}
+
 	/**
 	 * Cut the input line
 	 *
-	 * Si prende pure i campi extra.. il metodo parse line li ignorerà!
+	 * Si prende pure i campi extra.. il metodo parse line li ignorera'!
 	 *
-	 * @see http://stackoverflow.com/questions/12360694/java-scanner-delimit-by-spaces-unless-quotation-marks-are-present
+	 * @see "http://stackoverflow.com/questions/12360694/java-scanner-delimit-by-spaces-unless-quotation-marks-are-present"
 	 *
 	 */
 	@Override
@@ -48,6 +54,11 @@ public class SystemExtractor extends AbstractSystemExtractor implements Extracto
 		List<String> list = new ArrayList<String>();
 		while(scanner.hasNext())
 			list.add(scanner.findInLine(regex).replaceAll("^\"|\"$", ""));
+		int i = list.size();
+		while(i<5){
+			list.add("*?*");
+			i++;
+		}
 		return list;
 	}
 
@@ -72,12 +83,10 @@ public class SystemExtractor extends AbstractSystemExtractor implements Extracto
 			record.setBirthday(formatter.parse(scanner.next()));
 			record.setHeight(scanner.useLocale(Locale.US).nextDouble());
 			record.setMarried(scanner.nextBoolean());
-		}catch(ParseException pe){
-			log.error("Date Parsing not succeded.");
-		}catch(InputMismatchException ex){
-			log.error("Int /double /booleanr parsing not succeded.");
-		}catch(NoSuchElementException  ex){
-			log.error("Invalid number of fields.");
+		} catch (ParseException|InputMismatchException ex) {
+			log.error("Parsing not succeded. " + ex.getMessage());
+			log.debug(ex);
+			record = null; // ignore wrong format string
 		}finally{
 			scanner.close();
 			return record;

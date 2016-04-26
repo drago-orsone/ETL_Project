@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Extract all the record from a SQL database
  *
- * 
+ *
  */
 public abstract class AbstractDbExtractor  {
 

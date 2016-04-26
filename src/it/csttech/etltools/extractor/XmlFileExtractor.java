@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.lang.IllegalArgumentException;
 import java.io.IOException;
 
+import java.util.Properties;
 
 /**
 * PlaceHolder
@@ -28,6 +29,10 @@ public class XmlFileExtractor extends AbstractFileExtractor implements Extractor
 	 */
 	public XmlFileExtractor(String file){
 		super(file);
+	}
+
+	public XmlFileExtractor(Properties properties){
+		super(properties.getProperty("inputFile") + ".xml");
 	}
 
 
