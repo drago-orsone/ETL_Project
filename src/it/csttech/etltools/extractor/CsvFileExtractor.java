@@ -7,6 +7,8 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Properties;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 /**
 * @todo. il metodo parse column name non è a prova di errore. Non considera entry tra virgolette come un solo campo e la presenza di ; in un campo rompe la lettura.
@@ -14,8 +16,9 @@ import java.util.Properties;
 public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor {
 
 	private static final Logger log = LogManager.getLogger(CsvFileExtractor.class.getName());
-	private String fieldSeparator;
-	private String stringDelimiter;
+	private final String fieldSeparator;
+	private final String stringDelimiter;
+	private final Pattern patternCSV;
 
 	/**
 	 * [CsvFileExtractor description]
@@ -27,12 +30,22 @@ public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor
 		super(fileName);
 		this.fieldSeparator = fieldSeparator;
 		this.stringDelimiter = stringDelimiter;
+		this.patternCSV = createCSVPattern();
 	}
 
 	public CsvFileExtractor( Properties properties){
 		super(properties.getProperty("inputFile") + ".csv");
 		this.fieldSeparator = properties.getProperty("FIELD_SEPARATOR");
 		this.stringDelimiter = properties.getProperty("STRING_DELIMITER");
+		this.patternCSV = createCSVPattern();
+	}
+
+	private Pattern createCSVPattern(){
+		String simple       = "[^;\"]+";
+		String complicated  = "\"([^\"]*(\"\")*)*\"";
+		String complete     = complicated + "|" + simple;
+		Pattern pattern = Pattern.compile(complete);
+		return pattern;
 	}
 
 
@@ -46,13 +59,28 @@ public class CsvFileExtractor extends LineWiseFileExtractor implements Extractor
 	 @Override
 	protected List<String> parseColumnNames(String inputLine){
 		log.trace("*Parsing* " + inputLine);
-		List<String> entryList = Arrays.asList( inputLine.split(
-			stringDelimiter + fieldSeparator + stringDelimiter + "|" +
-			stringDelimiter + fieldSeparator + "|" +
-			fieldSeparator + stringDelimiter + "|" +
-			fieldSeparator + "|" +
-			stringDelimiter));
+
+		Matcher matcher = patternCSV.matcher(inputLine);
+
+		List<String> entryList = new ArrayList<String>();
+
+		while (matcher.find())
+      entryList.add(simplifyWord(matcher.group()));
+
 		log.trace("*  in   * " + entryList);
+
 		return entryList ;
 	}
+
+	protected String simplifyWord ( String word ){
+
+		if( word == null) return null;
+			if(word.startsWith(stringDelimiter)){
+				word = word.substring(stringDelimiter.length(), word.length() - stringDelimiter.length());
+				word = word.replace(stringDelimiter+stringDelimiter, stringDelimiter);//working with office
+			}
+		return word;
+
+	}
+
 }

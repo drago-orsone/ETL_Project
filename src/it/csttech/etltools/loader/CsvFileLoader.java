@@ -14,18 +14,20 @@ import java.util.List;
 public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 
 	private String fieldSeparator;
-
+	private String stringDelimiter;
 	/*
 	* Constructor
 	*/
-	public CsvFileLoader(String fileName, String fieldSeparator){
+	public CsvFileLoader(String fileName, String fieldSeparator, String stringDelimiter){
 		super(fileName);
 		this.fieldSeparator = fieldSeparator;
+		this.stringDelimiter = stringDelimiter;
 	}
 
 	public CsvFileLoader(Properties prop){
 		super(prop.getProperty("outputFile") + ".csv");
 		this.fieldSeparator = prop.getProperty("FIELD_SEPARATOR");
+		this.stringDelimiter = prop.getProperty("STRING_DELIMITER");
 	}
 
 	/**
@@ -49,9 +51,18 @@ public class CsvFileLoader extends LineWiseFileLoader implements Loader {
 		return String.format(Locale.US, "%2$d%1$s%3$s%1$s%4$td/%4$tm/%4$tY%1$s%5$.02f%1$s%6$s",
 		fieldSeparator,
 		record.getId(),
-		record.getName(),
+		prepareForPrint(record.getName()),
 		record.getBirthday(),
 		record.getHeight(),
 		record.isMarried());
 	}
+
+	protected String prepareForPrint( String word ){
+    if (word.contains(stringDelimiter) || word.contains(fieldSeparator)) {
+      word = word.replace(stringDelimiter, stringDelimiter+stringDelimiter);
+      word = stringDelimiter + word + stringDelimiter;
+    }
+    return word;
+  }
+
 }
