@@ -26,3 +26,7 @@ out*
 #Ignore user conf
 config/etltools.properties
 config/log4j2.xml
+
+#data
+data.*
+MOCK_DATA.csv
